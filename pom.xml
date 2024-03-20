@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.zlagoda.shop</groupId>
-  <artifactId>my-project</artifactId>
+  <artifactId>BD_Zlagoda</artifactId>
   <version>1.0</version>
   <packaging>war</packaging>
 
@@ -14,18 +14,34 @@
   <url>http://www.example.com</url>
 
   <properties>
-    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.target>21</maven.compiler.target>
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.24</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+
   </dependencies>
 
   <build>
@@ -67,8 +83,8 @@
           <version>2.2</version>
           <configuration>
             <port>9090</port>
-          </configuration> </plugin>
-
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
