@@ -40,6 +40,7 @@ public class FrontController extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         out.print(employeeJsonString);
         out.flush();
     }

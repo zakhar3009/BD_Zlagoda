@@ -46,3 +46,18 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+
+# Mac
+.DS_Store
+
+# Maven
+log/
