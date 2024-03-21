@@ -1,20 +1,47 @@
 package controller;
 
+import com.google.gson.Gson;
 import controller.command.Command;
 import controller.command.CommandFactory;
 import controller.utils.CommandKeyGenerator;
 import controller.utils.HttpWrapper;
+import entity.Employee;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 
-@WebServlet(urlPatterns = "/controller/*", loadOnStartup = 1)
+@WebServlet(urlPatterns = "/controller", loadOnStartup = 1)
 public class FrontController extends HttpServlet {
+
+    private Gson gson = new Gson();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //getServletContext().getRequestDispatcher("/WEB-INF/views/errors/pageNotFound.jsp").forward(request, response);
+        Employee employee = new Employee(
+                "EMP001",
+                "Doe",
+                "John",
+                "Smith",
+                "Manager",
+                5000.00,
+                new Date(90, 5, 15), // Дата народження (рік, місяць, день)
+                new Date(122, 0, 1), // Дата початку роботи (рік, місяць, день)
+                "1234567890",
+                "New York",
+                "Main Street",
+                "12345"
+        );
+        String employeeJsonString = this.gson.toJson(employee);
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(employeeJsonString);
+        out.flush();
     }
 
     @Override
