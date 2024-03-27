@@ -1,6 +1,12 @@
 node_modules/
 target/
 
+# React stuff
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
