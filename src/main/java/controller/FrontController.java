@@ -2,7 +2,7 @@ package controller;
 
 
 import controller.command.Command;
-import controller.command.CommandFactory;
+import controller.command.commands.CommandFactory;
 
 
 import javax.servlet.ServletException;
@@ -19,8 +19,12 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         processRequest(request, response);
+
     }
 
     @Override
@@ -30,20 +34,26 @@ public class FrontController extends HttpServlet {
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
+
         Enumeration<String> attributeNames = request.getAttributeNames();
         List<String> attributeList = Collections.list(attributeNames);
         HashMap<String, String> attributes = new HashMap<>();
-        String commandKey = null;
-        for (String attributeName : attributeList) {
-            if(attributeName.equals("command_name")) commandKey = (String) request.getAttribute(attributeName);
-            else attributes.put(attributeName, (String) request.getAttribute(attributeName));
-        }
+//        String commandKey = null;
+//        for (String attributeName : attributeList) {
+//            if(attributeName.equals("command_name")) commandKey = (String) request.getAttribute(attributeName);
+//            else attributes.put(attributeName, (String) request.getAttribute(attributeName));
+//        }
+        String commandKey = request.getParameter("command_name");
         Command command = CommandFactory.getCommand(commandKey);
         try {
+            System.out.println("processRequest");
             PrintWriter out = response.getWriter();
+            response.setHeader("Access-Control-Allow-Origin", "*");
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            out.print(command.execute(attributes));
+
+            out.print(command.execute(new HashMap<String, String>()));
+            out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

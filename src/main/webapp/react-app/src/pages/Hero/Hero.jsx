@@ -1,29 +1,25 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
 export default function Hero() {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(null);
-
   useEffect(() => {
     const fetchData = async () => {
-      //   setIsLoading(true);
-      //   console.log("fetching");
-      //   const respone = await fetch("http://localhost:8080/controller");
-      //   const data = await respone.json();
-      //   setData(data);
-      //   setIsLoading(false);
-      //   console.log(data);
-      const params = new URLSearchParams([
-        ["command_name", "GET_ALL_EMPLOYEES"],
-      ]);
       try {
         setIsLoading(true);
-        const response = await axios.get("http://localhost:8080/controller", {
-          params,
-        });
-        setData(response);
+        console.log("fetching");
+        const response = await fetch(
+            "http://localhost:8080/controller?" +
+            new URLSearchParams({
+              "command_name": "GET_ALL_EMPLOYEES",
+            })
+        );
+        const data = await response.json();
+        setData(data);
         setIsLoading(false);
+        console.log(data);
       } catch (err) {
         console.log(err);
       }
@@ -50,7 +46,7 @@ export default function Hero() {
           cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat
           aliqua.
         </p>
-        <div class="mt-10 flex items-center justify-center gap-x-6">
+        <div className="mt-10 flex items-center justify-center gap-x-6">
           <NavLink
             to="/"
             className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

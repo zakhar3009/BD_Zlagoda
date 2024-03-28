@@ -3,8 +3,10 @@ import controller.command.Command;
 import controller.command.commands.employee.GetAllEmployeesCommand;
 import service.EmployeeService;
 
-public enum ManagerCommands {
-    POST_ADD_EMPLOYEE{
+public enum  ManagerCommands {
+
+
+        POST_ADD_EMPLOYEE{
         {
             this.key = "POST_ADD_EMPLOYEE";
         }
@@ -84,7 +86,7 @@ public enum ManagerCommands {
             this.key = "DELETE_CHECK";
         }
     },
-    GET_ALL_EMPLOYEES{
+    GET_ALL_EMPLOYEES {
         {
             this.key = "GET_ALL_EMPLOYEES";
             this.command = new GetAllEmployeesCommand(EmployeeService.getInstance());
@@ -223,7 +225,7 @@ public enum ManagerCommands {
     }
 
     public static Command getCommand(String key) {
-        for (final ManagerCommands command : ManagerCommands.values()) {
+        for (ManagerCommands command : ManagerCommands.values()) {
             if (command.getKey().equals(key)) {
                 return command.getCommand();
             }
