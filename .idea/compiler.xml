@@ -7,11 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="BD_Zlagoda" />
-        <module name="my-project" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="my-project" target="21" />
+      <module name="my-project" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

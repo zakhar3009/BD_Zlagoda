@@ -29,7 +29,7 @@ function App() {
       <div className='w-screen h-screen'>
         dsfsdfsdf
         {isLoading && <div>Is Loading </div>}
-        {!isLoading && <><h1>Fetched</h1><div>{JSON.stringify(data)}</div></>}
+        {/*{!isLoading && <><h1>Fetched</h1><div>{JSON.stringify(data)}</div></>}*/}
       </div>
     </>
   )
