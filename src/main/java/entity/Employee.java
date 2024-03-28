@@ -9,7 +9,7 @@ public class Employee {
     private String name;
     private String patronymic;
     // TODO: replace by Employee role enam
-    private String role;
+    private Role role;
     private double salary;
     private Date dateOfBirth;
     private Date dateOfStart;
@@ -50,11 +50,11 @@ public class Employee {
         this.patronymic = patronymic;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -74,7 +74,7 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Employee(String id, String surname, String name, String patronymic, String role, double salary, Date dateOfBirth, Date dateOfStart, String phoneNumber, String city, String street, String zipCode) {
+    public Employee(String id, String surname, String name, String patronymic, Role role, double salary, Date dateOfBirth, Date dateOfStart, String phoneNumber, String city, String street, String zipCode) {
         this.id = id;
         this.surname = surname;
         this.name = name;
@@ -88,6 +88,8 @@ public class Employee {
         this.street = street;
         this.zipCode = zipCode;
     }
+
+    public Employee (){};
 
     public Date getDateOfStart() {
         return dateOfStart;
@@ -129,6 +131,73 @@ public class Employee {
         this.zipCode = zipCode;
     }
 
+    public static class Builder implements IBuilder<Employee> {
+
+        private Employee employee = new Employee();
+
+        public Builder setId(String id) {
+            employee.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            employee.name = name;
+            return this;
+        }
+
+        public Builder setSurname(String surname) {
+            employee.surname = surname;
+            return this;
+        }
+
+        public Builder setCity(String city) {
+            employee.city = city;
+            return this;
+        }
+        public Builder setStreet(String street) {
+            employee.street = street;
+            return this;
+        }
+
+        public Builder setPhone(String phone) {
+            employee.phoneNumber = phone;
+            return this;
+        }
+
+        public Builder setRole(Role role) {
+            employee.role = role;
+            return this;
+        }
+
+        public Builder setZipCode(String zipCode) {
+            employee.zipCode = zipCode;
+            return this;
+        }
+
+        public Builder setDateOfBirth(Date dateOfBirth) {
+            employee.dateOfBirth = dateOfBirth;
+            return this;
+        }
+        public Builder setDateOfStart(Date dateOfStart) {
+            employee.dateOfStart = dateOfStart;
+            return this;
+        }
+        public Builder setPatronymic(String patronymic) {
+            employee.patronymic = patronymic;
+            return this;
+        }
+        public Builder setSalary(Double salary) {
+            employee.salary = salary;
+            return this;
+        }
+
+        @Override
+        public Employee build() {
+            return employee;
+        }
+
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, surname, name, patronymic);
@@ -165,4 +234,5 @@ public class Employee {
                 .append(", street=").append(street).append(", zipCode=").append(zipCode).append("]");
         return builder.toString();
     }
+
 }

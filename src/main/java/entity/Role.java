@@ -17,4 +17,13 @@ public enum Role {
     public String getRole() {
         return role;
     }
+
+    public static Role forValue(String value) {
+        for (Role role : Role.values()) {
+            if (role.getRole().equals(value)) {
+                return role;
+            }
+        }
+        throw new RuntimeException("Role with such string value doesn't exist");
+    }
 }

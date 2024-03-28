@@ -1,5 +1,7 @@
 package controller.command.commands;
 import controller.command.Command;
+import controller.command.commands.employee.GetAllEmployeesCommand;
+import service.EmployeeService;
 
 public enum ManagerCommands {
     POST_ADD_EMPLOYEE{
@@ -85,6 +87,7 @@ public enum ManagerCommands {
     GET_ALL_EMPLOYEES{
         {
             this.key = "GET_ALL_EMPLOYEES";
+            this.command = new GetAllEmployeesCommand(EmployeeService.getInstance());
         }
     },
     GET_ALL_CLIENTS{
