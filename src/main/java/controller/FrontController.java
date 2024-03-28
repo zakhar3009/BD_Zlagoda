@@ -6,6 +6,7 @@ import controller.command.CommandFactory;
 import controller.utils.CommandKeyGenerator;
 import controller.utils.HttpWrapper;
 import entity.Employee;
+import entity.Role;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,7 @@ public class FrontController extends HttpServlet {
                 "Doe",
                 "John",
                 "Smith",
-                "Manager",
+                Role.getRole("Manager"),
                 5000.00,
                 new Date(90, 5, 15), // Дата народження (рік, місяць, день)
                 new Date(122, 0, 1), // Дата початку роботи (рік, місяць, день)
