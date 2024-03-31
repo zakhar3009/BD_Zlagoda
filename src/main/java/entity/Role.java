@@ -1,7 +1,8 @@
 package entity;
 
 public enum Role {
-    CASHIER("cashier"), MANAGER("manager");
+    CASHIER("Cashier"),
+    MANAGER("Manager");
 
     public static Role getRole(String rawValue){
         if(rawValue.equals(CASHIER.role)) return CASHIER;

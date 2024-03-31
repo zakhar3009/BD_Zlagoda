@@ -1,7 +1,9 @@
 package dao;
 
 
-import exception.ServerException;
+import dao.jdbc.JdbcDaoFactory;
+import db_connection.DBFunctions;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -24,11 +26,10 @@ public abstract class DaoFactory {
                 InputStream inputStream = DaoFactory.class.getResourceAsStream(DB_FILE);
                 Properties dbProps = new Properties();
                 dbProps.load(inputStream);
-                String factoryClass = dbProps.getProperty(DB_FACTORY_CLASS);
-                daoFactory = (DaoFactory) Class.forName(factoryClass).newInstance();
-
-            } catch (IOException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new ServerException(e);
+                Connection connection = DBFunctions.connect_to_db(dbProps.getProperty("db_name"), dbProps.getProperty("user"), dbProps.getProperty("password"));
+                daoFactory = new JdbcDaoFactory(connection);
+            } catch (IOException e) {
+                System.out.println(e);
             }
         }
         return daoFactory;

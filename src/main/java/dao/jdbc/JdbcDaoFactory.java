@@ -1,6 +1,5 @@
-package dao.jdcb;
+package dao.jdbc;
 
-import dao.DaoConnection;
 import dao.DaoFactory;
 import dao.EmployeeDao;
 import java.sql.Connection;

@@ -9,22 +9,18 @@ public class EmployeeService {
 
     private final DaoFactory daoFactory;
 
-    EmployeeService(DaoFactory daoFactory) {
+    private EmployeeService(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
-
-    private static class Holder {
-        static final EmployeeService INSTANCE = new EmployeeService(DaoFactory.getDaoFactory());
-    }
+    private static final EmployeeService INSTANCE = new EmployeeService(DaoFactory.getDaoFactory());
 
     public static EmployeeService getInstance() {
-        return Holder.INSTANCE;
+        return INSTANCE;
     }
 
     public List<Employee> getAllEmployees() {
-        try (EmployeeDao employeeDao = daoFactory.createEmployeeDao()) {
-            return employeeDao.getAll();
-        }
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.getAll();
     }
 /*
     public Optional<User> getUserById(Long userId) {

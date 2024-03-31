@@ -4,13 +4,14 @@ import controller.command.Command;
 
 public class CommandFactory {
 
-
     private CommandFactory() {}
 
-    public static Command getCommand(String commandKey) {
+    public static Command getManagerCommand(String commandKey) {
+        return ManagerCommands.valueOf(commandKey).getCommand();
+    }
 
-        Command command = ManagerCommands.getCommand(commandKey);
-        return command;
+    public static Command getCashierCommand(String commandKey){
+        return CashierCommands.valueOf(commandKey).getCommand();
     }
 }
 
