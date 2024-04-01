@@ -20,6 +20,18 @@ public abstract class DaoFactory {
 
     public abstract EmployeeDao createEmployeeDao();
 
+    public abstract CategoryDao createCategoryDao();
+
+    public abstract CheckDao createCheckDao();
+
+    public abstract CustomerDao createCustomerDao();
+
+    public abstract ProductDao createProductDao();
+
+    public abstract SaleDao createSaleDao();
+
+    public abstract StoreProductDao createStoreProductDao();
+
     public static DaoFactory getDaoFactory() {
         if (daoFactory == null) {
             try {

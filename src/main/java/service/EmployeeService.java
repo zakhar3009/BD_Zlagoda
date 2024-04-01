@@ -3,7 +3,9 @@ package service;
 import dao.DaoFactory;
 import dao.EmployeeDao;
 import entity.Employee;
+
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeService {
 
@@ -22,64 +24,46 @@ public class EmployeeService {
         EmployeeDao employeeDao = daoFactory.createEmployeeDao();
         return employeeDao.getAll();
     }
-/*
-    public Optional<User> getUserById(Long userId) {
-        LOGGER.info(String.format(GET_USER_BY_ID, userId));
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.getById(userId);
-        }
+
+    public Optional<Employee> getEmployeeById(String employeeId) {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.getById(employeeId);
     }
 
-    public Optional<User> getUserByCredentials(CredentialsDto credentials) {
-        LOGGER.info(String.format(GET_USER_BY_CREDENTIALS, credentials.getEmail()));
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.getUserByCredentials(credentials.getEmail(), credentials.getPassword());
-        }
+    public Optional<Employee> getUserByCredentials(String email, String password) {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.getEmployeeByCredentials(email, password);
     }
 
-    public void createUser(EmployeeDao userDto) {
-        LOGGER.info(String.format(CREATE_USER, userDto.getEmail()));
-        User user = UserDtoUserConverter.toUser(userDto);
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            userDao.create(user);
-        }
+    public void createEmployee(Employee employee) {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        employeeDao.create(employee);
     }
 
-    public void updateUser(UserDto userDto) {
-        LOGGER.info(String.format(UPDATE_USER, userDto.getId()));
-        User user = UserDtoUserConverter.toUser(userDto);
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            userDao.update(user);
-        }
+    public void updateEmployee(Employee employee) {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        employeeDao.update(employee);
     }
 
-    public void deleteUser(Long userId) {
-        LOGGER.info(String.format(DELETE_USER, userId));
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            userDao.delete(userId);
-        }
+    public void deleteEmployee(String employeeId) {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        employeeDao.delete(employeeId);
     }
 
-    public List<User> searchUsersBySurname(String surname) {
-        LOGGER.info(String.format(SEARCH_USERS_BY_SURNAME, surname));
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.searchUsersBySurname(surname);
-        }
+    public List<Employee> getEmployeesOrderBySurname() {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.getEmployeesOrderBySurname();
     }
 
-    public List<User> searchUsersByRole(Role role) {
-        LOGGER.info(String.format(SEARCH_USERS_BY_ROLE, role.getValue()));
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.searchUsersByRole(role);
-        }
+    public List<Employee> getCashiersOrderBySurname() {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.getCashiersOrderBySurname();
     }
 
-    public List<User> searchBestWaitersPerPeriod(LocalDate fromDate, LocalDate toDate) {
-        LOGGER.info(String.format(SEARCH_BEST_WAITER_PER_PERIOD, fromDate.toString(), toDate.toString()));
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.searchBestWaitersPerPeriod(fromDate, toDate);
-        }
+    public Optional<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.searchEmployeeAddressAndPhoneBySurname(surname);
     }
-    */
+
 
 }

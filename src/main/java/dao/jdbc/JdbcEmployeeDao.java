@@ -16,8 +16,8 @@ import java.util.Optional;
 public class JdbcEmployeeDao implements EmployeeDao {
 
 
-    //
-    private static String GET_ALL = "SELECT * FROM employee ORDER BY empl_surname";
+    private static String GET_ALL= "SELECT * FROM employee ORDER BY empl_surname";
+    private static String GET_CASHIERS = "SELECT * FROM employee WHERE empl_role=Cashier ORDER BY empl_surname";
 
 
     // table columns names
@@ -50,26 +50,23 @@ public class JdbcEmployeeDao implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> searchEmployeesBySurname(String surname) {
+    public List<Employee> getEmployeesOrderBySurname() {
         return null;
     }
 
     @Override
-    public List<Employee> searchEmployeesByRole(Role role) {
+    public List<Employee> getCashiersOrderBySurname() {
         return null;
     }
 
     @Override
-    public Role getRole(String id) {
-        return null;
+    public Optional<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
+        return Optional.empty();
     }
-
-
 
     @Override
     public List<Employee> getAll() {
         List<Employee> users = new ArrayList<>();
-
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL)) {
             while (resultSet.next()) {
                 users.add(extractUserFromResultSet(resultSet));
