@@ -8,6 +8,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
 import Shop from './pages/Shop/Shop.jsx'
 import Navbar from './components/header/Navbar.jsx'
+import LogIn from "./pages/LogIn/LogIn.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
       <Route index element={<Hero />} />
       <Route path="home" element={<Home />} />
       <Route path="shop" element={<Shop />} />
+        <Route path="logIn" element={<LogIn/>}/>
       <Route path="*" element={<Error />} />
     </Route>
   )
