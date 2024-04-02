@@ -4,7 +4,6 @@ import controller.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class LogoutCommand implements Command {
 

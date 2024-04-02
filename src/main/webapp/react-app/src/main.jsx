@@ -6,10 +6,10 @@ import Error from "./pages/Error/Error.jsx";
 import Home from "./pages/Home/Home.jsx";
 import "./index.css";
 import {
-  createBrowserRouter,
-  RouterProvider,
-  createRoutesFromElements,
-  Route,
+    createBrowserRouter,
+    RouterProvider,
+    createRoutesFromElements,
+    Route,
 } from "react-router-dom";
 import Shop from "./pages/Shop/Shop.jsx";
 import Navbar from "./components/header/Navbar.jsx";
@@ -34,19 +34,19 @@ import LogIn from "./pages/LogIn/LogIn.jsx";
 // ]);
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Navbar />}>
-      <Route index element={<Hero />} />
-      <Route path="/login" element={<LogIn />} />
-      <Route path="home" element={<Home />} />
-      <Route path="shop" element={<Shop />} />
-      <Route path="*" element={<Error />} />
-    </Route>
-  )
+    createRoutesFromElements(
+        <Route path="/" element={<Navbar />}>
+            <Route index element={<Hero />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="home" element={<Home />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="*" element={<Error />} />
+        </Route>
+    )
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+        <RouterProvider router={router} />
+    </React.StrictMode>
 );
