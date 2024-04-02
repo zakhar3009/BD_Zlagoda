@@ -2,6 +2,7 @@ package service;
 
 import dao.DaoFactory;
 import dao.EmployeeDao;
+import dto.CredentialsDto;
 import entity.Employee;
 
 import java.util.List;
@@ -30,9 +31,9 @@ public class EmployeeService {
         return employeeDao.getById(employeeId);
     }
 
-    public Optional<Employee> getUserByCredentials(String email, String password) {
+    public Optional<Employee> getUserByCredentials(CredentialsDto credentialsDto) {
         EmployeeDao employeeDao = daoFactory.createEmployeeDao();
-        return employeeDao.getEmployeeByCredentials(email, password);
+        return employeeDao.getEmployeeByCredentials(credentialsDto.getEmail(), credentialsDto.getPassword());
     }
 
     public void createEmployee(Employee employee) {
