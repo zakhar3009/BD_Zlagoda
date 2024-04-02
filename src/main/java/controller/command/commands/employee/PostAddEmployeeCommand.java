@@ -17,9 +17,8 @@ public class PostAddEmployeeCommand implements Command {
         this.employeeService = employeeService;
     }
 
-
     @Override
-    public String execute(HashMap<String, String> attributes) throws IOException {
+    public String execute(HttpServletRequest request) throws IOException {
         return null;
     }
 }

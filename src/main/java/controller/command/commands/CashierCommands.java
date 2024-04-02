@@ -8,7 +8,7 @@ import service.EmployeeService;
 public enum CashierCommands {
 
     LOGOUT("LOGOUT", new LogoutCommand()),
-    POST_LOGIN("", new PostLoginCommand(EmployeeService.getInstance())),
+    POST_LOGIN("POST_LOGIN", new PostLoginCommand(EmployeeService.getInstance())),
     GET_ALL_PRODUCTS_ORDER_BY_NAME("GET_ALL_PRODUCTS_ORDER_BY_NAME", null),
     GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", null),
     GET_ALL_CLIENTS_ORDER_BY_SURNAME("GET_ALL_CLIENTS_ORDER_BY_SURNAME", null),

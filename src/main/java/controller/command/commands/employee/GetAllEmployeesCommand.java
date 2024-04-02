@@ -5,6 +5,7 @@ import controller.command.Command;
 import entity.Employee;
 import service.EmployeeService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ public class GetAllEmployeesCommand implements Command {
     }
 
     @Override
-    public String execute(HashMap<String, String> attributes) throws IOException {
+    public String execute(HttpServletRequest request) throws IOException {
         List<Employee> list = employeeService.getAllEmployees();
         return this.gson.toJson(list);
     }
