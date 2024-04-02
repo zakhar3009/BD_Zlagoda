@@ -30,8 +30,14 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         processRequest(request, response);
     }
+
+
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -45,13 +51,13 @@ public class FrontController extends HttpServlet {
 //            else attributes.put(attributeName, (String) request.getAttribute(attributeName));
 //        }
         String commandKey = request.getParameter("command_name");
-        Command command = CommandFactory.getManagerCommand(commandKey);
+        Command command = CommandFactory.getManagerCommand(request);
         try {
             PrintWriter out = response.getWriter();
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            out.print(command.execute(new HashMap<>()));
+            out.print(command.execute(request));
             out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);

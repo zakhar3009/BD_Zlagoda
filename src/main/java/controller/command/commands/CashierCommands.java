@@ -1,10 +1,14 @@
 package controller.command.commands;
 
 import controller.command.Command;
+import controller.command.commands.auth.LogoutCommand;
+import controller.command.commands.auth.PostLoginCommand;
+import service.EmployeeService;
 
 public enum CashierCommands {
 
-
+    LOGOUT("LOGOUT", new LogoutCommand()),
+    POST_LOGIN("POST_LOGIN", new PostLoginCommand(EmployeeService.getInstance())),
     GET_ALL_PRODUCTS_ORDER_BY_NAME("GET_ALL_PRODUCTS_ORDER_BY_NAME", null),
     GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", null),
     GET_ALL_CLIENTS_ORDER_BY_SURNAME("GET_ALL_CLIENTS_ORDER_BY_SURNAME", null),

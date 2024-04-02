@@ -1,14 +1,12 @@
 package dao.jdbc;
 
+import controller.Encryption;
 import dao.EmployeeDao;
 import entity.Employee;
 import entity.Role;
 import exception.ServerException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +16,11 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
     private static String GET_ALL= "SELECT * FROM employee ORDER BY empl_surname";
     private static String GET_CASHIERS = "SELECT * FROM employee WHERE empl_role=Cashier ORDER BY empl_surname";
+    private static String GET_BY_CREDENTIALS = "SELECT * FROM employee WHERE email=? AND password=?";
 
 
     // table columns names
+
     private static String ID = "id_employee";
     private static String NAME = "empl_name";
     private static String SURNAME = "empl_surname";
@@ -33,6 +33,8 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private static String CITY = "city";
     private static String STREET = "street";
     private static String ZIP_CODE = "zip_code";
+    private static String EMAIL = "email";
+    private static String PASSWORD = "password";
 
 
     private Connection connection;
@@ -46,7 +48,18 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
     @Override
     public Optional<Employee> getEmployeeByCredentials(String email, String password) {
-        return Optional.empty();
+        Optional<Employee> user = Optional.empty();
+        try (PreparedStatement query = connection.prepareStatement(GET_BY_CREDENTIALS)) {
+            query.setString(1, email);
+            query.setString(2, Encryption.hashPassword(password));
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                user = Optional.of(extractUserFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            
+        }
+        return user;
     }
 
     @Override

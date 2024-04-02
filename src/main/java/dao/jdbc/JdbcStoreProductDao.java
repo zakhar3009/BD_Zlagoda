@@ -15,7 +15,6 @@ public class JdbcStoreProductDao implements StoreProductDao {
         this.connection = connection;
     }
 
-
     @Override
     public List<StoreProduct> getAll() {
         return null;
