@@ -14,23 +14,25 @@ public class JdbcStoreProductDao implements StoreProductDao {
     public JdbcStoreProductDao(Connection connection) {
         this.connection = connection;
     }
+
+
     @Override
-    public List<StoreProductDao> getAll() {
+    public List<StoreProduct> getAll() {
         return null;
     }
 
     @Override
-    public Optional<StoreProductDao> getById(String id) {
+    public Optional<StoreProduct> getById(String id) {
         return Optional.empty();
     }
 
     @Override
-    public void create(StoreProductDao e) {
+    public void create(StoreProduct e) {
 
     }
 
     @Override
-    public void update(StoreProductDao e) {
+    public void update(StoreProduct e) {
 
     }
 
