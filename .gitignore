@@ -1,5 +1,4 @@
 node_modules/
-target/
 
 
 # User-specific stuff
@@ -52,10 +51,36 @@ fabric.properties
 .classpath
 .project
 .settings/
+target/
+/target/**
 
 # Intellij
 .idea/
 *.iml
+**/target
+/target/
+*/target/**
+**/META-INF/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.factorypath
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
 # Mac
 .DS_Store

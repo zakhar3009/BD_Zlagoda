@@ -1,11 +1,15 @@
 package controller.command.commands;
 
 import controller.command.Command;
+import controller.command.commands.auth.LogoutCommand;
+import controller.command.commands.auth.PostLoginCommand;
 import controller.command.commands.employee.GetAllEmployeesCommand;
 import service.EmployeeService;
 
 public enum ManagerCommands {
 
+    LOGOUT("LOGOUT", new LogoutCommand()),
+    POST_LOGIN("", new PostLoginCommand(EmployeeService.getInstance())),
     POST_ADD_EMPLOYEE ("POST_ADD_EMPLOYEE", null),
     POST_ADD_CLIENT ("POST_ADD_CLIENT", null),
     POST_ADD_CATEGORY("POST_ADD_CATEGORY", null),
