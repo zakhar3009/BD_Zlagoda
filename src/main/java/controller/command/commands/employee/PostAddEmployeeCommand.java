@@ -1,6 +1,9 @@
 package controller.command.commands.employee;
 
 import controller.command.Command;
+import controller.command.commands.CommandFactory;
+import controller.utils.JSON;
+import entity.Employee;
 import service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,8 @@ public class PostAddEmployeeCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws IOException {
-        return null;
+        Employee employee = CommandFactory.getAttributes(request, Employee.class);
+        employeeService.createEmployee(employee);
+        return JSON.gson().toJson("");
     }
 }
