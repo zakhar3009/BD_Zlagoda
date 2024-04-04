@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class JdbcEmployeeDao implements EmployeeDao {
 
@@ -119,10 +120,12 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
 
             query.executeUpdate();
-            ResultSet keys = query.getGeneratedKeys();
-//            if (keys.next()) {
-//                e.setId(keys.getLong(1));
-//            }
+            String randomId = UUID.randomUUID().toString().substring(0, 10);
+            e.setId(randomId);
+           // ResultSet keys = query.getGeneratedKeys();
+           // if (keys.next()) {
+
+         //   }
         } catch (SQLException err) {
             throw new ServerException(err);
         }

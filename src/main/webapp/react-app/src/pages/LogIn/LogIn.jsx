@@ -11,7 +11,8 @@ export default function LogIn() {
         const fetchData = async () => {
             const requestOptions = {
                 method: "POST",
-                headers: { "Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json",
+                "command_name": "POST_LOGIN"},
                 body: JSON.stringify({
                     email: "abcd@gmail.com",
                     password: "12345",
