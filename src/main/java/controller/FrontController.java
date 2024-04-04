@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/controller", loadOnStartup = 1)
 public class FrontController extends HttpServlet {
@@ -41,16 +37,6 @@ public class FrontController extends HttpServlet {
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-
-        Enumeration<String> attributeNames = request.getAttributeNames();
-        List<String> attributeList = Collections.list(attributeNames);
-        HashMap<String, String> attributes = new HashMap<>();
-//        String commandKey = null;
-//        for (String attributeName : attributeList) {
-//            if(attributeName.equals("command_name")) commandKey = (String) request.getAttribute(attributeName);
-//            else attributes.put(attributeName, (String) request.getAttribute(attributeName));
-//        }
-        String commandKey = request.getParameter("command_name");
         Command command = CommandFactory.getManagerCommand(request);
         try {
             PrintWriter out = response.getWriter();
