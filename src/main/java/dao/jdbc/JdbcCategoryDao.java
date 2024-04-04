@@ -15,6 +15,12 @@ public class JdbcCategoryDao implements CategoryDao {
         this.connection = connection;
     }
 
+
+    private static String ID = "category_number";
+    private String NAME = "category_name";
+
+
+
     @Override
     public List<Category> getAllOrderByName() {
         return null;

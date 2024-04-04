@@ -1,7 +1,7 @@
 package controller.command.commands.employee;
 
-import com.google.gson.Gson;
 import controller.command.Command;
+import controller.utils.JSON;
 import entity.Employee;
 import service.EmployeeService;
 
@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class GetAllEmployeesCommand implements Command {
-    private Gson gson = new Gson();
 
     private final EmployeeService employeeService;
 
@@ -21,6 +20,6 @@ public class GetAllEmployeesCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         List<Employee> list = employeeService.getAllEmployees();
-        return this.gson.toJson(list);
+        return JSON.gson().toJson(list);
     }
 }
