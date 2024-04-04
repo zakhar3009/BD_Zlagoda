@@ -51,7 +51,7 @@ public class FrontController extends HttpServlet {
 //            else attributes.put(attributeName, (String) request.getAttribute(attributeName));
 //        }
         String commandKey = request.getParameter("command_name");
-        Command command = CommandFactory.getManagerCommand(request);
+        Command command = CommandFactory.getManagerCommand(commandKey);
         try {
             PrintWriter out = response.getWriter();
             response.setHeader("Access-Control-Allow-Origin", "*");

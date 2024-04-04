@@ -13,11 +13,14 @@ public class CommandFactory {
 
     private CommandFactory() {}
 
-    public static Command getManagerCommand(HttpServletRequest request) {
-        HashMap<String, String> attributes = getAttributes(request);
-        return ManagerCommands.valueOf(attributes.get("command_name")).getCommand();
+//    public static Command getManagerCommand(HttpServletRequest request) {
+//        HashMap<String, String> attributes = getAttributes(request);
+//        return ManagerCommands.valueOf(attributes.get("command_name")).getCommand();
+//    }
+public static Command getManagerCommand(String request) {
+     //   HashMap<String, String> attributes = getAttributes(request);
+        return ManagerCommands.valueOf(request).getCommand();
     }
-
     public static Command getCashierCommand(HttpServletRequest request){
         HashMap<String, String> attributes = getAttributes(request);
         return CashierCommands.valueOf(attributes.get("command_name")).getCommand();
