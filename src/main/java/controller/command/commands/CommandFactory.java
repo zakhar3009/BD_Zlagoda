@@ -28,7 +28,7 @@ public class CommandFactory {
         List<String> attributeList = Collections.list(attributeNames);
         HashMap<String, String> attributes = new HashMap<>();
         for (String attributeName : attributeList) {
-            attributes.put(attributeName, (String) request.getAttribute(attributeName));
+            attributes.put(attributeName, (String) request.getAttribute(attribugtoteName));
         }
         return attributes;
     }
