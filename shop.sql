@@ -85,9 +85,9 @@ CREATE TABLE Sale
 -- Insert data into Employee table
 INSERT INTO Employee (email, password, id_employee, empl_surname, empl_name, empl_patronymic, empl_role, salary, date_of_birth,
                       date_of_start, phone_number, city, street, zip_code)
-VALUES ('abcd@gmail.com', '$2a$10$rf1e.T8cR40y9Tz0MsKdr.IGrtgsftn3H.n2E4yCWBAMYYNFD9axu', 'E001', 'Smith', 'John', 'James', 'Manager', 5000.00, '1990-05-15', '2022-01-01', '123-456-7890', 'New York',
+VALUES ('abcd@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3uvoIXYMibeZniZS2vWSXm0CQK3e6DoOa', 'E001', 'Smith', 'John', 'James', 'Manager', 5000.00, '1990-05-15', '2022-01-01', '123-456-7890', 'New York',
         'Broadway', '10001'),
-       ('glybovtsarotebal@ukr.net.ua', '$2a$10$OtTWqRLSHjUu3UE2UHw80./IxRMIqPpK4kxl9XathbRydmwBAR0v2', 'E002', 'Johnson', 'Emily', 'Grace', 'Cashier', 3000.00, '1992-08-20', '2022-02-01', '987-654-3210',
+       ('glybovtsarotebal@ukr.net.ua', '$2a$10$c7XAOdvq40jde1A5nUvJ3u19UTcRn252reLX200C0rnuyItSYLMnG', 'E002', 'Johnson', 'Emily', 'Grace', 'Cashier', 3000.00, '1992-08-20', '2022-02-01', '987-654-3210',
         'Los Angeles', 'Main St', '90001');
 --        ('genocidArmian@gmail.com', '4321', 'E003', 'Williams', 'Robert', 'Andrew', 'Cashier', 2500.00, '1995-03-10', '2022-03-01', '456-789-0123',
 --         'Chicago', 'Elm St', '60601'),

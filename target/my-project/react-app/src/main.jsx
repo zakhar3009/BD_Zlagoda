@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import 'bootstrap/dist/css/bootstrap.css';
 import Hero from "./pages/Hero/Hero.jsx";
 import Error from "./pages/Error/Error.jsx";
 import Home from "./pages/Home/Home.jsx";

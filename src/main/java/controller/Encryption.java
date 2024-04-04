@@ -2,10 +2,9 @@ package controller;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class Encryption {
-    private static String salt;
+    private static String salt = "$2a$10$c7XAOdvq40jde1A5nUvJ3u";
 
     public static String hashPassword(String password) {
-        if (salt == null) salt = BCrypt.gensalt();
         return BCrypt.hashpw(password, salt);
     }
 
@@ -14,9 +13,11 @@ public class Encryption {
     }
 
     public static void main(String[] args){
-        String password = "12345";
-        String loginAttemptPassword = "54321";
+        String password = "54321";
+        //String loginAttemptPassword = "54321";
+        //System.out.println(hashPassword(password));
         System.out.println(hashPassword(password));
-//        $2a$10$rf1e.T8cR40y9Tz0MsKdr.IGrtgsftn3H.n2E4yCWBAMYYNFD9axu
+        System.out.println(hashPassword(password));
+
     }
 }

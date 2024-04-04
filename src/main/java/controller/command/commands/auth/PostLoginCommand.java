@@ -1,6 +1,5 @@
 package controller.command.commands.auth;
 
-import com.google.gson.Gson;
 import controller.command.Command;
 import controller.command.commands.CommandFactory;
 import controller.utils.JSON;
@@ -9,7 +8,6 @@ import entity.Employee;
 import service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
@@ -19,7 +17,7 @@ public class PostLoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
 
-        CredentialsDto credentialsDto = getUserInput(CommandFactory.getAttributes(request));
+        CredentialsDto credentialsDto = getUserInput(CommandFactory.getAttributes(request, HashMap.class));
 
         Optional<Employee> employee = employeeService.getUserByCredentials(credentialsDto);
 
