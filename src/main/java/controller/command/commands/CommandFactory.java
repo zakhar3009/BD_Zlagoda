@@ -16,17 +16,17 @@ public class CommandFactory {
     private CommandFactory() {}
 
     public static Command getManagerCommand(HttpServletRequest request) {
-        HashMap<String, String> attributes;
-        if(request.getMethod().equals("GET")) attributes = getParameters(request);
-        else attributes = getAttributes(request);
-        return ManagerCommands.valueOf(attributes.get("command_name")).getCommand();
+        String commandKey;
+        if(request.getMethod().equals("GET")) commandKey = request.getParameter("command_name");
+        else commandKey = request.getHeader("command_name");
+        return ManagerCommands.valueOf(commandKey).getCommand();
     }
 
     public static Command getCashierCommand(HttpServletRequest request){
-        HashMap<String, String> attributes;
-        if(request.getMethod().equals("GET")) attributes = getParameters(request);
-        else attributes = getAttributes(request);
-        return CashierCommands.valueOf(attributes.get("command_name")).getCommand();
+        String commandKey;
+        if(request.getMethod().equals("GET")) commandKey = request.getParameter("command_name");
+        else commandKey = request.getHeader("command_name");
+        return CashierCommands.valueOf(commandKey).getCommand();
     }
 
 

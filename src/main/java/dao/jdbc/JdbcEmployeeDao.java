@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class JdbcEmployeeDao implements EmployeeDao {
 
@@ -17,6 +18,12 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private static String GET_ALL= "SELECT * FROM employee ORDER BY empl_surname";
     private static String GET_CASHIERS = "SELECT * FROM employee WHERE empl_role=Cashier ORDER BY empl_surname";
     private static String GET_BY_CREDENTIALS = "SELECT * FROM employee WHERE email=? AND password=?";
+
+    private static String CREATE = "INSERT INTO employee"
+            + " (empl_name, empl_surname, empl_patronymic, empl_role, salary, date_of_birth, date_of_start, phone_number, city, street, zip_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static String UPDATE = "UPDATE `user`"
+            + " SET name=?, surname=?, address=?, phone=?, role=?, email=?, password=?" + " WHERE id_user=? ";
+    private static String DELETE = "DELETE FROM `user` WHERE id_user=?";
 
 
     // table columns names
@@ -95,9 +102,33 @@ public class JdbcEmployeeDao implements EmployeeDao {
         return Optional.empty();
     }
 
+    //            + " (empl_name, empl_surname, empl_patronymic, empl_role, salary, date_of_birth, date_of_start, phone_number, city, street, zip_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     @Override
     public void create(Employee e) {
+        try (PreparedStatement query = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
+            query.setString(1, e.getName());
+            query.setString(2, e.getSurname());
+            query.setString(3, e.getPatronymic());
+            query.setString(4, e.getRole().getRole());
+            query.setDouble(5, e.getSalary());
+            query.setDate(6, e.getDateOfBirth());
+            query.setDate(7, e.getDateOfStart());
+            query.setString(8, e.getPhoneNumber());
+            query.setString(9, e.getCity());
+            query.setString(10, e.getStreet());
+            query.setString(11, e.getZipCode());
 
+
+            query.executeUpdate();
+            String randomId = UUID.randomUUID().toString().substring(0, 10);
+            e.setId(randomId);
+           // ResultSet keys = query.getGeneratedKeys();
+           // if (keys.next()) {
+
+         //   }
+        } catch (SQLException err) {
+            throw new ServerException(err);
+        }
     }
 
     @Override

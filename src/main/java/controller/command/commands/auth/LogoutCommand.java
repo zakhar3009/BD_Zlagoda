@@ -9,6 +9,8 @@ public class LogoutCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws IOException {
+        SessionManager.getInstance().invalidateSession(request.getSession());
+
         return null;
     }
 }
