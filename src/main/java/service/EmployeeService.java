@@ -62,7 +62,7 @@ public class EmployeeService {
         return employeeDao.getCashiersOrderBySurname();
     }
 
-    public HashMap<String, String> searchEmployeeAddressAndPhoneBySurname(String surname) {
+    public List<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
         EmployeeDao employeeDao = daoFactory.createEmployeeDao();
         return employeeDao.searchEmployeeAddressAndPhoneBySurname(surname);
     }

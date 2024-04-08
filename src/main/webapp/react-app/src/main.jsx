@@ -14,6 +14,7 @@ import {
 import Shop from "./pages/Shop/Shop.jsx";
 import Navbar from "./components/header/Navbar.jsx";
 import LogIn from "./pages/LogIn/LogIn.jsx";
+import Employee from "./pages/Employee/Employee.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -41,6 +42,8 @@ const router = createBrowserRouter(
             <Route path="home" element={<Home />} />
             <Route path="shop" element={<Shop />} />
             <Route path="*" element={<Error />} />
+            <Route path="employee" element={<Employee />} />
+
         </Route>
     )
 );

@@ -15,7 +15,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
     private static String GET_ALL= "SELECT * FROM employee";
     private static String GET_ALL_ORDER_BY_SURNAME = "SELECT * FROM employee ORDER BY empl_surname";
-    private static String GET_CASHIERS_ORDER_BY_SURNAME = "SELECT * FROM employee WHERE empl_role=Cashier ORDER BY empl_surname";
+    private static String GET_CASHIERS_ORDER_BY_SURNAME = "SELECT * FROM employee WHERE empl_role='Cashier' ORDER BY empl_surname";
     private static String GET_BY_CREDENTIALS = "SELECT * FROM employee WHERE email=? AND password=?";
     private static String GET_BY_ID = "SELECT * FROM employee WHERE id_employee=?";
     private static String CREATE = "INSERT INTO employee"
@@ -24,7 +24,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
             + " SET email=?, password=?, empl_name=?, empl_surname=?, empl_patronymic=?, empl_role=?, salary=?, date_of_birth=?, date_of_start=?, phone_number=?, city=?, street=?, zip_code=?" + " WHERE id_employee=? ";
     private static String DELETE = "DELETE FROM employee WHERE id_employee=?";
 
-    private static String SEARCH_ADDRESS_AND_PHONE_BY_SURNAME = "SELECT street, phone_number FROM employee WHERE empl_surname=?";
+    private static String SEARCH_ADDRESS_AND_PHONE_BY_SURNAME = "SELECT street, phone_number, city, empl_surname FROM employee WHERE empl_surname=?";
 
     // table columns names
 
@@ -96,14 +96,13 @@ public class JdbcEmployeeDao implements EmployeeDao {
     }
 
     @Override
-    public HashMap<String, String> searchEmployeeAddressAndPhoneBySurname(String surname) {
-        HashMap<String, String> result = new HashMap<>();
+    public List<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
+        List<Employee> result = new ArrayList<>();
         try (PreparedStatement query = connection.prepareStatement(SEARCH_ADDRESS_AND_PHONE_BY_SURNAME)){
             query.setString(1, surname);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()){
-                result.put("street", resultSet.getString(STREET));
-                result.put("phone", resultSet.getString(PHONE));
+                result.add(extractAddressAndPhoneUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
@@ -209,6 +208,15 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 .setPatronymic(resultSet.getString(PATRONYMIC))
                 .setSalary(resultSet.getDouble(SALARY))
                 .setZipCode(resultSet.getString(ZIP_CODE))
+                .build();
+    }
+    protected static Employee extractAddressAndPhoneUserFromResultSet(ResultSet resultSet) throws SQLException {
+
+        return new Employee.Builder()
+                .setSurname(resultSet.getString(SURNAME))
+                .setCity(resultSet.getString(CITY))
+                .setStreet(resultSet.getString(STREET))
+                .setPhone(resultSet.getString(PHONE))
                 .build();
     }
 }
