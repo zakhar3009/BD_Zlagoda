@@ -1,6 +1,7 @@
 package controller.command.commands;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controller.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class CommandFactory {
 
 
     public static HashMap<String, String> getParameters(HttpServletRequest request){
-        Enumeration<String> parametersNames = request.getAttributeNames();
+        Enumeration<String> parametersNames = request.getParameterNames();
         List<String> attributeList = Collections.list(parametersNames);
         HashMap<String, String> attributes = new HashMap<>();
         for (String parameterName : attributeList) {
@@ -39,7 +40,7 @@ public class CommandFactory {
         }
         return attributes;
     }
-    public static HashMap<String, String> getAttributes(HttpServletRequest request) {
+    public static <T> T getAttributes(HttpServletRequest request, Class<T> tClass) {
         try {
             StringBuilder requestBody = new StringBuilder();
             String line;
@@ -48,12 +49,14 @@ public class CommandFactory {
             while ((line = reader.readLine()) != null) {
                 requestBody.append(line);
             }
-            ObjectMapper objectMapper = new ObjectMapper();
-            HashMap<String, String> attributes = objectMapper.readValue(requestBody.toString(), HashMap.class);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            T attributes = gson.fromJson(requestBody.toString(), tClass);
             return attributes;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }
 

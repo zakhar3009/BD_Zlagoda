@@ -7,17 +7,24 @@ import entity.Role;
 import exception.ServerException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 
 public class JdbcEmployeeDao implements EmployeeDao {
 
 
-    private static String GET_ALL= "SELECT * FROM employee ORDER BY empl_surname";
-    private static String GET_CASHIERS = "SELECT * FROM employee WHERE empl_role=Cashier ORDER BY empl_surname";
+    private static String GET_ALL= "SELECT * FROM employee";
+    private static String GET_ALL_ORDER_BY_SURNAME = "SELECT * FROM employee ORDER BY empl_surname";
+    private static String GET_CASHIERS_ORDER_BY_SURNAME = "SELECT * FROM employee WHERE empl_role='Cashier' ORDER BY empl_surname";
     private static String GET_BY_CREDENTIALS = "SELECT * FROM employee WHERE email=? AND password=?";
+    private static String GET_BY_ID = "SELECT * FROM employee WHERE id_employee=?";
+    private static String CREATE = "INSERT INTO employee"
+            + " (email, password, id_employee, empl_name, empl_surname, empl_patronymic, empl_role, salary, date_of_birth, date_of_start, phone_number, city, street, zip_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static String UPDATE = "UPDATE employee"
+            + " SET email=?, password=?, empl_name=?, empl_surname=?, empl_patronymic=?, empl_role=?, salary=?, date_of_birth=?, date_of_start=?, phone_number=?, city=?, street=?, zip_code=?" + " WHERE id_employee=? ";
+    private static String DELETE = "DELETE FROM employee WHERE id_employee=?";
 
+    private static String SEARCH_ADDRESS_AND_PHONE_BY_SURNAME = "SELECT street, phone_number, city, empl_surname FROM employee WHERE empl_surname=?";
 
     // table columns names
 
@@ -64,17 +71,43 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
     @Override
     public List<Employee> getEmployeesOrderBySurname() {
-        return null;
+        List<Employee> employees = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL_ORDER_BY_SURNAME)) {
+            while (resultSet.next()) {
+                employees.add(extractUserFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return employees;
     }
 
     @Override
     public List<Employee> getCashiersOrderBySurname() {
-        return null;
+        List<Employee> employees = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_CASHIERS_ORDER_BY_SURNAME)) {
+            while (resultSet.next()) {
+                employees.add(extractUserFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return employees;
     }
 
     @Override
-    public Optional<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
-        return Optional.empty();
+    public List<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
+        List<Employee> result = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_ADDRESS_AND_PHONE_BY_SURNAME)){
+            query.setString(1, surname);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()){
+                result.add(extractAddressAndPhoneUserFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return result;
     }
 
     @Override
@@ -92,22 +125,73 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
     @Override
     public Optional<Employee> getById(String id) {
-        return Optional.empty();
+        Optional<Employee> employee = Optional.empty();
+        try (PreparedStatement query = connection.prepareStatement(GET_BY_ID)) {
+            query.setString(1, id);
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next())
+                employee = Optional.of(extractUserFromResultSet(resultSet));
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return employee;
+    }
+    
+    @Override
+    public void create(Employee employee) {
+        String randomId = UUID.randomUUID().toString().substring(0, 10);
+        try (PreparedStatement query = connection.prepareStatement(CREATE)) {
+            query.setString(1, employee.getEmail());
+            query.setString(2, Encryption.hashPassword(employee.getPassword()));
+            query.setString(3, randomId);
+            query.setString(4, employee.getName());
+            query.setString(5, employee.getSurname());
+            query.setString(6, employee.getPatronymic());
+            query.setString(7, employee.getRole().getRole());
+            query.setDouble(8, employee.getSalary());
+            query.setDate(9, employee.getDateOfBirth());
+            query.setDate(10, employee.getDateOfStart());
+            query.setString(11, employee.getPhoneNumber());
+            query.setString(12, employee.getCity());
+            query.setString(13, employee.getStreet());
+            query.setString(14, employee.getZipCode());
+            query.executeUpdate();
+        } catch (SQLException err) {
+            throw new ServerException(err);
+        }
     }
 
     @Override
-    public void create(Employee e) {
-
-    }
-
-    @Override
-    public void update(Employee e) {
-
+    public void update(Employee employee) {
+        try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
+            query.setString(1, employee.getEmail());
+            query.setString(2, employee.getPassword());
+            query.setString(3, employee.getId());
+            query.setString(4, employee.getName());
+            query.setString(5, employee.getSurname());
+            query.setString(6, employee.getPatronymic());
+            query.setString(7, employee.getRole().getRole());
+            query.setDouble(8, employee.getSalary());
+            query.setDate(9, employee.getDateOfBirth());
+            query.setDate(10, employee.getDateOfStart());
+            query.setString(11, employee.getPhoneNumber());
+            query.setString(12, employee.getCity());
+            query.setString(13, employee.getStreet());
+            query.setString(14, employee.getZipCode());
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }        
     }
 
     @Override
     public void delete(String id) {
-
+        try (PreparedStatement query = connection.prepareStatement(DELETE)) {
+            query.setString(1, id);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
     }
 
     protected static Employee extractUserFromResultSet(ResultSet resultSet) throws SQLException {
@@ -124,6 +208,15 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 .setPatronymic(resultSet.getString(PATRONYMIC))
                 .setSalary(resultSet.getDouble(SALARY))
                 .setZipCode(resultSet.getString(ZIP_CODE))
+                .build();
+    }
+    protected static Employee extractAddressAndPhoneUserFromResultSet(ResultSet resultSet) throws SQLException {
+
+        return new Employee.Builder()
+                .setSurname(resultSet.getString(SURNAME))
+                .setCity(resultSet.getString(CITY))
+                .setStreet(resultSet.getString(STREET))
+                .setPhone(resultSet.getString(PHONE))
                 .build();
     }
 }

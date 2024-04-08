@@ -17,6 +17,8 @@ controller\command\commands\auth\PostLoginCommand.class
 dao\jdbc\JdbcCustomerDao.class
 dao\DaoFactory.class
 controller\command\commands\ManagerCommands.class
+controller\command\commands\employee\GetCashiersOrderBySurname.class
+controller\command\commands\employee\DeleteEmployeeCommand.class
 controller\command\commands\employee\GetAllEmployeesCommand.class
 dao\jdbc\JdbcEmployeeDao.class
 db_connection\DBFunctions.class
@@ -35,12 +37,15 @@ controller\utils\HttpWrapper.class
 service\ProductService.class
 entity\IBuilder.class
 controller\command\commands\auth\SessionManager.class
+controller\command\commands\employee\GetEmployeeById.class
 dao\EmployeeDao.class
+controller\command\commands\employee\UpdateEmployeeCommand.class
 dao\jdbc\JdbcCategoryDao.class
 controller\command\commands\CashierCommands.class
 entity\CustomerCard.class
 controller\utils\CommandKeyGenerator.class
 dao\GenericDao.class
+controller\command\commands\employee\GetEmployeeAddressAndPhoneBySurname.class
 entity\Check.class
 entity\Product.class
 service\CustomerService.class
@@ -48,5 +53,6 @@ controller\command\commands\employee\PostAddEmployeeCommand.class
 dao\CheckDao.class
 dao\jdbc\JdbcDaoFactory.class
 controller\command\commands\CommandFactory.class
+controller\command\commands\employee\GetAllEmployeeOrderBySurname.class
 dao\jdbc\JdbcCheckDao.class
 entity\Role.class

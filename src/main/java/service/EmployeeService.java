@@ -5,6 +5,7 @@ import dao.EmployeeDao;
 import dto.CredentialsDto;
 import entity.Employee;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +62,7 @@ public class EmployeeService {
         return employeeDao.getCashiersOrderBySurname();
     }
 
-    public Optional<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
+    public List<Employee> searchEmployeeAddressAndPhoneBySurname(String surname) {
         EmployeeDao employeeDao = daoFactory.createEmployeeDao();
         return employeeDao.searchEmployeeAddressAndPhoneBySurname(surname);
     }

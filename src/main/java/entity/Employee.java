@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Employee {
+
+    private String email;
+    private String password;
     private String id;
     private String surname;
     private String name;
     private String patronymic;
-    // TODO: replace by Employee role enam
     private Role role;
     private double salary;
     private Date dateOfBirth;
@@ -74,7 +76,11 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Employee(String id, String surname, String name, String patronymic, Role role, double salary, Date dateOfBirth, Date dateOfStart, String phoneNumber, String city, String street, String zipCode) {
+    public Employee(String email, String password, String id, String surname, String name,
+                    String patronymic, Role role, double salary, Date dateOfBirth,
+                    Date dateOfStart, String phoneNumber, String city, String street, String zipCode) {
+        this.email = email;
+        this.password = password;
         this.id = id;
         this.surname = surname;
         this.name = name;
@@ -87,6 +93,22 @@ public class Employee {
         this.city = city;
         this.street = street;
         this.zipCode = zipCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Employee (){};
@@ -134,6 +156,16 @@ public class Employee {
     public static class Builder implements IBuilder<Employee> {
 
         private Employee employee = new Employee();
+
+        public Builder setEmail(String email){
+            employee.email = email;
+            return this;
+        }
+
+        public Builder setPassword(String password){
+            employee.password = password;
+            return this;
+        }
 
         public Builder setId(String id) {
             employee.id = id;

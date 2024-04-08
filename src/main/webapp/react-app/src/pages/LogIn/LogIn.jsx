@@ -5,6 +5,7 @@ export default function LogIn() {
     const [password, setPassword] = useState("");
 
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(false);
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -13,8 +14,8 @@ export default function LogIn() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    email: "abcd@gmail.com",
-                    password: "12345",
+                    email: email,
+                    password: password,
                 }),
             };
             try {
@@ -30,6 +31,7 @@ export default function LogIn() {
                 console.log(data);
             } catch (err) {
                 console.log(err);
+                setError(true)
             }
         };
 
@@ -102,21 +104,8 @@ export default function LogIn() {
                                                 required=""
                                             />
                                         </div>
-                                        <div className="ml-3 text-sm">
-                                            <label
-                                                form="remember"
-                                                className="text-gray-500 dark:text-gray-300"
-                                            >
-                                                Remember me
-                                            </label>
-                                        </div>
                                     </div>
-                                    <a
-                                        href="#"
-                                        className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                    >
-                                        Forgot password?
-                                    </a>
+                                    {error && <label className="text-red-600">There is no such employee in the database. Please check your password and login.</label>}
                                 </div>
                                 <button
                                     type="submit"

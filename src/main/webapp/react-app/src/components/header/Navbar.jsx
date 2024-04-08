@@ -6,6 +6,8 @@ import { NavLink, Outlet } from 'react-router-dom'
 const navigation = [
 	{ name: 'Home', href: '/home', current: false },
 	{ name: 'Shop', href: '/shop', current: false },
+	{ name: 'Employee', href: '/employee', current: false },
+
 ]
 
 function classNames(...classes) {
