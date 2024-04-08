@@ -1,5 +1,6 @@
 package dao.jdbc;
 
+import dao.GenericDao;
 import dao.ProductDao;
 import entity.Employee;
 import entity.Product;
@@ -223,7 +224,9 @@ public class JdbcProductDao implements ProductDao {
     @Override
     public List<Product> getAllByPartOfName(String partOfName) {
         List<Product> products = new ArrayList<>();
-        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PRODUCT_BY_PART_OF_NAME)) {
+        try (PreparedStatement query = connection.prepareStatement(GET_PRODUCT_BY_PART_OF_NAME)) {
+            query.setString(1, "%" + partOfName + "%");
+            ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
                 products.add(extractProductFromResultSet(resultSet));
             }
