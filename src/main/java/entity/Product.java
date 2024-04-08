@@ -9,6 +9,35 @@ public class Product {
     private String name;
     private String characteristic;
 
+    public static class Builder implements IBuilder<Product> {
+        private Product product = new Product();
+
+        public Product.Builder setID(Integer id){
+            product.id = id;
+            return this;
+        }
+
+        public Product.Builder setCategory(Category c){
+            product.category = c;
+            return this;
+        }
+
+        public Product.Builder setName(String name){
+            product.name = name;
+            return this;
+        }
+
+        public Product.Builder setCharacteristic(String characteristic){
+            product.characteristic = characteristic;
+            return this;
+        }
+
+        @Override
+        public Product build() {
+            return product;
+        }
+    }
+
     public Integer getId() {
         return id;
     }
@@ -51,6 +80,8 @@ public class Product {
         this.name = name;
         this.characteristic = characteristic;
     }
+
+    public Product() {}
 
     @Override
     public int hashCode() {

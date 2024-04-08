@@ -33,14 +33,14 @@ CREATE TABLE Product
 
 CREATE TABLE Store_Product
 (
-    UPC                 VARCHAR(50) PRIMARY KEY,
---     UPC_prom            VARCHAR(13)    NULL,
+    UPC                 VARCHAR(12) PRIMARY KEY,
+    UPC_prom            VARCHAR(12)    NULL,
     id_product          INTEGER        NOT NULL,
     selling_price       DECIMAL(13, 4) NOT NULL,
-    quantity            INT            NOT NULL,
+    products_number     INT            NOT NULL,
     promotional_product BOOLEAN        NOT NULL,
---     FOREIGN KEY (UPC_prom) REFERENCES Sale (UPC) ON UPDATE CASCADE
---         ON DELETE SET NULL,
+    FOREIGN KEY (UPC_prom) REFERENCES Store_Product (UPC) ON UPDATE CASCADE
+         ON DELETE SET NULL,
     FOREIGN KEY (id_product) REFERENCES Product (id_product) ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
@@ -113,7 +113,7 @@ VALUES (1, 1, 'Laptop', '16GB RAM, 512GB SSD'),
        (5, 3, 'Novel', 'Science fiction, paperback');
 
 -- Insert data into Store_Product table
-INSERT INTO Store_Product (UPC, id_product, selling_price, quantity, promotional_product)
+INSERT INTO Store_Product (UPC, id_product, selling_price, products_number, promotional_product)
 VALUES ('123456789', 1, 1500.00, 10, FALSE),
        ('987654321', 2, 800.00, 20, TRUE),
        ('456789123', 3, 20.00, 50, FALSE),

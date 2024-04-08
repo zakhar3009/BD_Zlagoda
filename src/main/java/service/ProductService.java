@@ -20,60 +20,60 @@ public class ProductService {
         return INSTANCE;
     }
 
-    List<Product> getAll(){
+    public List<Product> getAll(){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getAll();
     }
 
-    Optional<Product> getById(Integer id){
+    public Optional<Product> getById(Integer id){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getById(id);
     }
 
-    void create(Product product){
+    public void create(Product product){
         ProductDao productDao = daoFactory.createProductDao();
         productDao.create(product);
     }
 
-    void update(Product product){
+    public void update(Product product){
         ProductDao productDao = daoFactory.createProductDao();
         productDao.update(product);
     }
 
-    void delete(Integer id){
+    public void delete(Integer id){
         ProductDao productDao = daoFactory.createProductDao();
         productDao.delete(id);
     }
 
-    List<Product> getAllOrderByName(){
+    public List<Product> getAllOrderByName(){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getAllOrderByName();
     }
-    List<Product> getAllOrderByQuantity(){
+    public List<Product> getAllOrderByQuantity(){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getAllOrderByQuantity();
     }
-    List<Product> searchProductsByCategoryOrderByName(Integer id){
+    public List<Product> searchProductsByCategoryOrderByName(String name){
         ProductDao productDao = daoFactory.createProductDao();
-        return productDao.searchProductsByCategoryOrderByName(id);
+        return productDao.searchProductsByCategoryOrderByName(name);
     }
-    List<Product> getPromProductsOrderByQuantity(){
+    public List<Product> getPromProductsOrderByQuantity(){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getPromProductsOrderByQuantity();
     }
-    List<Product> getPromProductsOrderByName(){
+    public List<Product> getPromProductsOrderByName(){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getPromProductsOrderByName();
     }
-    List<Product> getNonPromProductsOrderByQuantity(){
+    public List<Product> getNonPromProductsOrderByQuantity(){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getNonPromProductsOrderByQuantity();
     }
-    List<Product> getNonPromProductsOrderByName(){
+    public List<Product> getNonPromProductsOrderByName(){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getNonPromProductsOrderByName();
     }
-    List<Product> getAllByPartOfName(String partOfName){
+    public List<Product> getAllByPartOfName(String partOfName){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getAllByPartOfName(partOfName);
     }

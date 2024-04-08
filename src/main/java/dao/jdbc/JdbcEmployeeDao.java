@@ -27,7 +27,6 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private static String SEARCH_ADDRESS_AND_PHONE_BY_SURNAME = "SELECT street, phone_number, city, empl_surname FROM employee WHERE empl_surname=?";
 
     // table columns names
-
     private static String ID = "id_employee";
     private static String NAME = "empl_name";
     private static String SURNAME = "empl_surname";

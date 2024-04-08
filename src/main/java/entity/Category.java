@@ -4,22 +4,43 @@ import java.util.Objects;
 
 public class Category {
 
-    private Long number;
+    private Integer number;
 
-    public Category(Long number, String name) {
+    public Category(Integer number, String name) {
         this.number = number;
         this.name = name;
+    }
+
+    public static class Builder implements IBuilder<Category> {
+
+        private Category category = new Category();
+
+        public Builder setID(Integer id){
+            category.number = id;
+            return this;
+        }
+
+        public Builder setName(String name){
+            category.name = name;
+            return this;
+        }
+
+        @Override
+        public Category build() {
+            return category;
+        }
+
     }
 
     private String name;
 
     public Category() {}
 
-    public Long getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

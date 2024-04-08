@@ -3,7 +3,9 @@ package controller.command.commands;
 import controller.command.Command;
 import controller.command.commands.auth.LogoutCommand;
 import controller.command.commands.auth.PostLoginCommand;
+import controller.command.commands.category.*;
 import controller.command.commands.employee.*;
+import service.CategoryService;
 import service.EmployeeService;
 
 public enum ManagerCommands {
@@ -28,7 +30,7 @@ public enum ManagerCommands {
     DELETE_CHECK("DELETE_CHECK", null),
     GET_ALL_EMPLOYEES ("GET_ALL_EMPLOYEES", new GetAllEmployeesCommand(EmployeeService.getInstance())),
     GET_ALL_CLIENTS("GET_ALL_CLIENTS", null),
-    GET_ALL_CATEGORIES("GET_ALL_CATEGORIES", null),
+    GET_ALL_CATEGORIES("GET_ALL_CATEGORIES", new GetAllCategoriesCommand(CategoryService.getInstance())),
     GET_ALL_PRODUCTS("GET_ALL_PRODUCTS", null),
     GET_ALL_PRODUCTS_IN_SHOP("GET_ALL_PRODUCTS_IN_SHOP", null),
     GET_ALL_CHECKS("GET_ALL_CHECKS", null),

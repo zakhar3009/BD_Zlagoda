@@ -20,32 +20,32 @@ public class CategoryService {
         return INSTANCE;
     }
 
-    List<Category> getAll(){
+    public List<Category> getAll(){
         CategoryDao categoryDao = daoFactory.createCategoryDao();
         return categoryDao.getAll();
     }
 
-    Optional<Category> getById(Integer id){
+    public Optional<Category> getById(Integer id){
         CategoryDao categoryDao = daoFactory.createCategoryDao();
         return categoryDao.getById(id);
     }
 
-    void create(Category category){
+    public void create(Category category){
         CategoryDao categoryDao = daoFactory.createCategoryDao();
         categoryDao.create(category);
     }
 
-    void update(Category category){
+    public void update(Category category){
         CategoryDao categoryDao = daoFactory.createCategoryDao();
         categoryDao.update(category);
     }
 
-    void delete(Integer id){
+    public void delete(Integer id){
         CategoryDao categoryDao = daoFactory.createCategoryDao();
         categoryDao.delete(id);
     }
 
-    List<Category> getAllOrderByName(){
+    public List<Category> getAllOrderByName(){
         CategoryDao categoryDao = daoFactory.createCategoryDao();
         return categoryDao.getAllOrderByName();
     }

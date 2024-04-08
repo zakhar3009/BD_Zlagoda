@@ -1,82 +1,245 @@
 package dao.jdbc;
 
 import dao.ProductDao;
+import entity.Employee;
 import entity.Product;
+import exception.ServerException;
 
-import java.sql.Connection;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JdbcProductDao implements ProductDao {
 
-    private Connection connection;
+    private static String GET_ALL = "SELECT * FROM product";
+    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM product ORDER product_name";
+    private static String GET_BY_ID = "SELECT * FROM product WHERE id_product=?";
+    private static String CREATE = "INSERT INTO product"
+            + " (id_product, category_number, product_name, characteristics) VALUES (?, ?, ?, ?)";
+    private static String UPDATE = "UPDATE product"
+            + " SET  category_number=?, product_name=?, characteristics=?" + " WHERE id_product=? ";
+    private static String DELETE = "DELETE FROM product WHERE id_product=?";
+    private static String GET_ALL_ORDER_BY_QUANTITY = "SELECT *" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
+            "ORDER BY products_number ASC";
 
+    private static String SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME = "SELECT *" +
+            "FROM product" +
+            "WHERE category_number IN (SELECT category_number" +
+            "                          FROM category" +
+            "                          WHERE category_name=?))";
+    private static String GET_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
+            "WHERE promotional_product = TRUE" +
+            "ORDER BY quantity ASC";
+
+    private static String GET_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
+            "WHERE promotional_product = TRUE" +
+            "ORDER BY product_name ASC";
+
+    private static String GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
+            "WHERE promotional_product = FALSE" +
+            "ORDER BY quantity ASC";
+
+    private static String GET_NON_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
+            "WHERE promotional_product = FALSE" +
+            "ORDER BY product_name ASC";
+
+
+    private static String GET_PRODUCT_BY_PART_OF_NAME = "SELECT *" +
+            "FROM product" +
+            "WHERE product_name LIKE ?";
+    // table columns names
+    private static String ID = "id_product";
+    private static String CATEGORY_NUMBER = "category_number";
+    private static String NAME = "product_name";
+    private static String CHARACTERISTICS = "characteristics";
+
+    private Connection connection;
     public JdbcProductDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
     public List<Product> getAll() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
     }
 
     @Override
     public Optional<Product> getById(Integer id) {
-        return Optional.empty();
+        Optional<Product> product = Optional.empty();
+        try (PreparedStatement query = connection.prepareStatement(GET_BY_ID)) {
+            query.setInt(1, id);
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next())
+                product = Optional.of(extractProductFromResultSet(resultSet));
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return product;
     }
 
     @Override
-    public void create(Product e) {
-
+    public void create(Product product) {
+        try (PreparedStatement query = connection.prepareStatement(CREATE)) {
+            query.setInt(1, product.getId());
+            query.setInt(2, product.getCategory().getNumber());
+            query.setString(3, product.getName());
+            query.setString(4, product.getCharacteristic());
+            query.executeUpdate();
+        } catch (SQLException err) {
+            throw new ServerException(err);
+        }
     }
 
     @Override
-    public void update(Product e) {
-
+    public void update(Product product) {
+        try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
+            query.setInt(1, product.getId());
+            query.setInt(2, product.getCategory().getNumber());
+            query.setString(3, product.getName());
+            query.setString(4, product.getCharacteristic());
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
     }
 
     @Override
     public void delete(Integer id) {
-
+        try (PreparedStatement query = connection.prepareStatement(DELETE)) {
+            query.setInt(1, id);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
     }
 
     @Override
     public List<Product> getAllOrderByName() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL_ORDER_BY_NAME)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
     }
 
     @Override
     public List<Product> getAllOrderByQuantity() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL_ORDER_BY_QUANTITY)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
     }
 
     @Override
-    public List<Product> searchProductsByCategoryOrderByName(Integer categoryId) {
-        return null;
+    public List<Product> searchProductsByCategoryOrderByName(String categoryName) {
+        List<Product> result = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME)){
+            query.setString(1, categoryName);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()){
+                result.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return result;
     }
 
     @Override
     public List<Product> getPromProductsOrderByQuantity() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PROM_PRODUCT_ORDER_BY_QUANTITY)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
     }
 
     @Override
     public List<Product> getPromProductsOrderByName() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PROM_PRODUCT_ORDER_BY_NAME)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
     }
 
     @Override
     public List<Product> getNonPromProductsOrderByQuantity() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
     }
 
     @Override
     public List<Product> getNonPromProductsOrderByName() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_NON_PROM_PRODUCT_ORDER_BY_NAME)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
     }
 
     @Override
     public List<Product> getAllByPartOfName(String partOfName) {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PRODUCT_BY_PART_OF_NAME)) {
+            while (resultSet.next()) {
+                products.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
+    }
+
+    protected static Product extractProductFromResultSet(ResultSet resultSet) throws SQLException {
+
+        return new Product.Builder()
+                .setID(resultSet.getInt(ID))
+                .setCategory(JdbcCategoryDao.extractCategoryFromResultSet(resultSet))
+                .setName(resultSet.getString(NAME))
+                .setCharacteristic(resultSet.getString(CHARACTERISTICS))
+                .build();
     }
 }
