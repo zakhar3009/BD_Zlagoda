@@ -10,6 +10,6 @@ public interface EmployeeDao extends GenericDao<Employee, String> {
     Optional<Employee> getEmployeeByCredentials(String email, String password);
     List<Employee> getEmployeesOrderBySurname();
     List<Employee> getCashiersOrderBySurname();
-    HashMap<String, String> searchEmployeeAddressAndPhoneBySurname(String surname);
+    List<Employee> searchEmployeeAddressAndPhoneBySurname(String surname);
 
 }
