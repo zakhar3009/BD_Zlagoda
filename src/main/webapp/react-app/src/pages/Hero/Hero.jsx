@@ -25,72 +25,6 @@ export default function Hero() {
           console.log(err);
         }
       };
-
-
-    //
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log("fetching all employees");
-  //       const response = await fetch(
-  //           "http://localhost:8080/controller?" +
-  //           new URLSearchParams({
-  //             "command_name": "GET_ALL_EMPLOYEES"
-  //           })
-  //       );
-  //       const data = await response.json();
-  //       setAllEmployees(data);
-  //       console.log(data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //
-  //   fetchData();
-  // }, []);
-  //
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log("fetching Employee by ID");
-  //       const response = await fetch(
-  //           "http://localhost:8080/controller?" +
-  //           new URLSearchParams({
-  //             "command_name": "GET_EMPLOYEE_BY_ID",
-  //             "id": "E002"
-  //           })
-  //       );
-  //       const employee = await response.json();
-  //       setEmployeeById(employee);
-  //       console.log(employee);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //
-  //   fetchData();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log("fetching EMPLOYEES_ORDER_BY_SURNAME");
-  //       const response = await fetch(
-  //           "http://localhost:8080/controller?" +
-  //           new URLSearchParams({
-  //             "command_name": "GET_ALL_EMPLOYEES_ORDER_BY_SURNAME",
-  //           })
-  //       );
-  //       const getAllEmployeesOrder = await response.json();
-  //       setAllEmployeesOrderedBySurname(getAllEmployeesOrder);
-  //       console.log(getAllEmployeesOrder);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //
-  //   fetchData();
-  // }, []);
   //
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -161,49 +95,7 @@ export default function Hero() {
   //     console.log(err);
   //   }
   // };
-  //
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log("ALL_CASHIERS_ORDER_BY_SURNAME");
-  //       const response = await fetch(
-  //           "http://localhost:8080/controller?" +
-  //           new URLSearchParams({
-  //             "command_name": "GET_ALL_CASHIERS_ORDER_BY_SURNAME",
-  //           })
-  //       );
-  //       const getAllEmployeesOrder = await response.json();
-  //       setAllCashiersOrderedBySurname(getAllEmployeesOrder);
-  //       console.log(getAllEmployeesOrder);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //
-  //   fetchData();
-  // }, []);
-  //
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log("SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME");
-  //       const response = await fetch(
-  //           "http://localhost:8080/controller?" +
-  //           new URLSearchParams({
-  //             "command_name": "SEARCH_EMPLOYEE_BY_SURNAME",
-  //             "surname": "Johnson"
-  //           })
-  //       );
-  //       const getAllEmployeesOrder = await response.json();
-  //       setEmployeeBySurname(getAllEmployeesOrder);
-  //       console.log(getAllEmployeesOrder);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //
-  //   fetchData();
-  // }, []);
+
 
   return (
     <div className="w-full h-screen bg-gradient-to-r from-violet-200 to-pink-200">
