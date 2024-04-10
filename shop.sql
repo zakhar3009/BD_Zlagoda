@@ -54,7 +54,7 @@ CREATE TABLE Customer_Card
     phone_number    VARCHAR(13) NOT NULL,
     city            VARCHAR(50) NOT NULL,
     street          VARCHAR(50) NOT NULL,
-    zip             VARCHAR(9)  NOT NULL,
+    zip_code             VARCHAR(9)  NOT NULL,
     percent         INTEGER     NOT NULL
 );
 
@@ -121,7 +121,7 @@ VALUES ('123456789', 1, 1500.00, 10, FALSE),
        ('789123456', 5, 15.00, 40, TRUE);
 
 -- Insert data into Customer_Card table
-INSERT INTO Customer_Card (card_number, cust_surname, cust_name, cust_patronymic, phone_number, city, street, zip,
+INSERT INTO Customer_Card (card_number, cust_surname, cust_name, cust_patronymic, phone_number, city, street, zip_code,
                            percent)
 VALUES ('C001', 'Doe', 'Alice', 'Marie', '456-789-0123', 'Chicago', 'Elm St', '60601', 5),
        ('C002', 'Brown', 'James', 'Michael', '789-012-3456', 'San Francisco', 'Market St', '94102', 10),

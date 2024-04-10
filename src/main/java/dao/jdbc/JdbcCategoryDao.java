@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class JdbcCategoryDao implements CategoryDao {
 
@@ -15,7 +16,7 @@ public class JdbcCategoryDao implements CategoryDao {
     private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM category ORDER BY category_name";
     private static String GET_BY_ID = "SELECT * FROM category WHERE category_number=?";
     private static String CREATE = "INSERT INTO category"
-            + " (category_number, category_name) VALUES (?, ?)";
+            + " (category_number,  category_name) VALUES (?, ?)";
     private static String UPDATE = "UPDATE category"
             + " SET category_name=?" + " WHERE category_number=? ";
     private static String DELETE = "DELETE FROM category WHERE category_number=?";
@@ -68,8 +69,9 @@ public class JdbcCategoryDao implements CategoryDao {
 
     @Override
     public void create(Category category) {
+        int randomId = UUID.randomUUID().toString().hashCode();
         try (PreparedStatement query = connection.prepareStatement(CREATE)) {
-            query.setInt(1, category.getNumber());
+            query.setInt(1, randomId);
             query.setString(2, category.getName());
             query.executeUpdate();
         } catch (SQLException err) {

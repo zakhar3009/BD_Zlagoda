@@ -21,7 +21,7 @@ public class GetCategoryByID implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        Optional<Category> category = categoryService.getById(Integer.parseInt(hashMap.get("number")));
+        Optional<Category> category = categoryService.getById(Integer.parseInt(hashMap.get("category_number")));
         return category.map(value -> JSON.gson().toJson(value)).orElse(null);
     }
 }

@@ -1,6 +1,5 @@
 package entity;
-
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public class Check {
@@ -35,6 +34,47 @@ public class Check {
         this.printDate = printDate;
         this.sumTotal = sumTotal;
         this.vat = vat;
+    }
+
+    public Check() {}
+
+    public static class Builder implements IBuilder<Check> {
+        private Check check = new Check();
+
+        public Check.Builder setNumber(String number){
+            check.number = number;
+            return this;
+        }
+
+        public Check.Builder setEmployee(Employee employee){
+            check.employee = employee;
+            return this;
+        }
+
+        public Check.Builder setCustomerCard(CustomerCard customerCard){
+            check.customerCard = customerCard;
+            return this;
+        }
+
+        public Check.Builder setPrintDate(Date printDate){
+            check.printDate = printDate;
+            return this;
+        }
+
+        public Check.Builder setTotalSum(double totalSum){
+            check.sumTotal = totalSum;
+            return this;
+        }
+
+        public Check.Builder setVat(String vat){
+            check.vat = vat;
+            return this;
+        }
+
+        @Override
+        public Check build() {
+            return check;
+        }
     }
 
     public String getCustomerCardNumber() {

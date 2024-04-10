@@ -3,7 +3,7 @@ package entity;
 public class StoreProduct {
 
     private String UPC;
-    private Sale upcProm;
+    private StoreProduct promStoreProduct;
     private Product product;
     private Double sellingPrice;
     private Integer productsNumber;
@@ -17,22 +17,63 @@ public class StoreProduct {
         this.UPC = UPC;
     }
 
-    public String getUpcProm() {
-        return upcProm.getSaleUPC();
+    public StoreProduct getPromStoreProduct() {
+        return promStoreProduct;
     }
 
-    public void setUpcProm(Sale upcProm) {
-        this.upcProm = upcProm;
+    public void setPromStoreProduct(StoreProduct promStoreProduct) {
+        this.promStoreProduct = promStoreProduct;
     }
 
-    public StoreProduct(String UPC, Sale upcProm, Product product, Double sellingPrice, Integer productsNumber, Boolean promotionalProduct) {
+    public StoreProduct(String UPC, StoreProduct promStoreProduct, Product product, Double sellingPrice, Integer productsNumber, Boolean promotionalProduct) {
         this.UPC = UPC;
-        this.upcProm = upcProm;
+        this.promStoreProduct = promStoreProduct;
         this.product = product;
         this.sellingPrice = sellingPrice;
         this.productsNumber = productsNumber;
         this.promotionalProduct = promotionalProduct;
     }
+
+    public StoreProduct() {}
+    public static class Builder implements IBuilder<StoreProduct> {
+        private StoreProduct storeProduct = new StoreProduct();
+
+        public StoreProduct.Builder setUpc(String upc){
+            storeProduct.UPC = upc;
+            return this;
+        }
+
+        public StoreProduct.Builder setPromStoreProduct(StoreProduct storeProduct){
+            storeProduct.promStoreProduct = storeProduct;
+            return this;
+        }
+
+        public StoreProduct.Builder setProduct(Product product){
+            storeProduct.product = product;
+            return this;
+        }
+
+        public StoreProduct.Builder setSellingPrice(double sellingPrice){
+            storeProduct.sellingPrice = sellingPrice;
+            return this;
+        }
+
+        public StoreProduct.Builder setProductsNumber(Integer productsNumber){
+            storeProduct.productsNumber = productsNumber;
+            return this;
+        }
+
+        public StoreProduct.Builder setIsProm(Boolean isProm){
+            storeProduct.promotionalProduct = isProm;
+            return this;
+        }
+
+        @Override
+        public StoreProduct build() {
+            return storeProduct;
+        }
+    }
+
 
     public Integer getProductID() {
         return product.getId();

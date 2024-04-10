@@ -1,8 +1,6 @@
 package dao.jdbc;
 
-import dao.GenericDao;
 import dao.ProductDao;
-import entity.Employee;
 import entity.Product;
 import exception.ServerException;
 
@@ -10,11 +8,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class JdbcProductDao implements ProductDao {
 
     private static String GET_ALL = "SELECT * FROM product";
-    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM product ORDER product_name";
+    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM product ORDER BY product_name";
     private static String GET_BY_ID = "SELECT * FROM product WHERE id_product=?";
     private static String CREATE = "INSERT INTO product"
             + " (id_product, category_number, product_name, characteristics) VALUES (?, ?, ?, ?)";
@@ -22,37 +21,37 @@ public class JdbcProductDao implements ProductDao {
             + " SET  category_number=?, product_name=?, characteristics=?" + " WHERE id_product=? ";
     private static String DELETE = "DELETE FROM product WHERE id_product=?";
     private static String GET_ALL_ORDER_BY_QUANTITY = "SELECT *" +
-            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product " +
             "ORDER BY products_number ASC";
 
     private static String SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME = "SELECT *" +
-            "FROM product" +
+            "FROM product " +
             "WHERE category_number IN (SELECT category_number" +
             "                          FROM category" +
-            "                          WHERE category_name=?))";
+            "                          WHERE category_name=?)";
     private static String GET_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
-            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
-            "WHERE promotional_product = TRUE" +
-            "ORDER BY quantity ASC";
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product " +
+            "WHERE promotional_product = TRUE " +
+            "ORDER BY products_number ASC";
 
     private static String GET_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
-            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
-            "WHERE promotional_product = TRUE" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product " +
+            "WHERE promotional_product = TRUE " +
             "ORDER BY product_name ASC";
 
     private static String GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
-            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
-            "WHERE promotional_product = FALSE" +
-            "ORDER BY quantity ASC";
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product " +
+            "WHERE promotional_product = FALSE " +
+            "ORDER BY products_number ASC";
 
     private static String GET_NON_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
-            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product" +
-            "WHERE promotional_product = FALSE" +
+            "FROM product INNER JOIN store_product ON product.id_product = store_product.id_product " +
+            "WHERE promotional_product = FALSE " +
             "ORDER BY product_name ASC";
 
 
-    private static String GET_PRODUCT_BY_PART_OF_NAME = "SELECT *" +
-            "FROM product" +
+    private static String GET_PRODUCT_BY_PART_OF_NAME = "SELECT * " +
+            "FROM product " +
             "WHERE product_name LIKE ?";
     // table columns names
     private static String ID = "id_product";
@@ -94,8 +93,9 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public void create(Product product) {
+        int randomId = UUID.randomUUID().toString().hashCode();
         try (PreparedStatement query = connection.prepareStatement(CREATE)) {
-            query.setInt(1, product.getId());
+            query.setInt(1, randomId);
             query.setInt(2, product.getCategory().getNumber());
             query.setString(3, product.getName());
             query.setString(4, product.getCharacteristic());

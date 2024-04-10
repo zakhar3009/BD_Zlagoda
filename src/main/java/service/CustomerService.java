@@ -20,36 +20,36 @@ public class CustomerService {
         return INSTANCE;
     }
 
-    List<CustomerCard> getAll(){
+    public List<CustomerCard> getAll(){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getAll();
     }
 
-    Optional<CustomerCard> getById(String id){
+    public Optional<CustomerCard> getById(String id){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getById(id);
     }
 
-    void create(CustomerCard customerCard){
+    public void create(CustomerCard customerCard){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         customerDao.create(customerCard);
     }
 
-    void update(CustomerCard customerCard){
+    public void update(CustomerCard customerCard){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         customerDao.update(customerCard);
     }
 
-    void delete(String id){
+    public void delete(String id){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         customerDao.delete(id);
     }
 
-    List<CustomerCard> getAllOrderBySurname(){
+    public List<CustomerCard> getAllOrderBySurname(){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getAllOrderBySurname();
     }
-    List<CustomerCard> searchCustomersByPartOfSurname(String partOfSurname){
+    public List<CustomerCard> searchCustomersByPartOfSurname(String partOfSurname){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.searchCustomersByPartOfSurname(partOfSurname);
     }

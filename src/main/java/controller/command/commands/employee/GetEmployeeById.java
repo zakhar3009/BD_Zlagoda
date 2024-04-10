@@ -21,7 +21,7 @@ public class GetEmployeeById implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        Optional<Employee> employee = employeeService.getEmployeeById(hashMap.get("id"));
+        Optional<Employee> employee = employeeService.getEmployeeById(hashMap.get("id_employee"));
         return employee.map(value -> JSON.gson().toJson(value)).orElse(null);
     }
 }
