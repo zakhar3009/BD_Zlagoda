@@ -16,6 +16,7 @@ import Navbar from "./components/header/Navbar.jsx";
 import LogIn from "./pages/LogIn/LogIn.jsx";
 import Employee from "./pages/Employee/Employee.jsx";
 import SearchEmployee from "./pages/Employee/SearchEmployee.jsx";
+import AddAndEditEmployee from "./pages/Employee/AddAndEditEmployee.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -60,8 +61,12 @@ const router = createBrowserRouter(
           path="search_employee_address_and_phone_by_surname"
           element={<SearchEmployee />}
         />
-        <Route path="post_add_employee" element={<Employee />} />
-        <Route path="post_update_employee" element={<Employee />} />
+        <Route path="post_add_employee"
+               element={<AddAndEditEmployee/>}
+        />
+        <Route path=":id/post_update_employee"
+               element={<AddAndEditEmployee />}
+        />
         <Route path="delete_employee" element={<Employee />} />
       </Route>
     </Route>
