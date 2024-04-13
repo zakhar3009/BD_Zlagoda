@@ -28,25 +28,25 @@ export default function Hero() {
   //
   // useEffect(() => {
   //   const fetchData = async () => {
-  //     console.log("deleting EMPLOYEE");
-  //     const requestOptions = {
-  //       method: "DELETE",
-  //       headers: { "Content-Type": "application/json",
-  //         "command_name": "DELETE_EMPLOYEE"},
-  //       body: JSON.stringify({
-  //         id: "E001"
-  //       }),
-  //     };
-  //     try {
-  //       const response = await fetch(
-  //           "http://localhost:8080/controller",
-  //           requestOptions
-  //       );
-  //       const data = await response.json();
-  //       console.log(data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
+      // console.log("deleting EMPLOYEE");
+      // const requestOptions = {
+      //   method: "DELETE",
+      //   headers: { "Content-Type": "application/json",
+      //     "command_name": "DELETE_EMPLOYEE"},
+      //   body: JSON.stringify({
+      //     id: "E001"
+      //   }),
+      // };
+      // try {
+      //   const response = await fetch(
+      //       "http://localhost:8080/controller",
+      //       requestOptions
+      //   );
+      //   const data = await response.json();
+      //   console.log(data);
+      // } catch (err) {
+      //   console.log(err);
+      // }
   //   };
   //
   //   fetchData();

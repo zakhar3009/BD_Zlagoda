@@ -3,9 +3,11 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
 import EmployeeMenu from "./flyout-menus/EmployeeMenu";
+import CategoryMenu from "./flyout-menus/CategoryMenu";
 
 const navigation = [
   { menu: <EmployeeMenu /> },
+  { menu: <CategoryMenu /> },
   // { name: 'Shop', href: '/shop', current: false },
   // { name: 'Employee', href: '/employee', current: false },
 ];

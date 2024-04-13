@@ -6,6 +6,7 @@ C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\jdbc\JdbcEmployeeDao.
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\utils\HttpWrapper.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\auth\LogoutCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\service\SaleService.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\cutomerCard\GetAllCustomerCardsOrderBySurname.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\utils\CommandKeyGenerator.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\jdbc\JdbcProductDao.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\exception\ServerException.java
@@ -27,7 +28,9 @@ C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\SaleDao.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\employee\UpdateEmployeeCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\jdbc\JdbcStoreProductDao.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\auth\PostLoginCommand.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\cutomerCard\UpdateCustomerCardCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\entity\Employee.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\cutomerCard\GetCustomerCardsByPartOfSurname.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\FrontController.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\employee\PostAddEmployeeCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\jdbc\JdbcCheckDao.java
@@ -47,12 +50,14 @@ C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\entity\Role.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\product\GetProductByID.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\ManagerCommands.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\entity\Check.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\cutomerCard\CreateCustomerCardCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\entity\Category.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\employee\GetEmployeeById.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\DaoFactory.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\CommandFactory.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\entity\IBuilder.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\service\CheckService.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\cutomerCard\GetCustomerCardByIdCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\jdbc\JdbcSaleDao.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\product\UpdateProductCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\employee\GetEmployeeAddressAndPhoneBySurname.java
@@ -60,6 +65,7 @@ C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\comman
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\product\CreateProductCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\product\GetPromProductsOrderByName.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\service\EmployeeService.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\cutomerCard\DeleteCustomerCardCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\service\StoreProductService.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\product\GetAllProductsOrderByName.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\product\GetNonPromProductsOrderByQuantity.java
@@ -68,8 +74,10 @@ C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\comman
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dao\StoreProductDao.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\Encryption.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\entity\CustomerCard.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\cutomerCard\GetAllCustomerCardsCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\utils\HttpWrapper.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\dto\CredentialsDto.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\employee\DeleteEmployeeCommand.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\service\ProductService.java
 C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\db_connection\DBFunctions.java
+C:\Users\sasha\Desktop\NAUKMA\BD_Zlagoda\src\main\java\controller\command\commands\category\DeleteCategoryCommand.java

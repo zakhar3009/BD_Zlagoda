@@ -196,7 +196,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
     protected static Employee extractUserFromResultSet(ResultSet resultSet) throws SQLException {
 
         return new Employee.Builder()
-                .setId(ID)
+                .setId(resultSet.getString(ID))
                 .setRole(Role.getRole(resultSet.getString(ROLE)))
                 .setSurname(resultSet.getString(SURNAME))
                 .setName(resultSet.getString(NAME))
