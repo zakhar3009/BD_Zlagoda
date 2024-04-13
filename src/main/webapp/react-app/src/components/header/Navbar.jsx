@@ -4,10 +4,14 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
 import EmployeeMenu from "./flyout-menus/EmployeeMenu";
 import CategoryMenu from "./flyout-menus/CategoryMenu";
+import ProductMenu from "./flyout-menus/ProductMenu.jsx";
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const navigation = [
   { menu: <EmployeeMenu /> },
   { menu: <CategoryMenu /> },
+  { menu: <ProductMenu />}
   // { name: 'Shop', href: '/shop', current: false },
   // { name: 'Employee', href: '/employee', current: false },
 ];
@@ -165,6 +169,19 @@ export default function Navbar() {
         )}
       </Disclosure>
       <Outlet />
+      <ToastContainer
+        position="top-center"
+        autoClose={2300}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 }

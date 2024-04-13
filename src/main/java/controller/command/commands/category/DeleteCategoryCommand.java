@@ -20,8 +20,8 @@ public class DeleteCategoryCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, Double> hashMap = CommandFactory.getAttributes(request, HashMap.class);
-        Double id = hashMap.get("id");
-        categoryService.delete(id.intValue());
+        Double category_number = hashMap.get("category_number");
+        categoryService.delete(category_number.intValue());
         return JSON.gson().toJson("");
     }
 }

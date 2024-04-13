@@ -165,18 +165,18 @@ public class JdbcEmployeeDao implements EmployeeDao {
         try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
             query.setString(1, employee.getEmail());
             query.setString(2, employee.getPassword());
-            query.setString(3, employee.getId());
-            query.setString(4, employee.getName());
-            query.setString(5, employee.getSurname());
-            query.setString(6, employee.getPatronymic());
-            query.setString(7, employee.getRole().getRole());
-            query.setDouble(8, employee.getSalary());
-            query.setDate(9, employee.getDateOfBirth());
-            query.setDate(10, employee.getDateOfStart());
-            query.setString(11, employee.getPhoneNumber());
-            query.setString(12, employee.getCity());
-            query.setString(13, employee.getStreet());
-            query.setString(14, employee.getZipCode());
+            query.setString(3, employee.getName());
+            query.setString(4, employee.getSurname());
+            query.setString(5, employee.getPatronymic());
+            query.setString(6, employee.getRole().getRole());
+            query.setDouble(7, employee.getSalary());
+            query.setDate(8, employee.getDateOfBirth());
+            query.setDate(9, employee.getDateOfStart());
+            query.setString(10, employee.getPhoneNumber());
+            query.setString(11, employee.getCity());
+            query.setString(12, employee.getStreet());
+            query.setString(13, employee.getZipCode());
+            query.setString(14, employee.getId());
             query.executeUpdate();
         } catch (SQLException e) {
             throw new ServerException(e);

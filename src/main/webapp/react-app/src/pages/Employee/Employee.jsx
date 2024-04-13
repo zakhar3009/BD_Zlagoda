@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { employeesTableMap } from "../../constants/EmployeesCommandMap.js";
 import MatTable from "../../components/table/MatTable.jsx";
+import {toast} from "react-toastify";
 
 export default function Employee({ command }) {
   const [data, setData] = useState(null);
@@ -48,8 +49,9 @@ export default function Employee({ command }) {
       const data = await response.json();
       fetchEmployeesData();
       console.log(data);
+      toast.success("Employee was removed!")
     } catch (err) {
-      console.log(err);
+      toast.error(`ERROR: ${err}`)
     }
   };
 
@@ -62,6 +64,7 @@ export default function Employee({ command }) {
             rows={data}
             deleteFunc={deleteEmployee}
             deleteProperty={"id"}
+            pathToCreateUpdate={"/post_update_employee"}
           ></MatTable>
         )}
       </div>

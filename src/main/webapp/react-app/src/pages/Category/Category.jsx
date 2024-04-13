@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { categoriesTableMap } from "../../constants/CategoiesCommandMap.js";
 import MatTable from "../../components/table/MatTable.jsx";
+import {toast} from "react-toastify";
 
 // GET_ALL_CATEGORIES
 export default function Category({ command }) {
@@ -38,7 +39,7 @@ export default function Category({ command }) {
         command_name: "DELETE_CATEGORY",
       },
       body: JSON.stringify({
-        id: categoryId,
+        category_number: categoryId,
       }),
     };
     try {
@@ -49,8 +50,9 @@ export default function Category({ command }) {
       const data = await response.json();
       fetchCategoryData();
       console.log(data);
+      toast.success("Category was removed!")
     } catch (err) {
-      console.log(err);
+      toast.error(`ERROR: ${err}`)
     }
   };
 
@@ -63,6 +65,7 @@ export default function Category({ command }) {
             rows={data}
             deleteFunc={deleteCategory}
             deleteProperty={"number"}
+            pathToCreateUpdate={"/post_update_category"}
           ></MatTable>
         )}
       </div>

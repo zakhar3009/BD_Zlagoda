@@ -9,6 +9,7 @@ export default function DeleteModal({
   deleteProperty,
 }) {
   const deleteRequest = async () => {
+    console.log("Item", item)
     deleteFunc(item[deleteProperty]);
     handleClose();
   };

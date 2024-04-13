@@ -12,8 +12,8 @@ import java.util.UUID;
 
 public class JdbcProductDao implements ProductDao {
 
-    private static String GET_ALL = "SELECT * FROM product";
-    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM product ORDER BY product_name";
+    private static String GET_ALL = "SELECT * FROM product JOIN category USING(category_number)";
+    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM product JOIN category USING(category_number) ORDER BY product_name";
     private static String GET_BY_ID = "SELECT * FROM product WHERE id_product=?";
     private static String CREATE = "INSERT INTO product"
             + " (id_product, category_number, product_name, characteristics) VALUES (?, ?, ?, ?)";
