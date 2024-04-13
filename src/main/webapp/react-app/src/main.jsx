@@ -17,6 +17,7 @@ import LogIn from "./pages/LogIn/LogIn.jsx";
 import Employee from "./pages/Employee/Employee.jsx";
 import SearchEmployee from "./pages/Employee/SearchEmployee.jsx";
 import Category from "./pages/Category/Category.jsx";
+import AddAndEditEmployee from "./pages/Employee/AddAndEditEmployee.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -61,23 +62,27 @@ const router = createBrowserRouter(
           path="search_employee_address_and_phone_by_surname"
           element={<SearchEmployee />}
         />
-        <Route path="post_add_employee" element={<Employee />} />
-        <Route path="post_update_employee" element={<Employee />} />
+        <Route path="post_add_employee"
+               element={<AddAndEditEmployee/>}
+        />
+        <Route path=":id/post_update_employee"
+               element={<AddAndEditEmployee />}
+        />
         <Route path="delete_employee" element={<Employee />} />
       </Route>
-      <Route path="category">
-        <Route
-          path="get_all_categories"
-          element={<Category command={"GET_ALL_CATEGORIES"} />}
-        />
-        <Route
-          path="get_all_categories_order_by_name"
-          element={<Category command={"GET_ALL_CATEGORIES_ORDER_BY_NAME"} />}
-        />
-        <Route path="post_add_category" element={<Category />} />
-        <Route path="post_update_category" element={<Category />} />
-        <Route path="delete_category" element={<Category />} />
-      </Route>
+        <Route path="category">
+            <Route
+                path="get_all_categories"
+                element={<Category command={"GET_ALL_CATEGORIES"} />}
+            />
+            <Route
+                path="get_all_categories_order_by_name"
+                element={<Category command={"GET_ALL_CATEGORIES_ORDER_BY_NAME"} />}
+            />
+            <Route path="post_add_category" element={<Category />} />
+            <Route path="post_update_category" element={<Category />} />
+            <Route path="delete_category" element={<Category />} />
+        </Route>
     </Route>
   )
 );
