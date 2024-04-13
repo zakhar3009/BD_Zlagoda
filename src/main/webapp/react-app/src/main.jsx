@@ -16,7 +16,10 @@ import Navbar from "./components/header/Navbar.jsx";
 import LogIn from "./pages/LogIn/LogIn.jsx";
 import Employee from "./pages/Employee/Employee.jsx";
 import SearchEmployee from "./pages/Employee/SearchEmployee.jsx";
+import Category from "./pages/Category/Category.jsx";
 import AddAndEditEmployee from "./pages/Employee/AddAndEditEmployee.jsx";
+import AddAndEditCategory from "./pages/Category/AddAndEditCategory.jsx";
+import Products from "./pages/Products/Products.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -67,8 +70,40 @@ const router = createBrowserRouter(
         <Route path=":id/post_update_employee"
                element={<AddAndEditEmployee />}
         />
-        <Route path="delete_employee" element={<Employee />} />
       </Route>
+        <Route path="category">
+            <Route
+                path="get_all_categories"
+                element={<Category command={"GET_ALL_CATEGORIES"} />}
+            />
+            <Route
+                path="get_all_categories_order_by_name"
+                element={<Category command={"GET_ALL_CATEGORIES_ORDER_BY_NAME"} />}
+            />
+            <Route path="post_add_category" element={<AddAndEditCategory />} />
+            <Route path=":id/post_update_category" element={<AddAndEditCategory />} />
+        </Route>
+
+        <Route path="products">
+            <Route
+                path="get_all_products"
+                element={<Products command={"GET_ALL_PRODUCTS"} />}
+            />
+            <Route
+                path="get_all_products_order_by_name"
+                element={<Products command={"GET_ALL_PRODUCTS_ORDER_BY_NAME"} />}
+            />
+            <Route
+                path="get_all_products_by_category_order_by_category"
+                element={<Products command={"GET_PRODUCTS_BY_CATEGORY_ORDER_BY_CATEGORY"} />}
+            />
+            <Route
+                path="get_all_products_by_upc"
+                element={<Products command={"GET_PRODUCT_BY_UPC"} />}
+            />
+
+        </Route>
+
     </Route>
   )
 );

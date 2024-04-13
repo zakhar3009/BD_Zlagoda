@@ -19,8 +19,9 @@ public class DeleteCategoryCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws IOException {
-        HashMap<String, String> hashMap = CommandFactory.getAttributes(request, HashMap.class);
-        categoryService.delete(Integer.parseInt(hashMap.get("id")));
+        HashMap<String, Double> hashMap = CommandFactory.getAttributes(request, HashMap.class);
+        Double category_number = hashMap.get("category_number");
+        categoryService.delete(category_number.intValue());
         return JSON.gson().toJson("");
     }
 }

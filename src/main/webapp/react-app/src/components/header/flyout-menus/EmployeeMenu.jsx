@@ -10,6 +10,11 @@ function classNames(...classes) {
 export default function EmployeeMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const employeesCommands = Array.from(employeesCommandMap.entries()).filter(
+    (item) =>
+      item[0] !== "DELETE_EMPLOYEE" && item[0] !== "POST_UPDATE_EMPLOYEE"
+  );
+
   return (
     <Popover className="relative">
       <Popover.Button
@@ -39,17 +44,17 @@ export default function EmployeeMenu() {
         <Popover.Panel className="absolute left-1/2 z-10 mt-4 flex w-screen max-w-max -translate-x-1/2 px-4">
           <div className="w-screen max-w-xs flex-auto overflow-hidden rounded-2xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
             <div className="p-1">
-              {Array.from(employeesCommandMap.keys()).map((item) => (
+              {employeesCommands.map((item) => (
                 <div
-                  key={item.toLowerCase()}
+                  key={item[0].toLowerCase()}
                   className="group relative flex gap-x-6 rounded-lg p-2 hover:bg-gray-50"
                 >
                   <NavLink
                     onClick={() => setIsOpen((prev) => !prev)}
-                    to={"/employee/" + item.toLowerCase()}
+                    to={"/employee/" + item[0].toLowerCase()}
                     className="font-semibold text-gray-900"
                   >
-                    {employeesCommandMap.get(item)}
+                    {item[1]}
                   </NavLink>
                 </div>
               ))}
