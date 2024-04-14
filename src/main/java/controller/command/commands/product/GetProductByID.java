@@ -23,6 +23,6 @@ public class GetProductByID implements Command {
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
         Optional<Product> product = productService.getById(Integer.parseInt(hashMap.get("id_product")));
-        return JSON.gson().toJson(product.get());
+        return product.map(value -> JSON.gson().toJson(value)).orElse(null);
     }
 }

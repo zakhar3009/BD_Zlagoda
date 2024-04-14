@@ -3,29 +3,39 @@ package controller.command.commands;
 import controller.command.Command;
 import controller.command.commands.auth.LogoutCommand;
 import controller.command.commands.auth.PostLoginCommand;
+import controller.command.commands.cutomerCard.CreateCustomerCardCommand;
+import controller.command.commands.cutomerCard.GetAllCustomerCardsOrderBySurname;
+import controller.command.commands.cutomerCard.GetCustomerCardsByPartOfSurname;
+import controller.command.commands.cutomerCard.UpdateCustomerCardCommand;
+import controller.command.commands.product.*;
+import controller.command.commands.storeProduct.GetAllStoreProductsOrderByName;
+import controller.command.commands.storeProduct.GetStoreProductByIdCommand;
+import service.CustomerService;
 import service.EmployeeService;
+import service.ProductService;
+import service.StoreProductService;
 
 public enum CashierCommands {
 
     LOGOUT("LOGOUT", new LogoutCommand()),
     POST_LOGIN("POST_LOGIN", new PostLoginCommand(EmployeeService.getInstance())),
-    GET_ALL_PRODUCTS_ORDER_BY_NAME("GET_ALL_PRODUCTS_ORDER_BY_NAME", null),
-    GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", null),
-    GET_ALL_CLIENTS_ORDER_BY_SURNAME("GET_ALL_CLIENTS_ORDER_BY_SURNAME", null),
-    SEARCH_PRODUCT_BY_NAME("SEARCH_PRODUCT_BY_NAME", null),
-    SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME("SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME", null),
-    SEARCH_CLIENTS_BY_SURNAME("SEARCH_CLIENTS_BY_SURNAME", null),
+    GET_ALL_PRODUCTS_ORDER_BY_NAME("GET_ALL_PRODUCTS_ORDER_BY_NAME", new GetAllProductsOrderByName(ProductService.getInstance())),
+    GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", new GetAllStoreProductsOrderByName(StoreProductService.getInstance())),
+    GET_ALL_CLIENTS_ORDER_BY_SURNAME("GET_ALL_CLIENTS_ORDER_BY_SURNAME", new GetAllCustomerCardsOrderBySurname(CustomerService.getInstance())),
+    SEARCH_PRODUCT_BY_PART_OF_NAME("SEARCH_PRODUCT_BY_NAME", new GetAllProductsByPartOfNameCommand(ProductService.getInstance())),
+    SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME("SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME", new GetProductsByCategoryOrderByName(ProductService.getInstance())),
+    SEARCH_CLIENTS_BY_PART_OF_SURNAME("SEARCH_CLIENTS_BY_SURNAME", new GetCustomerCardsByPartOfSurname(CustomerService.getInstance())),
     POST_ADD_CHECK("POST_ADD_CHECK", null),
-    POST_ADD_CLIENT("POST_ADD_CLIENT", null),
-    POST_UPDATE_CLIENT("POST_UPDATE_CLIENT", null),
+    POST_ADD_CLIENT("POST_ADD_CLIENT", new CreateCustomerCardCommand(CustomerService.getInstance())),
+    POST_UPDATE_CLIENT("POST_UPDATE_CLIENT", new UpdateCustomerCardCommand(CustomerService.getInstance())),
     GET_CHECKS_BY_CASHIER_IN_DAY("GET_CHECKS_BY_CASHIER_IN_DAY", null),
     GET_CHECKS_BY_CASHIER_IN_TIME_PERIOD("GET_CHECKS_BY_CASHIER_IN_TIME_PERIOD", null),
     GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", null),
-    GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", null),
-    GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", null),
-    GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", null),
-    GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", null),
-    GET_PRODUCT_INFO_BY_UPC("GET_PRODUCT_INFO_BY_UPC", null),
+    GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetPromProductsOrderByQuantity(ProductService.getInstance())),
+    GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", new GetPromProductsOrderByName(ProductService.getInstance())),
+    GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(ProductService.getInstance())),
+    GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(ProductService.getInstance())),
+    GET_PRODUCT_INFO_BY_UPC("GET_PRODUCT_INFO_BY_UPC", new GetStoreProductByIdCommand(StoreProductService.getInstance())),
     GET_SELF_INFO("GET_SELF_INFO", null);
 
 
