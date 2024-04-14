@@ -20,36 +20,36 @@ public class StoreProductService {
         return INSTANCE;
     }
 
-    List<StoreProduct> getAll(){
+    public List<StoreProduct> getAll(){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         return storeProductDao.getAll();
     }
 
-    Optional<StoreProduct> getById(String id){
+    public Optional<StoreProduct> getById(String id){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         return storeProductDao.getById(id);
     }
 
-    void create(StoreProduct storeProduct){
+    public void create(StoreProduct storeProduct){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         storeProductDao.create(storeProduct);
     }
 
-    void update(StoreProduct storeProduct){
+    public void update(StoreProduct storeProduct){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         storeProductDao.update(storeProduct);
     }
 
-    void delete(String id){
+    public void delete(String id){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         storeProductDao.delete(id);
     }
 
-    List<StoreProduct> getAllOrderByName(){
+    public List<StoreProduct> getAllOrderByName(){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         return storeProductDao.getAllOrderByName();
     }
-    Optional<StoreProduct> searchStoreProductByUpc(String upc){
+    public Optional<StoreProduct> searchStoreProductByUpc(String upc){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         return storeProductDao.searchStoreProductByUpc(upc);
     }

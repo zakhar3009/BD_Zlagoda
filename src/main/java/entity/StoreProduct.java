@@ -1,5 +1,7 @@
 package entity;
 
+import org.jetbrains.annotations.Nullable;
+
 public class StoreProduct {
 
     private String UPC;
@@ -43,8 +45,8 @@ public class StoreProduct {
             return this;
         }
 
-        public StoreProduct.Builder setPromStoreProduct(StoreProduct storeProduct){
-            storeProduct.promStoreProduct = storeProduct;
+        public StoreProduct.Builder setPromStoreProduct(@Nullable StoreProduct storeProduct){
+            this.storeProduct.promStoreProduct = storeProduct;
             return this;
         }
 
