@@ -3,7 +3,6 @@ package entity;
 import java.util.Objects;
 
 public class CustomerCard {
-
     private String number;
     private String customerSurname;
     private String customerName;
@@ -42,7 +41,7 @@ public class CustomerCard {
         }
 
         public CustomerCard.Builder setCustomerName(String name){
-            customerCard.customerSurname = name;
+            customerCard.customerName = name;
             return this;
         }
 

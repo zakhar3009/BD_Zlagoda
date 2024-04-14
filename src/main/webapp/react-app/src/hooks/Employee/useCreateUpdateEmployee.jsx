@@ -56,8 +56,7 @@ export default function useCreateUpdateEmployee(id, employee) {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = () => {
     if (id) addEditEmployeeRequest("POST_UPDATE_EMPLOYEE");
     else addEditEmployeeRequest("POST_ADD_EMPLOYEE");
   };

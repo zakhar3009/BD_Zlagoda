@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-export default function useCreateUpdateCategory(id, category) {
+export default function useCreateUpdateCustomerCard(id, client) {
     const navigate = useNavigate();
 
     const {
@@ -15,11 +15,18 @@ export default function useCreateUpdateCategory(id, category) {
     } = useForm();
 
     useEffect(() => {
-        setValue("name", category.name);
-    }, [category, setValue]);
+        setValue("number", client.number);
+        setValue("customerSurname", client.customerSurname);
+        setValue("customerName", client.customerName);
+        setValue("customerPatronymic", client.customerPatronymic);
+        setValue("phoneNumber", client.phoneNumber);
+        setValue("city", client.city);
+        setValue("street", client.street);
+        setValue("zipCode", client.zipCode);
+        setValue("percent", client.percent)
+    }, [client, setValue]);
 
-    // Toast needed
-    const addEditCategoryRequest = async (command) => {
+    const addEditClientRequest = async (command) => {
         const formData = getValues();
         const requestOptions = {
             method: "POST",
@@ -35,18 +42,18 @@ export default function useCreateUpdateCategory(id, category) {
                 requestOptions
             );
             const data = await response.json();
-            if (id) toast.success("Category was updated");
-            else toast.success("New category was added");
+            if (id) toast.success("Client was updated");
+            else toast.success("New client was added");
         } catch (err) {
             toast.error(`Error: ${err}`);
         } finally {
-            navigate("../get_all_categories");
+            navigate("../get_all_clients");
         }
     };
 
     const onSubmit = () => {
-        if (id) addEditCategoryRequest("POST_UPDATE_CATEGORY");
-        else addEditCategoryRequest("POST_ADD_CATEGORY");
+        if (id) addEditClientRequest("POST_UPDATE_CLIENT");
+        else addEditClientRequest("POST_ADD_CLIENT");
     };
 
     return {

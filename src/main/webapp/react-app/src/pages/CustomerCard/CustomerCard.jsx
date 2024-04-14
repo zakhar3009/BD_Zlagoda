@@ -1,13 +1,13 @@
+import MatTable from "@/components/table/MatTable.jsx";
 import React, {useEffect, useState} from "react";
-import MatTable from "../../components/table/MatTable.jsx";
+import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
 import {toast} from "react-toastify";
-import {productsTableMap} from "../../constants/ProductsCommandName.js";
 
-export default function Products({command}) {
-    const [data, setData] = useState(null);
+export default function CustomerCard({ command }) {
+    const [customerCards, setCustomerCards] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const fetchProductsData = async () => {
+    const fetchClientsData = async () => {
         try {
             setIsLoading(true);
             const response = await fetch(
@@ -17,36 +17,27 @@ export default function Products({command}) {
                 })
             );
             const data = await response.json();
-            setData(data.map(
-                (item) => ({
-                    id: item.id,
-                    name: item.name,
-                    characteristic: item.characteristic,
-                    category_number: item.category.number,
-                    category_name: item.category.name
-                })
-            ));
+            setCustomerCards(data);
             setIsLoading(false);
-            console.log(data);
+            console.log("LOADED CLIENTS",data);
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error(`ERROR: ${err}`);
         }
     };
 
     useEffect(() => {
-        fetchProductsData();
+        fetchClientsData();
     }, [command]);
 
-    const deleteProduct = async (productId) => {
-        console.log("deleting PRODUCT");
+    const deleteCustomer= async (customerId) => {
         const requestOptions = {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                command_name: "DELETE_PRODUCT",
+                command_name: "DELETE_CLIENT",
             },
             body: JSON.stringify({
-                id_product: productId,
+                id: customerId,
             }),
         };
         try {
@@ -55,27 +46,26 @@ export default function Products({command}) {
                 requestOptions
             );
             const data = await response.json();
-            fetchProductsData();
-            console.log(data);
-            toast.success("Product was removed!")
+            fetchClientsData();
+            toast.success("Customer was removed!")
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
     };
 
-    return (
+    return(
         <main className="px-8 py-4">
             <div className="grid">
                 {!isLoading && (
                     <MatTable
-                        columnNames={productsTableMap.get(command)}
-                        rows={data}
-                        deleteFunc={deleteProduct}
-                        deleteProperty={"id"}
-                        pathToCreateUpdate={"/post_update_product"}
+                        columnNames={customerCardTableMap.get(command)}
+                        rows={customerCards}
+                        deleteFunc={deleteCustomer}
+                        deleteProperty={"number"}
+                        pathToCreateUpdate={"/post_update_client"}
                     ></MatTable>
                 )}
             </div>
         </main>
-    );
+    )
 }

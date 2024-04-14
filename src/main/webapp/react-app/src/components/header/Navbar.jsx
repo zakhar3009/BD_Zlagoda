@@ -6,14 +6,14 @@ import EmployeeMenu from "./flyout-menus/EmployeeMenu";
 import CategoryMenu from "./flyout-menus/CategoryMenu";
 import ProductMenu from "./flyout-menus/ProductMenu.jsx";
 import { ToastContainer, Bounce } from "react-toastify";
+import CustomerCardMenu from './flyout-menus/CustomerCardMenu.jsx';
 import "react-toastify/dist/ReactToastify.css";
 
 const navigation = [
   { menu: <EmployeeMenu /> },
   { menu: <CategoryMenu /> },
-  { menu: <ProductMenu />}
-  // { name: 'Shop', href: '/shop', current: false },
-  // { name: 'Employee', href: '/employee', current: false },
+  { menu: <ProductMenu /> },
+  { menu: <CustomerCardMenu />}
 ];
 
 function classNames(...classes) {

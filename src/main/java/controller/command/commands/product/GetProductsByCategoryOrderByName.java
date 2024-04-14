@@ -22,7 +22,7 @@ public class GetProductsByCategoryOrderByName implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        List<Product> list = productService.searchProductsByCategoryOrderByName(hashMap.get("product_name"));
+        List<Product> list = productService.searchProductsByCategoryOrderByName(hashMap.get("category_name"));
         return JSON.gson().toJson(list);
     }
 }

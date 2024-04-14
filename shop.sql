@@ -54,7 +54,7 @@ CREATE TABLE Customer_Card
     phone_number    VARCHAR(13) NOT NULL,
     city            VARCHAR(50) NOT NULL,
     street          VARCHAR(50) NOT NULL,
-    zip_code             VARCHAR(9)  NOT NULL,
+    zip_code        VARCHAR(9)  NOT NULL,
     percent         INTEGER     NOT NULL
 );
 
