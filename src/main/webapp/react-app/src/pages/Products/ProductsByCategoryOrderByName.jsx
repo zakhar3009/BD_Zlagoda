@@ -26,20 +26,20 @@ export default function ProductsByCategoryOrderByName() {
         }
     };
 
-    // useEffect(() => {
-    //     fetchAllCategories();
-    // }, []);
+    useEffect(() => {
+        fetchAllCategories();
+    }, []);
 
-    // delete
 
     const getAllProductsByCategory = async (name) => {
+        if(!name) setProducts([])
         try {
             setIsLoading(true);
             const response = await fetch(
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
                     command_name: "GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME",
-                    category_name: "Clothing"
+                    category_name: name
                 })
             );
             const products = await response.json();
@@ -52,12 +52,38 @@ export default function ProductsByCategoryOrderByName() {
         }
     };
 
-    const onChangeSelectedCategory = (value) => setSelectedCategory(value)
+
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(selectedCategory)
-        getAllProductsByCategory('sd');
+        console.log(selectedCategory);
+        getAllProductsByCategory(selectedCategory);
+    };
+
+    const deleteProduct = async (productId) => {
+        console.log("deleting PRODUCT");
+        const requestOptions = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                command_name: "DELETE_PRODUCT",
+            },
+            body: JSON.stringify({
+                id_product: productId,
+            }),
+        };
+        try {
+            const response = await fetch(
+                "http://localhost:8080/controller",
+                requestOptions
+            );
+            const data = await response.json();
+            getAllProductsByCategory(selectedCategory);
+            console.log(data);
+            toast.success("Product was removed!")
+        } catch (err) {
+            toast.error(`ERROR: ${err}`)
+        }
     };
 
     return (
@@ -69,7 +95,8 @@ export default function ProductsByCategoryOrderByName() {
                 >
                     <select
                         onChange={e => setSelectedCategory(e.target.value)}
-                        className="block pl-3 w-full md:place-self-end sm:max-w-80 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        className="block h-full pl-3 w-full md:place-self-end sm:max-w-80 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <option value={null}></option>
                         {categories.map((item) => (
                             <option key={item.value} value={item.label}>{item.label}</option>
                         ))}
@@ -85,8 +112,9 @@ export default function ProductsByCategoryOrderByName() {
                     <MatTable
                         columnNames={productsTableMap.get("GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME")}
                         rows={products}
+                        deleteFunc={deleteProduct}
                         deleteProperty={"id"}
-                        pathToCreateUpdate={"/post_update_employee"}
+                        pathToCreateUpdate={"/post_update_product"}
                     ></MatTable>
                 )}
             </div>

@@ -4,9 +4,13 @@ import controller.command.Command;
 import controller.command.commands.auth.LogoutCommand;
 import controller.command.commands.auth.PostLoginCommand;
 import controller.command.commands.category.*;
+import controller.command.commands.cutomerCard.CreateCustomerCardCommand;
+import controller.command.commands.cutomerCard.DeleteCustomerCardCommand;
+import controller.command.commands.cutomerCard.UpdateCustomerCardCommand;
 import controller.command.commands.employee.*;
 import controller.command.commands.product.*;
 import service.CategoryService;
+import service.CustomerService;
 import service.EmployeeService;
 import service.ProductService;
 
@@ -46,7 +50,8 @@ public enum ManagerCommands {
     GET_CLIENTS_HAVING_CUSTOMER_CARD_ORDER_BY_SURNAME("GET_CLIENTS_HAVING_CUSTOMER_CARD_ORDER_BY_SURNAME", null),
     GET_EMPLOYEE_BY_ID("GET_EMPLOYEE_BY_ID", new GetEmployeeById(EmployeeService.getInstance())),
     GET_CATEGORY_BY_ID("GET_CATEGORY_BY_ID", new GetCategoryByID(CategoryService.getInstance())),
-    GET_PRODUCTS_BY_CATEGORY_ORDER_BY_CATEGORY("GET_PRODUCTS_BY_CATEGORY_ORDER_BY_CATEGORY", new GetProductsByCategoryOrderByName(ProductService.getInstance())),
+    GET_PRODUCT_BY_ID("GET_PRODUCT_BY_ID", new GetProductByID(ProductService.getInstance())),
+    GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME("GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME", new GetProductsByCategoryOrderByName(ProductService.getInstance())),
     GET_PRODUCT_BY_UPC("GET_PRODUCT_BY_UPC", null),
     GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", null),
     GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", null),

@@ -14,6 +14,7 @@ import AddAndEditEmployee from "./pages/Employee/AddAndEditEmployee.jsx";
 import AddAndEditCategory from "./pages/Category/AddAndEditCategory.jsx";
 import Products from "./pages/Products/Products.jsx";
 import ProductsByCategoryOrderByName from "@/pages/Products/ProductsByCategoryOrderByName.jsx";
+import AddAndEditProduct from "@/pages/Products/AddAndEditProduct.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -90,10 +91,13 @@ const router = createBrowserRouter(
                     path="get_products_by_category_order_by_name"
                     element={<ProductsByCategoryOrderByName />}
                 />
-                <Route
-                    path="get_all_products_by_upc"
-                    element={<Products command={"GET_PRODUCT_BY_UPC"}/>}
-                />
+                <Route path="post_add_product" element={<AddAndEditProduct />}/>
+                <Route path=":id/post_update_product" element={<AddAndEditProduct />}/>
+
+                {/*<Route*/}
+                {/*    path="get_all_products_bpost_update_categoryy_upc"*/}
+                {/*    element={<Products command={"GET_PRODUCT_BY_UPC"}/>}*/}
+                {/*/>*/}
             </Route>
 
         </Route>

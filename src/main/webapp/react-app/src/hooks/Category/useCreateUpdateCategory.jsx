@@ -44,8 +44,7 @@ export default function useCreateUpdateCategory(id, category) {
         }
     };
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = () => {
         if (id) addEditCategoryRequest("POST_UPDATE_CATEGORY");
         else addEditCategoryRequest("POST_ADD_CATEGORY");
     };

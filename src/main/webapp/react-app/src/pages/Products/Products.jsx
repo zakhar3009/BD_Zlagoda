@@ -29,7 +29,7 @@ export default function Products({command}) {
             setIsLoading(false);
             console.log(data);
         } catch (err) {
-            console.log(err);
+            toast.error(`ERROR: ${err}`)
         }
     };
 
