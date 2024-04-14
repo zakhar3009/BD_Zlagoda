@@ -40,12 +40,6 @@ export default function SearchEmployee() {
           onSubmit={handleFormSubmit}
           className="grid sm:grid-cols-2 gap-3 mb-4"
         >
-          {/* <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm text-xl font-semibold text-gray-900"
-          >
-            Surname:
-          </label> */}
           <input
             type="text"
             id="default-input"
