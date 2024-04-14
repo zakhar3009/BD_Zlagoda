@@ -18,7 +18,7 @@ export default function AddAndEditEmployee() {
     );
 
     return (
-        <Card height="full" >
+        <Card height="full">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="border-b border-gray-900/10 pb-12">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -93,10 +93,7 @@ export default function AddAndEditEmployee() {
                                     <option value={"MANAGER"}>Manager</option>
                                     <option value={"CASHIER"}>Cashier</option>
                                 </select>
-                                {errors.role && (
-                                    <span className="text-red-500 text-sm">
-                    {errors.role.message}
-                  </span>
+                                {errors.role && (<span className="text-red-500 text-sm">{errors.role.message}</span>
                                 )}
                             </div>
                         </div>

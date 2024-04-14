@@ -20,9 +20,8 @@ export default function useCreateUpdateEmployee(id, employee) {
     setValue("patronymic", employee.patronymic);
     setValue("role", employee.role);
     setValue("salary", employee.salary);
-    // ?? problems with Date data type
-    setValue("dateOfBirth", new Date(employee.dateOfBirth));
-    setValue("dateOfStart", new Date(employee.dateOfStart));
+    setValue("dateOfBirth", employee.dateOfBirth);
+    setValue("dateOfStart", employee.dateOfStart);
     // ?? not have email
     setValue("email", employee.email);
     setValue("city", employee.city);
