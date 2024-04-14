@@ -1,17 +1,18 @@
 import { Fragment, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
+import {customerCardMap} from "@/constants/CustomerCardCommandMap.js";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductMenu() {
+export default function CustomerCardMenu() {
     const [isOpen, setIsOpen] = useState(false);
 
-    const productsCommands = Array.from(productsCommandMap.entries()).filter(
+    const productsCommands = Array.from(customerCardMap.entries()).filter(
         (item) =>
-            item[0] !== "DELETE_PRODUCT" && item[0] !== "POST_UPDATE_PRODUCT"
+            item[0] !== "DELETE_CLIENT" && item[0] !== "POST_UPDATE_CLIENT"
     );
 
     return (
@@ -27,7 +28,7 @@ export default function ProductMenu() {
                     );
                 }}
             >
-                <span>Products</span>
+                <span>Customer Cards</span>
             </Popover.Button>
 
             <Transition
@@ -50,7 +51,7 @@ export default function ProductMenu() {
                                 >
                                     <NavLink
                                         onClick={() => setIsOpen((prev) => !prev)}
-                                        to={"/products/" + item[0].toLowerCase()}
+                                        to={"/customer-card/" + item[0].toLowerCase()}
                                         className="font-semibold text-gray-900"
                                     >
                                         {item[1]}

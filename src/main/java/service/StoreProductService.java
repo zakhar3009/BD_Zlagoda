@@ -49,8 +49,4 @@ public class StoreProductService {
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         return storeProductDao.getAllOrderByName();
     }
-    public Optional<StoreProduct> searchStoreProductByUpc(String upc){
-        StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
-        return storeProductDao.searchStoreProductByUpc(upc);
-    }
 }

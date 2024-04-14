@@ -69,15 +69,15 @@ public class JdbcCustomerDao implements CustomerDao {
 
     @Override
     public List<CustomerCard> getAll() {
-        List<CustomerCard> products = new ArrayList<>();
+        List<CustomerCard> clients = new ArrayList<>();
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL)) {
             while (resultSet.next()) {
-                products.add(extractCustomerCardFromResultSet(resultSet));
+                clients.add(extractCustomerCardFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
         }
-        return products;
+        return clients;
     }
 
     @Override
@@ -96,9 +96,9 @@ public class JdbcCustomerDao implements CustomerDao {
 
     @Override
     public void create(CustomerCard customerCard) {
-        String randomId = UUID.randomUUID().toString();
+        String randomId = UUID.randomUUID().toString().substring(0, 10);
         try (PreparedStatement query = connection.prepareStatement(CREATE)){
-            query.setString(1, customerCard.getNumber());
+            query.setString(1, randomId);
             query.setString(2, customerCard.getCustomerSurname());
             query.setString(3, customerCard.getCustomerName());
             query.setString(4, customerCard.getCustomerPatronymic());
@@ -116,15 +116,15 @@ public class JdbcCustomerDao implements CustomerDao {
     @Override
     public void update(CustomerCard customerCard) {
         try (PreparedStatement query = connection.prepareStatement(UPDATE)){
-            query.setString(1, customerCard.getNumber());
-            query.setString(2, customerCard.getCustomerSurname());
-            query.setString(3, customerCard.getCustomerName());
-            query.setString(4, customerCard.getCustomerPatronymic());
-            query.setString(5, customerCard.getPhoneNumber());
-            query.setString(6, customerCard.getCity());
-            query.setString(7, customerCard.getStreet());
-            query.setString(8, customerCard.getZipCode());
-            query.setInt(9, customerCard.getPercent());
+            query.setString(1, customerCard.getCustomerSurname());
+            query.setString(2, customerCard.getCustomerName());
+            query.setString(3, customerCard.getCustomerPatronymic());
+            query.setString(4, customerCard.getPhoneNumber());
+            query.setString(5, customerCard.getCity());
+            query.setString(6, customerCard.getStreet());
+            query.setString(7, customerCard.getZipCode());
+            query.setInt(8, customerCard.getPercent());
+            query.setString(9, customerCard.getNumber());
             query.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

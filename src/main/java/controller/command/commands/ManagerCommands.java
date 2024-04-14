@@ -43,10 +43,13 @@ public enum ManagerCommands {
     GET_ALL_PRODUCTS_ORDER_BY_NAME("GET_ALL_PRODUCTS_ORDER_BY_NAME", new GetAllProductsOrderByName(ProductService.getInstance())),
     GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", new GetAllProductsOrderByQuantity(ProductService.getInstance())),
     SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME("SEARCH_EMPLOYEE_BY_SURNAME", new GetEmployeeAddressAndPhoneBySurname(EmployeeService.getInstance())),
-    GET_CLIENTS_HAVING_CUSTOMER_CARD_ORDER_BY_SURNAME("GET_CLIENTS_HAVING_CUSTOMER_CARD_ORDER_BY_SURNAME", new GetAllCustomerCardsOrderBySurname(CustomerService.getInstance())),
+
+    // Command to get clients by percent from user and order surname
+    GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME("GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME", null),
     GET_EMPLOYEE_BY_ID("GET_EMPLOYEE_BY_ID", new GetEmployeeById(EmployeeService.getInstance())),
     GET_CATEGORY_BY_ID("GET_CATEGORY_BY_ID", new GetCategoryByID(CategoryService.getInstance())),
-    GET_PRODUCTS_BY_CATEGORY_ORDER_BY_CATEGORY("GET_PRODUCTS_BY_CATEGORY_ORDER_BY_CATEGORY", new GetProductsByCategoryOrderByName(ProductService.getInstance())),
+    GET_CLIENT_BY_ID("GET_CLIENT_BY_ID", new GetCustomerCardByIdCommand(CustomerService.getInstance())),
+    GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME("GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME", new GetProductsByCategoryOrderByName(ProductService.getInstance())),
     GET_PRODUCT_BY_UPC("GET_PRODUCT_BY_UPC", new GetStoreProductByIdCommand(StoreProductService.getInstance())),
     GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetPromProductsOrderByQuantity(ProductService.getInstance())),
     GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", new GetPromProductsOrderByName(ProductService.getInstance())),
