@@ -12,15 +12,18 @@ import java.util.UUID;
 
 public class JdbcStoreProductDao implements StoreProductDao {
 
-    private static String GET_ALL = "SELECT * FROM (store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+    private static String GET_ALL = "SELECT * FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC";
-    private static String GET_BY_ID = "SELECT * FROM store_product INNER JOIN product ON store_product.id_product = product.id_product WHERE UPC=?";
+    private static String GET_BY_ID = "SELECT * FROM ((store_product INNER JOIN product ON store_product.id_product = product.id_product)" +
+            "INNER JOIN category ON product.category_number = category.category_number) WHERE UPC=?";
     private static String CREATE = "INSERT INTO store_product" +
             " (UPC, UPC_prom, id_product, selling_price, products_number, promotional_product) VALUES (?, ?, ?, ?, ?, ?)";
     private static String UPDATE = "UPDATE store_product" +
             " SET UPC_prom=?, selling_price=?, products_number=?, promotional_product=?" + " WHERE UPC=?";
     private static String DELETE = "DELETE FROM store_product WHERE UPC=?";
-    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM (store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC";
 
 
@@ -118,16 +121,47 @@ public class JdbcStoreProductDao implements StoreProductDao {
         return storeProducts;
     }
 
+    @Override
+    public void createPromStoreProduct(StoreProduct storeProduct) {
+        String randomId = UUID.randomUUID().toString().substring(0, 12);
+        storeProduct.setPromStoreProduct(new StoreProduct.Builder().setUpc(randomId).build());
+        update(storeProduct);
+        try(PreparedStatement query = connection.prepareStatement(CREATE)){
+            query.setString(1, storeProduct.getPromStoreProduct().getUPC());
+            query.setString(2, null);
+            query.setInt(3, storeProduct.getProductID());
+            query.setDouble(4, storeProduct.getSellingPrice() * 0.8);
+            query.setInt(5, storeProduct.getProductsNumber());
+            query.setBoolean(6, true);
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+
 
     protected static StoreProduct extractStoreProductFromResultSet(ResultSet resultSet) throws SQLException {
 
         return new StoreProduct.Builder()
                 .setUpc(resultSet.getString(UPC))
-                .setPromStoreProduct(resultSet.getBoolean(IS_PROM) ? null : extractStoreProductFromResultSet(resultSet))
+                .setPromStoreProduct(resultSet.getString(UPC_PROM) == null ? null : extractPromStoreProductFromResultSet(resultSet))
                 .setProduct(JdbcProductDao.extractProductFromResultSet(resultSet))
                 .setSellingPrice(resultSet.getDouble(PRODUCT_PRICE))
                 .setProductsNumber(resultSet.getInt(PRODUCT_QUANTITY))
                 .setIsProm(resultSet.getBoolean(IS_PROM))
+                .build();
+    }
+
+    protected static StoreProduct extractPromStoreProductFromResultSet(ResultSet resultSet) throws SQLException {
+
+        return new StoreProduct.Builder()
+                .setUpc(resultSet.getString(UPC_PROM))
+                .setPromStoreProduct(null)
+                .setProduct(JdbcProductDao.extractProductFromResultSet(resultSet))
+                .setSellingPrice(resultSet.getDouble(PRODUCT_PRICE))
+                .setProductsNumber(resultSet.getInt(PRODUCT_QUANTITY))
+                .setIsProm(true)
                 .build();
     }
 }

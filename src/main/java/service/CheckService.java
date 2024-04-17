@@ -4,7 +4,7 @@ import dao.CheckDao;
 import dao.DaoFactory;
 import entity.Check;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,19 +46,19 @@ public class CheckService {
         checkDao.delete(id);
     }
 
-    double getChecksSumByEmployeeIdPerPeriod(String employeeId, LocalDate start, LocalDate end){
+    double getChecksSumByEmployeeIdPerPeriod(String employeeId, Date start, Date end){
         CheckDao checkDao = daoFactory.createCheckDao();
         return checkDao.getChecksSumByEmployeeIdPerPeriod(employeeId, start, end);
     }
-    double getChecksSumByPeriod(LocalDate start, LocalDate end){
+    double getChecksSumByPeriod(Date start, Date end){
         CheckDao checkDao = daoFactory.createCheckDao();
         return checkDao.getChecksSumByPeriod(start, end);
     }
-    List<Check> getSelfDailyChecks(String employeeId, LocalDate day){
+    List<Check> getSelfDailyChecks(String employeeId, Date day){
         CheckDao checkDao = daoFactory.createCheckDao();
         return checkDao.getSelfDailyChecks(employeeId, day);
     }
-    List<Check> getSelfChecksPerPeriod(String employeeId, LocalDate start, LocalDate end){
+    List<Check> getSelfChecksPerPeriod(String employeeId, Date start, Date end){
         CheckDao checkDao = daoFactory.createCheckDao();
         return checkDao.getSelfChecksPerPeriod(employeeId, start, end);
     }
