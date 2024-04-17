@@ -17,6 +17,8 @@ import ProductsByCategoryOrderByName from "@/pages/Products/ProductsByCategoryOr
 import AddAndEditProduct from "@/pages/Products/AddAndEditProduct.jsx";
 import CustomerCard from "@/pages/CustomerCard/CustomerCard.jsx";
 import AddAndEditCustomerCard from "@/pages/CustomerCard/AddAndEditCustomerCard.jsx";
+import { AuthProvider } from "@/context/AuthProvider.jsx";
+import RequireAuth from "@/components/auth/RequireAuth.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -42,7 +44,7 @@ const router = createBrowserRouter(
             <Route index element={<Hero/>}/>
             <Route path="/login" element={<LogIn/>}/>
             <Route path="*" element={<Error/>}/>
-            <Route path="employee">
+            <Route path="employee" element={<RequireAuth />}>
                 <Route
                     path="get_all_employees"
                     element={<Employee command={"GET_ALL_EMPLOYEES"}/>}
@@ -122,6 +124,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <AuthProvider>
+            <RouterProvider router={router}/>
+        </AuthProvider>
     </React.StrictMode>
 );

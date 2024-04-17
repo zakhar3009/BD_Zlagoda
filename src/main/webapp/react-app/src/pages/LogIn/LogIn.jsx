@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import useAuth from "@/hooks/auth/useAuth.js";
 
 export default function LogIn() {
+    const { setAuth } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
