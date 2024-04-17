@@ -20,7 +20,7 @@ public class JdbcCheckDao implements CheckDao {
     private static String GET_CHECKS_SUM_BY_EMPLOYEE_PER_PERIOD = "SELECT SUM(sum_total) FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE (print_date>=? AND print_date<=?) AND id_employee=?";
     private static String GET_CHECKS_SUM_PER_PERIOD = "SELECT SUM(sum_total) FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE print_date>=? AND print_date<=?";
     private static String GET_SElF_DAILY_CHECKS = "SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE id_employee=? AND print_date=?";
-    private static String GET_SElF_DAILY_CHECKS_PER_PERIOD = "SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE id_employee=? AND (print_date>? AND print_date<?)";
+    private static String GET_SElF_CHECKS_PER_PERIOD = "SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE id_employee=? AND (print_date>? AND print_date<?)";
 
 
     private static String CHECK_NUMBER = "check_number";
@@ -83,7 +83,7 @@ public class JdbcCheckDao implements CheckDao {
     @Override
     public List<Check> getSelfChecksPerPeriod(String employeeId, Date start, Date end) {
         List<Check> checks = new ArrayList<>();
-        try (PreparedStatement query = connection.prepareStatement(GET_SElF_DAILY_CHECKS_PER_PERIOD)) {
+        try (PreparedStatement query = connection.prepareStatement(GET_SElF_CHECKS_PER_PERIOD)) {
             query.setString(1, employeeId);
             query.setDate(2, start);
             query.setDate(3, end);
