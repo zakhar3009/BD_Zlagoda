@@ -21,6 +21,7 @@ public class JdbcCustomerDao implements CustomerDao {
             + " SET  cust_surname=?, cust_name=?, cust_patronymic=?, phone_number=?, city=?, street=?, zip_code=?, percent=?" + " WHERE card_number=? ";
     private static String DELETE = "DELETE FROM customer_card WHERE card_number=?";
     private static String SEARCH_CUSTOMERS_BY_PART_OF_SURNAME = "SELECT * FROM customer_card WHERE cust_surname LIKE ?";
+    private static String GET_CUSTOMERS_BY_PERCENT_ORDER_BY_SURNAME = "SELECT * FROM customer_card WHERE percent=? ORDER BY cust_surname";
 
 
     private static String CUSTOMER_NUMBER = "card_number";
@@ -61,6 +62,20 @@ public class JdbcCustomerDao implements CustomerDao {
             while (resultSet.next()) {
                 customerCards.add(extractCustomerCardFromResultSet(resultSet));
             }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return customerCards;
+    }
+
+    @Override
+    public List<CustomerCard> getCustomersByPercentOrderBySurname(int percent) {
+        List<CustomerCard> customerCards = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_BY_PERCENT_ORDER_BY_SURNAME)) {
+            query.setInt(1, percent);
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next())
+                customerCards.add(extractCustomerCardFromResultSet(resultSet));
         } catch (SQLException e) {
             throw new ServerException(e);
         }

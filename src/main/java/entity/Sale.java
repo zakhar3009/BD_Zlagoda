@@ -6,18 +6,18 @@ public class Sale {
 
     private StoreProduct storeProduct;
     private Check check;
-    private Long productNumber;
+    private Integer productNumber;
     private double sellingPrice;
 
-    public String getStoreProduct() {
-        return storeProduct.getUPC();
+    public StoreProduct getStoreProduct() {
+        return storeProduct;
     }
 
     public void setStoreProduct(StoreProduct storeProduct) {
         this.storeProduct = storeProduct;
     }
 
-    public Sale(StoreProduct saleUPC, Check check, Long productNumber, double sellingPrice) {
+    public Sale(StoreProduct saleUPC, Check check, Integer productNumber, double sellingPrice) {
         this.storeProduct = saleUPC;
         this.check = check;
         this.productNumber = productNumber;
@@ -39,7 +39,7 @@ public class Sale {
             return this;
         }
 
-        public Sale.Builder setProductNumber(Long productNumber){
+        public Sale.Builder setProductNumber(Integer productNumber){
             sale.productNumber = productNumber;
             return this;
         }
@@ -55,7 +55,7 @@ public class Sale {
         }
     }
 
-    public Check getCheckNumber() {
+    public Check getCheck() {
         return check;
     }
 
@@ -63,11 +63,11 @@ public class Sale {
         this.check = check;
     }
 
-    public Long getProductNumber() {
+    public Integer getProductNumber() {
         return productNumber;
     }
 
-    public void setProductNumber(Long productNumber) {
+    public void setProductNumber(Integer productNumber) {
         this.productNumber = productNumber;
     }
 

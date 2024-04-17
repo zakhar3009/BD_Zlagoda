@@ -9,7 +9,7 @@ public class Check {
     private CustomerCard customerCard;
     private Date printDate;
     private Double sumTotal;
-    private String vat;
+    private Double vat;
 
     public String getNumber() {
         return number;
@@ -19,15 +19,15 @@ public class Check {
         this.number = number;
     }
 
-    public String getEmployeeID() {
-        return employee.getId();
+    public Employee getEmployee() {
+        return employee;
     }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
-    public Check(String number, Employee employee, CustomerCard customerCard, Date printDate, Double sumTotal, String vat) {
+    public Check(String number, Employee employee, CustomerCard customerCard, Date printDate, Double sumTotal, Double vat) {
         this.number = number;
         this.employee = employee;
         this.customerCard = customerCard;
@@ -66,7 +66,7 @@ public class Check {
             return this;
         }
 
-        public Check.Builder setVat(String vat){
+        public Check.Builder setVat(Double vat){
             check.vat = vat;
             return this;
         }
@@ -77,8 +77,8 @@ public class Check {
         }
     }
 
-    public String getCustomerCardNumber() {
-        return customerCard.getNumber();
+    public CustomerCard getCustomerCard() {
+        return customerCard;
     }
 
     public void setCustomerCard(CustomerCard customerCard) {
@@ -101,11 +101,11 @@ public class Check {
         this.sumTotal = sumTotal;
     }
 
-    public String getVat() {
+    public Double getVat() {
         return vat;
     }
 
-    public void setVat(String vat) {
+    public void setVat(Double vat) {
         this.vat = vat;
     }
 

@@ -7,4 +7,6 @@ import java.util.List;
 public interface StoreProductDao extends GenericDao<StoreProduct, String>{
     List<StoreProduct> getAllOrderByName();
 
+    void createPromStoreProduct(StoreProduct storeProduct);
+
 }

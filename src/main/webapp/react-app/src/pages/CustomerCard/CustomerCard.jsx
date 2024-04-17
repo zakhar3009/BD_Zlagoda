@@ -61,7 +61,7 @@ export default function CustomerCard({ command }) {
                         columnNames={customerCardTableMap.get(command)}
                         rows={customerCards}
                         deleteFunc={deleteCustomer}
-                        deleteProperty={"number"}
+                        deleteProperty={"UPC"}
                         pathToCreateUpdate={"/post_update_client"}
                     ></MatTable>
                 )}

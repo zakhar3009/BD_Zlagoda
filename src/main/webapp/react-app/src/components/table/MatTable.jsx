@@ -90,8 +90,8 @@ export default function MatTable({
     return (
         <>
             <Paper className="w-full drop-shadow-lg overflow-hidden">
-                <TableContainer className="w-full" sx={{maxHeight: 440}}>
-                    <Table className="w-full" stickyHeader aria-label="sticky table">
+                <TableContainer className="w-screen table-for-print" sx={{maxHeight: 440}} >
+                    <Table className="w-full table-for-print" stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
                                 {columns.map((column) => (

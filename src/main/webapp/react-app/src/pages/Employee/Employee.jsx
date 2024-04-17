@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { employeesTableMap } from "../../constants/EmployeesCommandMap.js";
 import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
-
+import { useReactToPrint } from 'react-to-print';
+import TableForPrint from "@/components/table/TableForPrint.jsx";
 export default function Employee({ command }) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   const fetchEmployeesData = async () => {
     try {
       setIsLoading(true);
@@ -54,11 +59,16 @@ export default function Employee({ command }) {
       toast.error(`ERROR: ${err}`)
     }
   };
+  const createPDF = () => {
+    // Викликати друк таблиці до PDF
+    componentRef.current();
+  };
 
   return (
     <main className="px-8 py-4">
-      <div className="grid">
+      <div className="grid" ref={componentRef} >
         {!isLoading && (
+            <>
           <MatTable
             columnNames={employeesTableMap.get(command)}
             rows={data}
@@ -66,8 +76,18 @@ export default function Employee({ command }) {
             deleteProperty={"id"}
             pathToCreateUpdate={"/post_update_employee"}
           ></MatTable>
+        {/*  <div style={{ display: 'none' }}> /!* Приховати таблицю для друку *!/*/}
+        {/*<TableForPrint*/}
+        {/*    columnNames={employeesTableMap.get(command)}*/}
+        {/*    rows={data}*/}
+        {/*    ref={componentRef}*/}
+        {/*/>*/}
+      {/*</div>*/}
+      {/*<button onClick={createPDF}>To PDF</button>*/}
+    </>
         )}
       </div>
+      <button onClick={handlePrint}>To PDF</button>
     </main>
   );
 }
