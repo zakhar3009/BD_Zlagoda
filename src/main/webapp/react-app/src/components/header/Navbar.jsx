@@ -8,12 +8,14 @@ import ProductMenu from "./flyout-menus/ProductMenu.jsx";
 import { ToastContainer, Bounce } from "react-toastify";
 import CustomerCardMenu from './flyout-menus/CustomerCardMenu.jsx';
 import "react-toastify/dist/ReactToastify.css";
+import StoreProductMenu from "@/components/header/flyout-menus/StoreProductMenu.jsx";
 
 const navigation = [
   { menu: <EmployeeMenu /> },
   { menu: <CategoryMenu /> },
   { menu: <ProductMenu /> },
-  { menu: <CustomerCardMenu />}
+  { menu: <CustomerCardMenu />},
+  { menu: <StoreProductMenu />}
 ];
 
 function classNames(...classes) {
