@@ -19,7 +19,17 @@ public class JdbcSaleDao implements SaleDao {
     private static String GET_ALL = "SELECT * FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number))";
     private static String GET_QUANTITY_OF_SOLD_PRODUCT_PER_PERIOD = "SELECT SUM(product_number) FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number)) JOIN checks USING(check_number)" +
             " WHERE UPC=? AND (print_date>=? AND print_date<=?)";
-    private static String GET_FULL_CHECK_BY_NUMBER = "SELECT * FROM ((sale JOIN store_product USING(UPC)) )";
+    private static String GET_FULL_CHECK_BY_NUMBER = "SELECT * FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
+            " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
+            " WHERE checks.check_number=?";
+    private static String GET_FULL_CHECKS_PER_PERIOD = "SELECT * FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
+            " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
+            " WHERE checks.print_date>=? AND checks.print_date<=?" +
+            " GROUP BY sale.check_number";
+    private static String GET_FULL_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT * FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
+            " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
+            " WHERE employee.id_employee=? AND (checks.print_date>=? AND checks.print_date<=?)" +
+            " GROUP BY sale.check_number";
 
     private static String UPC = "UPC";
     private static String CHECK_NUMBER = "check_number";
@@ -90,12 +100,31 @@ public class JdbcSaleDao implements SaleDao {
 
     @Override
     public List<List<Sale>> getFullChecksByEmployeeIdPerPeriod(String employeeId, Date start, Date end) {
-        return null;
+        List<List<Sale>> sales;
+        try (PreparedStatement query = connection.prepareStatement(GET_FULL_CHECKS_BY_EMPLOYEE_PER_PERIOD)) {
+            query.setString(1, employeeId);
+            query.setDate(2, start);
+            query.setDate(3, end);
+            ResultSet resultSet = query.executeQuery();
+            sales = parseToSalesLists(resultSet);
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return sales;
     }
 
     @Override
     public List<List<Sale>> getFullChecksPerPeriod(Date start, Date end) {
-        return null;
+        List<List<Sale>> sales;
+        try (PreparedStatement query = connection.prepareStatement(GET_FULL_CHECKS_PER_PERIOD)) {
+            query.setDate(1, start);
+            query.setDate(2, end);
+            ResultSet resultSet = query.executeQuery();
+            sales = parseToSalesLists(resultSet);
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return sales;
     }
 
     @Override
@@ -115,7 +144,16 @@ public class JdbcSaleDao implements SaleDao {
 
     @Override
     public List<Sale> getFullCheckByNumber(String checkNumber) {
-        return null;
+        List<Sale> sales = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(GET_FULL_CHECK_BY_NUMBER)) {
+            query.setString(1, checkNumber);
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next())
+                sales.add(extractSaleFromResultSet(resultSet));
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return sales;
     }
 
     protected static Sale extractSaleFromResultSet(ResultSet resultSet) throws SQLException {
@@ -125,5 +163,24 @@ public class JdbcSaleDao implements SaleDao {
                 .setProductNumber(resultSet.getInt(PRODUCT_NUMBER))
                 .setSellingPrice(resultSet.getDouble(SELLING_PRICE))
                 .build();
+    }
+
+    public List<List<Sale>> parseToSalesLists(ResultSet resultSet) throws SQLException {
+        List<List<Sale>> resultList = new ArrayList<>();
+        int currentCheckNumber = -1;
+        List<Sale> currentSalesList = new ArrayList<>();
+        while (resultSet.next()) {
+            int checkNumber = resultSet.getInt("check_number");
+            Sale sale = extractSaleFromResultSet(resultSet);
+            if (checkNumber != currentCheckNumber) {
+                resultList.add(currentSalesList);
+                currentSalesList = new ArrayList<>();
+                currentCheckNumber = checkNumber;
+            }
+            currentSalesList.add(sale);
+        }
+        resultList.add(currentSalesList);
+        return resultList;
+
     }
 }

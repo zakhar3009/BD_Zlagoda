@@ -4,9 +4,16 @@ import controller.command.Command;
 import controller.command.commands.auth.LogoutCommand;
 import controller.command.commands.auth.PostLoginCommand;
 import controller.command.commands.category.*;
+import controller.command.commands.check.DeleteCheckCommand;
+import controller.command.commands.check.GetAllChecksCommand;
+import controller.command.commands.check.GetChecksSumByEmployeePerPeriod;
+import controller.command.commands.check.GetChecksSumPerPeriod;
 import controller.command.commands.cutomerCard.*;
 import controller.command.commands.employee.*;
 import controller.command.commands.product.*;
+import controller.command.commands.sale.GetFullChecksByEmployeePerPeriod;
+import controller.command.commands.sale.GetFullChecksPerPeriod;
+import controller.command.commands.sale.GetQuantityOfSoldProductPerPeriod;
 import controller.command.commands.storeProduct.*;
 import service.*;
 
@@ -29,13 +36,13 @@ public enum ManagerCommands {
     DELETE_CATEGORY("DELETE_CATEGORY", new DeleteCategoryCommand(CategoryService.getInstance())),
     DELETE_PRODUCT("DELETE_PRODUCT", new DeleteProductCommand(ProductService.getInstance())),
     DELETE_PRODUCT_IN_SHOP("DELETE_PRODUCT_IN_SHOP", new DeleteStoreProductCommand(StoreProductService.getInstance())),
-    DELETE_CHECK("DELETE_CHECK", null),
+    DELETE_CHECK("DELETE_CHECK", new DeleteCheckCommand(CheckService.getInstance())),
     GET_ALL_EMPLOYEES("GET_ALL_EMPLOYEES", new GetAllEmployeesCommand(EmployeeService.getInstance())),
     GET_ALL_CLIENTS("GET_ALL_CLIENTS", new GetAllCustomerCardsCommand(CustomerService.getInstance())),
     GET_ALL_CATEGORIES("GET_ALL_CATEGORIES", new GetAllCategoriesCommand(CategoryService.getInstance())),
     GET_ALL_PRODUCTS("GET_ALL_PRODUCTS", new GetAllProductsCommand(ProductService.getInstance())),
     GET_ALL_PRODUCTS_IN_SHOP("GET_ALL_PRODUCTS_IN_SHOP", new GetAllStoreProductsCommand(StoreProductService.getInstance())),
-    GET_ALL_CHECKS("GET_ALL_CHECKS", null),
+    GET_ALL_CHECKS("GET_ALL_CHECKS", new GetAllChecksCommand(CheckService.getInstance())),
     GET_ALL_EMPLOYEES_ORDER_BY_SURNAME("GET_ALL_EMPLOYEES_ORDER_BY_SURNAME", new GetAllEmployeeOrderBySurname(EmployeeService.getInstance())),
     GET_ALL_CASHIERS_ORDER_BY_SURNAME("GET_ALL_CASHIERS_ORDER_BY_SURNAME", new GetCashiersOrderBySurname(EmployeeService.getInstance())),
     GET_ALL_CLIENTS_ORDER_BY_SURNAME("GET_ALL_CLIENTS_ORDER_BY_SURNAME", new GetAllCustomerCardsOrderBySurname(CustomerService.getInstance())),
@@ -45,7 +52,7 @@ public enum ManagerCommands {
     SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME("SEARCH_EMPLOYEE_BY_SURNAME", new GetEmployeeAddressAndPhoneBySurname(EmployeeService.getInstance())),
     GET_CLIENTS_BY_PART_OF_SURNAME("GET_CLIENTS_BY_PART_OF_SURNAME", new GetCustomerCardsByPartOfSurname(CustomerService.getInstance())),
     // Command to get clients by percent from user and order surname
-    GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME("GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME", null),
+    GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME("GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME", new GetCustomersByPercentOrderBySurname(CustomerService.getInstance())),
     GET_EMPLOYEE_BY_ID("GET_EMPLOYEE_BY_ID", new GetEmployeeById(EmployeeService.getInstance())),
     GET_CATEGORY_BY_ID("GET_CATEGORY_BY_ID", new GetCategoryByID(CategoryService.getInstance())),
     GET_CLIENT_BY_ID("GET_CLIENT_BY_ID", new GetCustomerCardByIdCommand(CustomerService.getInstance())),
@@ -55,11 +62,11 @@ public enum ManagerCommands {
     GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", new GetPromProductsOrderByName(ProductService.getInstance())),
     GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(ProductService.getInstance())),
     GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(ProductService.getInstance())),
-    GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", null),
-    GET_ALL_CHECKS_BY_TIME_PERIOD("GET_ALL_CHECKS_BY_TIME_PERIOD", null),
-    GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD("GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD", null),
-    GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD("GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD", null),
-    GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", null);
+    GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", new GetFullChecksByEmployeePerPeriod(SaleService.getInstance())),
+    GET_ALL_CHECKS_BY_TIME_PERIOD("GET_ALL_CHECKS_BY_TIME_PERIOD", new GetFullChecksPerPeriod(SaleService.getInstance())),
+    GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD("GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD", new GetChecksSumByEmployeePerPeriod(CheckService.getInstance())),
+    GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD("GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD", new GetChecksSumPerPeriod(CheckService.getInstance())),
+    GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", new GetQuantityOfSoldProductPerPeriod(SaleService.getInstance()));
 
     ManagerCommands(String commandKey, Command command) {
         this.key = commandKey;
