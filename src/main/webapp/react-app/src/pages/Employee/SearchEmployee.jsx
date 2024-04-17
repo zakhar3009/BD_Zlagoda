@@ -1,13 +1,14 @@
 import { useState } from "react";
 import MatTable from "../../components/table/MatTable.jsx";
 import { employeesTableMap } from "../../constants/EmployeesCommandMap.js";
+import {toast} from "react-toastify";
 
 export default function SearchEmployee() {
   const [surname, setSurname] = useState("");
-  const [data, setData] = useState();
+  const [employees, setEmployees] = useState();
   const [isLoading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchEmployeesData = async () => {
     try {
       setLoading(true);
       console.log("SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME");
@@ -18,9 +19,8 @@ export default function SearchEmployee() {
             surname: surname,
           })
       );
-      const getAllEmployeesOrder = await response.json();
-      setData(getAllEmployeesOrder);
-      console.log("DATA", data);
+      const getAllEmployees = await response.json();
+      setEmployees(getAllEmployees);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -29,8 +29,31 @@ export default function SearchEmployee() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(surname);
-    fetchData();
+    fetchEmployeesData();
+  };
+
+  const deleteEmployee = async (employeeId) => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        command_name: "DELETE_EMPLOYEE",
+      },
+      body: JSON.stringify({
+        id: employeeId,
+      }),
+    };
+    try {
+      const response = await fetch(
+          "http://localhost:8080/controller",
+          requestOptions
+      );
+      const data = await response.json();
+      fetchEmployeesData();
+      toast.success("Employee was removed!")
+    } catch (err) {
+      toast.error(`ERROR: ${err}`)
+    }
   };
 
   return (
@@ -62,7 +85,10 @@ export default function SearchEmployee() {
             columnNames={employeesTableMap.get(
               "SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME"
             )}
-            rows={data}
+            rows={employees}
+            deleteFunc={deleteEmployee}
+            deleteProperty={"id"}
+            pathToCreateUpdate={"/post_update_employee"}
           ></MatTable>
         )}
         {/*{!isLoading && <h1>Not have employee with that with that surname</h1>}*/}
