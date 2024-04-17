@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
 import {storeProductsTableMap} from "@/constants/StoreProductsCommandName.js";
+import CollapsibleTable from "@/components/table/CollapsibleTable.jsx";
 
 export default function StoreProduct({command}) {
     const [storeProducts, setStoreProducts] = useState(null);
@@ -17,7 +18,20 @@ export default function StoreProduct({command}) {
                 })
             );
             const data = await response.json();
-            setStoreProducts(data);
+            setStoreProducts(data.map(
+                (item) => ({
+                    UPC: item.UPC,
+                    id: item.product.id,
+                    name: item.product.name,
+                    characteristic: item.product.characteristic,
+                    category_number: item.product.category.number,
+                    category_name: item.product.category.name,
+                    productsNumber : item.productsNumber,
+                    promotionalProduct: item.promotionalProduct ? "True" : "False",
+                    sellingPrice: item.sellingPrice,
+                    product: item.product
+                })
+            ));
             setIsLoading(false);
             console.log(data);
         } catch (err) {
@@ -47,24 +61,32 @@ export default function StoreProduct({command}) {
             );
             const data = await response.json();
             fetchStoreProductsData();
+
             console.log(data);
             toast.success("Product in shop was removed!")
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
     };
-
+console.log(storeProductsTableMap.get(command))
     return (
         <main className="px-8 py-4">
             <div className="grid">
                 {!isLoading && (
-                    <MatTable
+                    <>
+                    <CollapsibleTable
                         columnNames={storeProductsTableMap.get(command)}
-                        rows={storeProducts}
-                        deleteFunc={deleteStoreProduct}
-                        deleteProperty={"id"}
-                        pathToCreateUpdate={"/post_update_product"}
-                    ></MatTable>
+                        rows={storeProducts}>
+
+                    </CollapsibleTable>
+                    {/*<MatTable*/}
+                    {/*    columnNames={storeProductsTableMap.get(command)}*/}
+                    {/*    rows={storeProducts}*/}
+                    {/*    deleteFunc={deleteStoreProduct}*/}
+                    {/*    deleteProperty={"id"}*/}
+                    {/*    pathToCreateUpdate={"/post_update_product"}*/}
+                    {/*></MatTable>*/}
+                    </>
                 )}
             </div>
         </main>

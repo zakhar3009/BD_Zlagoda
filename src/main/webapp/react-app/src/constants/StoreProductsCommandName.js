@@ -1,9 +1,13 @@
 const columnsName =
-    ["id",
-        "name",
+    [  "name",
+        "UPC",
+        "id",
         "category_number",
         "category_name",
         "characteristic",
+        "productsNumber",
+        "promotionalProduct",
+        "sellingPrice"
     ];
 export const storeProductsTableMap = new Map([
     ["GET_ALL_PRODUCTS_IN_SHOP", columnsName],
