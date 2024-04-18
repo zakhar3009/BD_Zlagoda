@@ -58,7 +58,7 @@ export default function ()
     };
 
     return (
-        <main className="px-8 py-2">
+        <main className="px-8 py-2 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
             <div className="mb-6">
                 <form
                     onSubmit={handleFormSubmit}

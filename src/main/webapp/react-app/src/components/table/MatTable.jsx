@@ -89,10 +89,10 @@ export default function MatTable({
 
     return (
         <>
-            <Paper className="w-full drop-shadow-lg overflow-hidden">
+            <Paper className="w-full drop-shadow-xl overflow-hidden">
                 <TableContainer className="w-screen table-for-print" sx={{maxHeight: 440}} >
                     <Table className="w-full table-for-print" stickyHeader aria-label="sticky table">
-                        <TableHead>
+                        <TableHead className="rounded-full">
                             <TableRow>
                                 {columns.map((column) => (
                                     <TableCell

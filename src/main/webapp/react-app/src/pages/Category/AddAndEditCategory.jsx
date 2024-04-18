@@ -13,7 +13,7 @@ export default function AddAndEditCategory() {
 
 
     return (
-        <Card height="screen" >
+        <Card height="screen">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="border-b border-gray-900/10 pb-4">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">

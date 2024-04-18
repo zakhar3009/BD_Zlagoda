@@ -70,7 +70,7 @@ export default function StoreProduct({command}) {
     };
 console.log(storeProductsTableMap.get(command))
     return (
-        <main className="px-8 py-4">
+        <main className="px-8 py-4 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
             <div className="grid">
                 {!isLoading && (
                     <>
