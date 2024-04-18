@@ -36,6 +36,7 @@ public enum ManagerCommands {
     DELETE_CATEGORY("DELETE_CATEGORY", new DeleteCategoryCommand(CategoryService.getInstance())),
     DELETE_PRODUCT("DELETE_PRODUCT", new DeleteProductCommand(ProductService.getInstance())),
     DELETE_PRODUCT_IN_SHOP("DELETE_PRODUCT_IN_SHOP", new DeleteStoreProductCommand(StoreProductService.getInstance())),
+    DELETE_PROM_STORE_PRODUCT("DELETE_PROM_STORE_PRODUCT", new DeletePromStoreProduct(StoreProductService.getInstance())),
     DELETE_CHECK("DELETE_CHECK", new DeleteCheckCommand(CheckService.getInstance())),
     GET_ALL_EMPLOYEES("GET_ALL_EMPLOYEES", new GetAllEmployeesCommand(EmployeeService.getInstance())),
     GET_ALL_CLIENTS("GET_ALL_CLIENTS", new GetAllCustomerCardsCommand(CustomerService.getInstance())),
