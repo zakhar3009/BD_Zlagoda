@@ -18,6 +18,7 @@ export default function StoreProduct({command}) {
                 })
             );
             const data = await response.json();
+            console.log("DATA", data)
             setStoreProducts(data.map(
                 (item) => ({
                     UPC: item.UPC,
@@ -33,7 +34,6 @@ export default function StoreProduct({command}) {
                 })
             ));
             setIsLoading(false);
-            console.log(data);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
@@ -68,25 +68,19 @@ export default function StoreProduct({command}) {
             toast.error(`ERROR: ${err}`)
         }
     };
-console.log(storeProductsTableMap.get(command))
+
+
+    console.log(storeProducts);
     return (
         <main className="px-8 py-4 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
             <div className="grid">
                 {!isLoading && (
-                    <>
                     <CollapsibleTable
                         columnNames={storeProductsTableMap.get(command)}
-                        rows={storeProducts}>
+                        rows={storeProducts}
+                    >
 
                     </CollapsibleTable>
-                    {/*<MatTable*/}
-                    {/*    columnNames={storeProductsTableMap.get(command)}*/}
-                    {/*    rows={storeProducts}*/}
-                    {/*    deleteFunc={deleteStoreProduct}*/}
-                    {/*    deleteProperty={"id"}*/}
-                    {/*    pathToCreateUpdate={"/post_update_product"}*/}
-                    {/*></MatTable>*/}
-                    </>
                 )}
             </div>
         </main>

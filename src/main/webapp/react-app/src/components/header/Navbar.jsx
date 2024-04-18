@@ -21,7 +21,7 @@ const navigation = [
 ];
 
 export default function Navbar() {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
 
     return (
         <>
@@ -60,30 +60,12 @@ export default function Navbar() {
                                                 (item, index) => (
                                                     <div key={index}>{item.menu}</div>
                                                 )
-                                                // <NavLink
-                                                //   key={item.name}
-                                                //   to={item.href}
-                                                // className={({ isActive }) => {
-                                                //   return classNames(
-                                                //     isActive
-                                                //       ? "bg-gray-900 text-white"
-                                                //       : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                                                //     "rounded-md px-3 py-2 text-sm font-medium"
-                                                //   );
-                                                //   }}
-                                                //   aria-current={({ isActive }) =>
-                                                //     isActive ? "page" : undefined
-                                                //   }
-                                                // >
-                                                //   {item.name}
-                                                // </NavLink>
                                             )}
                                         </div>
                                     </div>
                                 </div>
                                 <div
                                     className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                    {/* Profile dropdown */}
                                     <Menu as="div" className="relative ml-3">
                                         <div>
                                             <Menu.Button

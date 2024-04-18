@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -13,26 +12,17 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {productsTableMap} from "@/constants/ProductsCommandName.js";
 
 
 function Row({row, columns}) {
-    const columnsForProduct =
-        [
-            "id",
-            "name",
-            "category_number",
-            "category_name",
-            "characteristic"
-        ]
-
     const [open, setOpen] = React.useState(false);
     const whatColumn = (column, row) => {
         return row[column];
     }
-    console.log(columns)
     return (
         <React.Fragment>
-            <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
+            <TableRow className="border-r-2 border-l-2 border-t-2 border-b-0" sx={{'& > *': {borderBottom: 'unset'}}}>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -54,10 +44,8 @@ function Row({row, columns}) {
                         )
                     )
                 }
-
-
             </TableRow>
-            <TableRow>
+            <TableRow className="border-r-2 border-l-2 border-b-2 border-t-0">
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{margin: 1}}>
@@ -68,17 +56,18 @@ function Row({row, columns}) {
                                 <TableHead>
                                     <TableRow>
                                         {
-                                            columnsForProduct.map((colTitle, index) =>(
+                                            productsTableMap.get("GET_ALL_PRODUCTS").map((colTitle, index) =>
                                                 <TableCell key={index}>{colTitle}</TableCell>
-                                            ))
+                                            )
                                         }
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        columnsForProduct.map((column, index) => (
-                                            <TableCell
-                                                    align="left"
+                                        productsTableMap.get("GET_ALL_PRODUCTS").map((column, index) => (
+                                                <TableCell
+                                                    key={index}
+                                                    align="center"
                                                     component="th"
                                                     scope="row">
                                                     {whatColumn(column, row.product)}
@@ -87,18 +76,6 @@ function Row({row, columns}) {
                                             )
                                         )
                                     }
-                                    {/*{row.product.map((productRow) => (*/}
-                                    {/*    <TableRow key={productRow.id}>*/}
-                                    {/*        <TableCell component="th" scope="row">*/}
-                                    {/*            {productRow.id}*/}
-                                    {/*        </TableCell>*/}
-                                    {/*        <TableCell>{productRow.name}</TableCell>*/}
-                                    {/*        /!*<TableCell align="right">{productRow.amount}</TableCell>*!/*/}
-                                    {/*        /!*<TableCell align="right">*!/*/}
-                                    {/*        /!*    {Math.round(productRow.amount * row.price * 100) / 100}*!/*/}
-                                    {/*        /!*</TableCell>*!/*/}
-                                    {/*    </TableRow>*/}
-                                    {/*))}*/}
                                 </TableBody>
                             </Table>
                         </Box>
@@ -109,30 +86,7 @@ function Row({row, columns}) {
     );
 }
 
-//
-// Row.propTypes = {
-//     row: PropTypes.shape({
-//         calories: PropTypes.number.isRequired,
-//         carbs: PropTypes.number.isRequired,
-//         fat: PropTypes.number.isRequired,
-//         history: PropTypes.arrayOf(
-//             PropTypes.shape({
-//                 amount: PropTypes.number.isRequired,
-//                 customerId: PropTypes.string.isRequired,
-//                 date: PropTypes.string.isRequired,
-//             }),
-//         ).isRequired,
-//         name: PropTypes.string.isRequired,
-//         price: PropTypes.number.isRequired,
-//         protein: PropTypes.number.isRequired,
-//     }).isRequired,
-// };
 export default function CollapsibleTable({columnNames, rows}) {
-    // const capitalizeFirsLetter = (label) =>
-    //     label.charAt(0).toUpperCase() + label.slice(1);
-    console.log(columnNames)
-    console.log(rows)
-    console.log(rows[0])
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
@@ -145,7 +99,6 @@ export default function CollapsibleTable({columnNames, rows}) {
                                            align={"right"}
                                            className="font-bold">
                                     {col}
-                                    {/*{capitalizeFirsLetter(col)}*/}
                                 </TableCell>
                             ))}
                     </TableRow>
