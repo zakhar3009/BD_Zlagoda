@@ -21,6 +21,8 @@ import {AuthProvider} from "@/context/AuthProvider.jsx";
 import RequireAuth from "@/components/auth/RequireAuth.jsx";
 import SearchClientsByPartOfSurname from "@/pages/CustomerCard/SearchClientsByPartOfSurname.jsx";
 import StoreProduct from "@/pages/StoreProducts/StoreProduct.jsx";
+import Profile from "@/pages/Profile/Profile.jsx";
+import AddAndEditStoreProduct from "@/pages/StoreProducts/AddAndEditStoreProduct.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -45,6 +47,7 @@ const router = createBrowserRouter(
         <Route path="/" element={<Navbar/>}>
             <Route index element={<Hero/>}/>
             <Route path="/login" element={<LogIn/>}/>
+            <Route path="/profile" element={<Profile/>}/>
             <Route path="*" element={<Error/>}/>
             <Route path="employee">
                 <Route
@@ -130,7 +133,10 @@ const router = createBrowserRouter(
                 />
                 <Route path="get_all_products_in_shop_order_by_quantity"
                        element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>}/>
+                <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>}/>
+                <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>}/>
             </Route>
+
 
 
         </Route>
