@@ -11,18 +11,26 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class CreatePromStoreProduct implements Command {
+public class DeletePromStoreProduct implements Command {
+
     private final StoreProductService storeProductService;
 
-    public CreatePromStoreProduct(StoreProductService storeProductService) {
+    public DeletePromStoreProduct(StoreProductService storeProductService) {
         this.storeProductService = storeProductService;
     }
 
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getAttributes(request, HashMap.class);
-        Optional<StoreProduct> storeProduct = storeProductService.getById(hashMap.get("UPC"));
-        storeProduct.ifPresent(storeProductService::createPromStoreProduct);
+        Optional<StoreProduct> optionalStoreProduct = storeProductService.getById(hashMap.get("UPC"));
+        if(optionalStoreProduct.isPresent()){
+            StoreProduct storeProduct = optionalStoreProduct.get();
+            storeProduct.setPromStoreProduct(null);
+            storeProductService.update(storeProduct);
+        }
         return JSON.gson().toJson("");
     }
 }
+
+
+
