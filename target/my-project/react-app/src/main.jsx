@@ -17,10 +17,12 @@ import ProductsByCategoryOrderByName from "@/pages/Products/ProductsByCategoryOr
 import AddAndEditProduct from "@/pages/Products/AddAndEditProduct.jsx";
 import CustomerCard from "@/pages/CustomerCard/CustomerCard.jsx";
 import AddAndEditCustomerCard from "@/pages/CustomerCard/AddAndEditCustomerCard.jsx";
-import { AuthProvider } from "@/context/AuthProvider.jsx";
+import {AuthProvider} from "@/context/AuthProvider.jsx";
 import RequireAuth from "@/components/auth/RequireAuth.jsx";
 import SearchClientsByPartOfSurname from "@/pages/CustomerCard/SearchClientsByPartOfSurname.jsx";
 import StoreProduct from "@/pages/StoreProducts/StoreProduct.jsx";
+import Profile from "@/pages/Profile/Profile.jsx";
+import AddAndEditStoreProduct from "@/pages/StoreProducts/AddAndEditStoreProduct.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -45,8 +47,9 @@ const router = createBrowserRouter(
         <Route path="/" element={<Navbar/>}>
             <Route index element={<Hero/>}/>
             <Route path="/login" element={<LogIn/>}/>
+            <Route path="/profile" element={<Profile/>}/>
             <Route path="*" element={<Error/>}/>
-            <Route path="employee" element={<RequireAuth />}>
+            <Route path="employee">
                 <Route
                     path="get_all_employees"
                     element={<Employee command={"GET_ALL_EMPLOYEES"}/>}
@@ -95,14 +98,10 @@ const router = createBrowserRouter(
                 />
                 <Route
                     path="get_products_by_category_order_by_name"
-                    element={<ProductsByCategoryOrderByName />}
+                    element={<ProductsByCategoryOrderByName/>}
                 />
-                <Route path="post_add_product" element={<AddAndEditProduct />}/>
-                <Route path=":id/post_update_product" element={<AddAndEditProduct />}/>
-                {/*<Route*/}
-                {/*    path="get_all_products_bpost_update_categoryy_upc"*/}
-                {/*    element={<Products command={"GET_PRODUCT_BY_UPC"}/>}*/}
-                {/*/>*/}
+                <Route path="post_add_product" element={<AddAndEditProduct/>}/>
+                <Route path=":id/post_update_product" element={<AddAndEditProduct/>}/>
             </Route>
 
             <Route path="customer-card">
@@ -112,14 +111,15 @@ const router = createBrowserRouter(
                 />
                 <Route
                     path="get_all_clients_order_by_surname"
-                    element={<CustomerCard command={"GET_ALL_CLIENTS_ORDER_BY_SURNAME"} />}
+                    element={<CustomerCard command={"GET_ALL_CLIENTS_ORDER_BY_SURNAME"}/>}
                 />
-                <Route path="get_clients_by_percent_order_by_surname" element={<CustomerCard command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
-            <Route path="get_clients_by_part_of_surname"
-                element={<SearchClientsByPartOfSurname/>}
-                    />
-                <Route path="post_add_client" element={<AddAndEditCustomerCard />}/>
-                <Route path=":id/post_update_client" element={<AddAndEditCustomerCard />}/>
+                <Route path="get_clients_by_percent_order_by_surname"
+                       element={<CustomerCard command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
+                <Route path="get_clients_by_part_of_surname"
+                       element={<SearchClientsByPartOfSurname/>}
+                />
+                <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
+                <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
             </Route>
 
             <Route path="store-products">
@@ -129,16 +129,14 @@ const router = createBrowserRouter(
                 />
                 <Route
                     path="get_all_products_in_shop"
-                    element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"} />}
+                    element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>}
                 />
                 <Route path="get_all_products_in_shop_order_by_quantity"
                        element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>}/>
-                {/*<Route path="get_clients_by_part_of_surname"*/}
-                {/*       element={<SearchClientsByPartOfSurname/>}*/}
-                {/*/>*/}
-                {/*<Route path="post_add_client" element={<AddAndEditCustomerCard />}/>*/}
-                {/*<Route path=":id/post_update_client" element={<AddAndEditCustomerCard />}/>*/}
+                <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>}/>
+                <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>}/>
             </Route>
+
 
 
         </Route>
