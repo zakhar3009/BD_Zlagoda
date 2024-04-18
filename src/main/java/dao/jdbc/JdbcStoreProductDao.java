@@ -14,16 +14,20 @@ public class JdbcStoreProductDao implements StoreProductDao {
 
     private static String GET_ALL = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*" +
             " FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
-        " INNER JOIN category ON product.category_number = category.category_number)" +
-        " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC";
-    private static String GET_BY_ID = "SELECT * FROM ((store_product INNER JOIN product ON store_product.id_product = product.id_product)" +
-            "INNER JOIN category ON product.category_number = category.category_number) WHERE UPC=?";
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC";
+    private static String GET_BY_ID = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.* " +
+            " FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC" +
+            " WHERE t1.UPC=?";
     private static String CREATE = "INSERT INTO store_product" +
             " (UPC, UPC_prom, id_product, selling_price, products_number, promotional_product) VALUES (?, ?, ?, ?, ?, ?)";
     private static String UPDATE = "UPDATE store_product" +
             " SET UPC_prom=?, selling_price=?, products_number=?, promotional_product=?" + " WHERE UPC=?";
     private static String DELETE = "DELETE FROM store_product WHERE UPC=?";
-    private static String GET_ALL_ORDER_BY_NAME = "SELECT * FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+    private static String GET_ALL_ORDER_BY_NAME = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*" +
+            " FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
             " INNER JOIN category ON product.category_number = category.category_number)" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC";
 
@@ -46,8 +50,8 @@ public class JdbcStoreProductDao implements StoreProductDao {
     @Override
     public List<StoreProduct> getAll() {
         List<StoreProduct> storeProducts = new ArrayList<>();
-        try(Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL)){
-            while (resultSet.next()){
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL)) {
+            while (resultSet.next()) {
                 storeProducts.add(extractStoreProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
@@ -62,7 +66,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
         try (PreparedStatement query = connection.prepareStatement(GET_BY_ID)) {
             query.setString(1, id);
             ResultSet resultSet = query.executeQuery();
-            while(resultSet.next())
+            while (resultSet.next())
                 storeProduct = Optional.of(extractStoreProductFromResultSet(resultSet));
         } catch (SQLException e) {
             throw new ServerException(e);
@@ -73,7 +77,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
     @Override
     public void create(StoreProduct storeProduct) {
         String randomId = UUID.randomUUID().toString().substring(0, 12);
-        try(PreparedStatement query = connection.prepareStatement(CREATE)){
+        try (PreparedStatement query = connection.prepareStatement(CREATE)) {
             query.setString(1, randomId);
             query.setString(2, storeProduct.getPromStoreProduct().getUPC());
             query.setInt(3, storeProduct.getProductID());
@@ -88,7 +92,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
 
     @Override
     public void update(StoreProduct storeProduct) {
-        try(PreparedStatement query = connection.prepareStatement(UPDATE)){
+        try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
             query.setString(1, storeProduct.getPromStoreProduct().getUPC());
             query.setDouble(2, storeProduct.getSellingPrice());
             query.setInt(3, storeProduct.getProductsNumber());
@@ -113,8 +117,8 @@ public class JdbcStoreProductDao implements StoreProductDao {
     @Override
     public List<StoreProduct> getAllOrderByName() {
         List<StoreProduct> storeProducts = new ArrayList<>();
-        try(Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL_ORDER_BY_NAME)){
-            while (resultSet.next()){
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL_ORDER_BY_NAME)) {
+            while (resultSet.next()) {
                 storeProducts.add(extractStoreProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
@@ -127,8 +131,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
     public void createPromStoreProduct(StoreProduct storeProduct) {
         String randomId = UUID.randomUUID().toString().substring(0, 12);
         storeProduct.setPromStoreProduct(new StoreProduct.Builder().setUpc(randomId).build());
-        update(storeProduct);
-        try(PreparedStatement query = connection.prepareStatement(CREATE)){
+        try (PreparedStatement query = connection.prepareStatement(CREATE)) {
             query.setString(1, storeProduct.getPromStoreProduct().getUPC());
             query.setString(2, null);
             query.setInt(3, storeProduct.getProductID());
@@ -136,11 +139,11 @@ public class JdbcStoreProductDao implements StoreProductDao {
             query.setInt(5, storeProduct.getProductsNumber());
             query.setBoolean(6, true);
             query.executeUpdate();
+            update(storeProduct);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
     }
-
 
 
     protected static StoreProduct extractStoreProductFromResultSet(ResultSet resultSet) throws SQLException {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -9,24 +8,19 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {MdDeleteOutline} from "react-icons/md";
+import {storeProductsTableMap} from "@/constants/StoreProductsCommandName.js";
+import {capitalizeFirsLetter} from "@/constants/utils/helpers.js";
 
-
-function Row({row, columns}) {
-    const promProductCols =
-        [
-            "UPC",
-            "product_id",
-            "category_number",
-            "characteristic",
-            "sellingPrice",
-            "productsNumber",
-        ]
+function Row({row, columns, deleteStoreProduct,
+                 deletePromStoreProduct,
+                 createPromStoreProduct}) {
     let promProduct = undefined;
-    if(row.promStoreProduct) {
+
+    if (row.promStoreProduct) {
         promProduct = {
             UPC: row.promStoreProduct.UPC,
             product_id: row.promStoreProduct.product.id,
@@ -39,68 +33,77 @@ function Row({row, columns}) {
 
     const [open, setOpen] = React.useState(false);
 
+    const showRowData = (column, idx) => {
+        if (column !== "actions") {
+            return (<td key={idx}>
+                {promProduct[column]}
+            </td>)
+        }
+        return (
+            <td key={idx}>
+                <MdDeleteOutline
+                    key={idx}
+                    onClick={() => deletePromStoreProduct(row.UPC)}
+                    className="text-red-600 text-2xl rounded active:text-opacity-50"
+                />
+            </td>
+        )
+    }
+
     return (
         <React.Fragment>
-            <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
+            <TableRow className="border-t-2 border-l-2 border-r-2 border-gray-400"
+                      sx={{'& > *': {borderBottom: 'unset'}}}>
                 <TableCell>
-                    <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={() => setOpen(!open)}
-                    >
+                    <IconButton onClick={() => setOpen(!open)} aria-label="expand row" size="small">
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
-                {
-                    columns.map((column, index) => (
-                            <TableCell
-                                align="right"
-                                key={index}
-                                scope="row">
-                                {row[column]}
-                            </TableCell>
-                        )
+                {columns.map((column, index) => (
+                        <TableCell
+                            align="center"
+                            key={index}
+                            scope="row">
+                            {row[column]}
+                        </TableCell>
                     )
-                }
+                )}
             </TableRow>
-
-            <TableRow>
+            <TableRow className="border-l-2 border-r-2 last:border-b-2 border-gray-400">
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{margin: 1}}>
-
-                                    <Typography variant="h6" gutterBottom component="div">
-                                        Promotional Product
-                                    </Typography>
                             {row.promStoreProduct &&
-
-                                    <Table size="small" aria-label="purchases">
-                                        <TableHead>
-                                            <TableRow>
-                                                {
-                                                    promProductCols.map((colTitle, index) => (
-                                                        <TableCell key={index}>{colTitle}</TableCell>
-                                                    ))
+                                <div className="bg-gray-200 px-4 py-2 rounded-xl">
+                                    <div className="relative overflow-x-auto">
+                                        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                                            <thead
+                                                className="text-xs text-gray-700 bg-gray-200 border-b-2 border-gray-400">
+                                            <tr>
+                                                {storeProductsTableMap.get("PROM_PRODUCT_COLUMNS").map((colTitle, idx) => (
+                                                    <th className="py-2" key={idx}>{capitalizeFirsLetter(colTitle)}</th>
+                                                ))}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr className="border-b bg-gray-200">
+                                                {storeProductsTableMap.get("PROM_PRODUCT_COLUMNS").map((column, idx) =>
+                                                    showRowData(column, idx))
                                                 }
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {
-                                                promProductCols.map((column, index) => (
-                                                        <TableCell
-                                                            key={index}
-                                                            align="left"
-                                                            scope="row">
-                                                            {promProduct[column]}
-                                                        </TableCell>
-
-                                                    )
-                                                )
-                                            }
-                                        </TableBody>
-                                    </Table>
-
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             }
+                            {!row.promStoreProduct &&
+                                <div className="bg-gray-200 px-4 py-2 w-80 rounded-xl text-center">
+                                    <button
+                                        onClick={() => createPromStoreProduct(row.UPC)}
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Make
+                                        the product promotional
+                                    </button>
+                                </div>}
                         </Box>
                     </Collapse>
                 </TableCell>
@@ -109,9 +112,13 @@ function Row({row, columns}) {
     );
 }
 
-export default function CollapsibleTable({columnNames, rows}) {
-    const capitalizeFirsLetter = (label) =>
-        label.charAt(0).toUpperCase() + label.slice(1);
+export default function CollapsibleTable({
+                                             columnNames,
+                                             rows,
+                                             deleteStoreProduct,
+                                             deletePromStoreProduct,
+                                             createPromStoreProduct
+                                         }) {
 
     return (
         <TableContainer component={Paper}>
@@ -121,17 +128,21 @@ export default function CollapsibleTable({columnNames, rows}) {
                         <TableCell/>
                         {columnNames.map((col, index) =>
                             (
-                                <TableCell key={index}
-                                           align="center"
-                                           className="font-bold">
+                                <TableCell key={index} align="center">
+                                    <span className="font-black text-gray-700">
                                     {capitalizeFirsLetter(col)}
+                                    </span>
                                 </TableCell>
                             ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row, index) => (
-                        <Row key={index} row={row} columns={columnNames}/>
+                        <Row deleteStoreProduct={deleteStoreProduct}
+                             deletePromStoreProduct={deletePromStoreProduct}
+                             createPromStoreProduct={createPromStoreProduct}
+                             key={index} row={row}
+                             columns={columnNames}/>
                     ))}
                 </TableBody>
             </Table>

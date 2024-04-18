@@ -26,6 +26,7 @@ public enum ManagerCommands {
     POST_ADD_CATEGORY("POST_ADD_CATEGORY", new CreateCategoryCommand(CategoryService.getInstance())),
     POST_ADD_PRODUCT("POST_ADD_PRODUCT", new CreateProductCommand(ProductService.getInstance())),
     POST_ADD_PRODUCT_IN_SHOP("POST_ADD_PRODUCT_IN_SHOP", new CreateStoreProductCommand(StoreProductService.getInstance())),
+    POST_ADD_PROM_PRODUCT_IN_SHOP("POST_ADD_PROM_PRODUCT_IN_SHOP", new CreatePromStoreProduct(StoreProductService.getInstance())),
     POST_UPDATE_EMPLOYEE("POST_UPDATE_EMPLOYEE", new UpdateEmployeeCommand(EmployeeService.getInstance())),
     POST_UPDATE_CLIENT("POST_UPDATE_CLIENT", new UpdateCustomerCardCommand(CustomerService.getInstance())),
     POST_UPDATE_CATEGORY("POST_UPDATE_CATEGORY", new UpdateCategoryCommand(CategoryService.getInstance())),
