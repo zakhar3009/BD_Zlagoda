@@ -29,7 +29,6 @@ function Row({row, columns}) {
     const whatColumn = (column, row) => {
         return row[column];
     }
-    console.log(columns)
     return (
         <React.Fragment>
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
@@ -130,9 +129,7 @@ function Row({row, columns}) {
 export default function CollapsibleTable({columnNames, rows}) {
     // const capitalizeFirsLetter = (label) =>
     //     label.charAt(0).toUpperCase() + label.slice(1);
-    console.log(columnNames)
-    console.log(rows)
-    console.log(rows[0])
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
