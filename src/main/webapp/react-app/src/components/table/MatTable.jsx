@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import {MdDeleteOutline} from "react-icons/md";
 import {GoGear} from "react-icons/go";
 import DeleteModal from "../modals/DeleteModal";
+import {capitalizeFirsLetter} from "@/constants/utils/helpers.js";
 
 export default function MatTable({
                                      columnNames,
@@ -54,9 +55,6 @@ export default function MatTable({
         {id: "actions", label: "Actions", minWidth: 50, align: "center"},
     ];
 
-    const capitalizeFirsLetter = (label) =>
-        label.charAt(0).toUpperCase() + label.slice(1);
-
     const whatColumn = (column, row) => {
         const value = row[column.label];
 
@@ -90,7 +88,7 @@ export default function MatTable({
     return (
         <>
             <Paper className="w-full drop-shadow-xl overflow-hidden">
-                <TableContainer className="w-screen table-for-print" sx={{maxHeight: 440}} >
+                <TableContainer className="w-screen table-for-print" sx={{maxHeight: 440}}>
                     <Table className="w-full table-for-print" stickyHeader aria-label="sticky table">
                         <TableHead className="rounded-full">
                             <TableRow>
@@ -100,9 +98,9 @@ export default function MatTable({
                                         align={column.align}
                                         className="font-bold"
                                     >
-                    <span className="font-black text-gray-700">
-                      {capitalizeFirsLetter(column.label)}
-                    </span>
+                                        <span className="font-black text-gray-700">
+                                          {capitalizeFirsLetter(column.label)}
+                                        </span>
                                     </TableCell>
                                 ))}
                             </TableRow>
