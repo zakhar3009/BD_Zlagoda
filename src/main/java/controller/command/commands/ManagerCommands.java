@@ -4,10 +4,7 @@ import controller.command.Command;
 import controller.command.commands.auth.LogoutCommand;
 import controller.command.commands.auth.PostLoginCommand;
 import controller.command.commands.category.*;
-import controller.command.commands.check.DeleteCheckCommand;
-import controller.command.commands.check.GetAllChecksCommand;
-import controller.command.commands.check.GetChecksSumByEmployeePerPeriod;
-import controller.command.commands.check.GetChecksSumPerPeriod;
+import controller.command.commands.check.*;
 import controller.command.commands.cutomerCard.*;
 import controller.command.commands.employee.*;
 import controller.command.commands.product.*;
@@ -65,6 +62,7 @@ public enum ManagerCommands {
     GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(ProductService.getInstance())),
     GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(ProductService.getInstance())),
     GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", new GetFullChecksByEmployeePerPeriod(SaleService.getInstance())),
+    GET_ALL_CHECKS_BY_CASHIER("GET_ALL_CHECKS_BY_CASHIER", new GetAllChecksByCashierCommand(CheckService.getInstance())),
     GET_ALL_CHECKS_BY_TIME_PERIOD("GET_ALL_CHECKS_BY_TIME_PERIOD", new GetFullChecksPerPeriod(SaleService.getInstance())),
     GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD("GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD", new GetChecksSumByEmployeePerPeriod(CheckService.getInstance())),
     GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD("GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD", new GetChecksSumPerPeriod(CheckService.getInstance())),

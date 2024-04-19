@@ -12,13 +12,16 @@ import {MdDeleteOutline} from "react-icons/md";
 import {GoGear} from "react-icons/go";
 import DeleteModal from "../modals/DeleteModal";
 import {capitalizeFirsLetter} from "@/constants/utils/helpers.js";
+import { FaRegFaceRollingEyes } from "react-icons/fa6";
 
 export default function MatTable({
                                      columnNames,
                                      rows,
                                      deleteFunc,
                                      deleteProperty,
-                                     pathToCreateUpdate
+                                     pathToCreateUpdate,
+                                     clickable,
+                                     pathToView
                                  }) {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(0);
@@ -54,6 +57,7 @@ export default function MatTable({
         }),
         {id: "actions", label: "Actions", minWidth: 50, align: "center"},
     ];
+    console.log(rows)
 
     const whatColumn = (column, row) => {
         const value = row[column.label];
@@ -66,9 +70,15 @@ export default function MatTable({
                     align={column.align}
                 >
                     <div className="flex flex-row justify-center items-center">
-                        <GoGear
+                        {!clickable ?
+                            <GoGear
                             onClick={() => navigate("../" + row[deleteProperty] + pathToCreateUpdate)}
                             className="text-blue-700 hover:bg-blue-100 text-xl mr-1 rounded-md active:text-opacity-70"/>
+                            :
+                            <FaRegFaceRollingEyes
+                                onClick={() => navigate("../"+ row[deleteProperty] + pathToView)}
+                            />
+                        }
                         <MdDeleteOutline
                             onClick={() => handleOpen(row)}
                             className="text-red-600 hover:bg-red-100 text-2xl rounded active:text-opacity-70"
@@ -77,6 +87,7 @@ export default function MatTable({
                 </TableCell>
             );
         }
+
 
         return (
             <TableCell key={column.id} align={column.align}>

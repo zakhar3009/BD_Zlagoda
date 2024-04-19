@@ -4,19 +4,22 @@ import React, {useState} from "react";
 import {employeesTableMap} from "@/constants/EmployeesCommandMap.js";
 import useCreateUpdateEmployee from "@/hooks/Employee/useCreateUpdateEmployee.jsx";
 import useFilterChecks from "@/hooks/Checks/useFilterChecks.jsx";
+import {checksCommandMap, checksTableMap} from "@/constants/ChecksCommandMap.js";
+import Card from "./../../components/cards/Card.jsx";
 
-export default function Checks({command}){
+
+export default function Checks() {
     const {register, handleSubmit, onSubmit, cashier, checks, isLoading} = useFilterChecks();
 
     return (
-        <main className="px-8 py-2 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
-            <div className="mb-6">
+        <main className="px-8 py-2 pt-6 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
+            <Card>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="grid sm:grid-cols-2 gap-3 mb-4"
+                    className="grid sm:grid-cols-2 gap-3"
                 >
                     <select
-                        {...register("id_employee",{
+                        {...register("id_employee", {
                             // required: {
                             //     value: true,
                             //     message: `Field category is required!`,
@@ -28,45 +31,48 @@ export default function Checks({command}){
                         })}
                         name="id_employee"
                         id="id_employee"
-                        className="block pl-3 w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        className="col-span-2 block pl-3 w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         <option value="">Choose cashier...</option>
                         {cashier.map((item) => (
                             <option key={item.value} value={item.value}>{item.label}</option>
                         ))}
                     </select>
                     <input
+                        {...register("start")}
                         type="date"
                         id="default-input"
                         placeholder="Date from"
-                        name = "start"
-                        className="bg-gray-50 md:place-self-end sm:max-w-80 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        name="start"
+                        className="col-span-1 bg-gray-50 md:place-self-end  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     />
                     <input
+                        {...register("end")}
                         type="date"
                         id="default-input"
                         placeholder="Date for"
                         name="end"
-                        className="bg-gray-50 md:place-self-end sm:max-w-80 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        className=" col-span-1 bg-gray-50 md:place-self-end  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     />
                     <button
                         type="submit"
-                        className="text-white md:max-w-64 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        className="col-span-2 mt-4 text-white  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                     >
                         Search
                     </button>
                 </form>
-                {!isLoading && (
-                    <MatTable
-                        columnNames={employeesTableMap.get(
-                            "SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME"
-                        )}
-                        rows={checks}
-                        deleteProperty={"id"}
-                        pathToCreateUpdate={"/post_update_employee"}
-                    ></MatTable>
-                )}
-                {/*{!isLoading && <h1>Not have employee with that with that surname</h1>}*/}
-            </div>
+            </Card>
+
+            {!isLoading && (
+                <MatTable
+                    columnNames={checksTableMap.get(
+                        "GET_ALL_CHECKS")}
+                    rows={checks}
+                    deleteProperty={"number"}
+                    pathToCreateUpdate={"/post_update_employee"}
+                    pathToView={"/view_check_products"}
+                    clickable={true}
+                ></MatTable>
+            )}
         </main>
     )
 

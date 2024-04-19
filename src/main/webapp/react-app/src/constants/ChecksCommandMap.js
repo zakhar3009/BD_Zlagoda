@@ -13,6 +13,7 @@ export const checksTableMap = new Map([
     ["GET_ALL_CHECKS_BY_TIME_PERIOD", columnsName],
     ["GET_SELF_DAILY_CHECKS", columnsName],
     ["GER_SELF_CHECKS_PER_PERIOD", columnsName],
+    ["GET_ALL_CHECKS_BY_CASHIER", columnsName]
 ]);
 export const checksCommandMap = new Map([
     // ["GET_CHECK_BY_NUMBER", "Get check by id"],

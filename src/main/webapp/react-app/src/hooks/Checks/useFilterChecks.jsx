@@ -37,6 +37,7 @@ export default function useFilterChecks() {
 
     useEffect(() => {
         fetchCashier();
+        fetchAllChecks("GET_ALL_CHECKS", {})
     }, []);
 
     // Toast needed
@@ -51,8 +52,18 @@ export default function useFilterChecks() {
                 })
             );
             const data = await response.json();
-            setChecks(data);
-            console.log(data)
+
+            const newData = data.map((item) =>({
+
+                number: item.number,
+                employee: item.employee.name + " "+ item.employee.surname,
+                customerCard: item.customerCard.customerName +" " + item.customerCard.customerSurname,
+                printDate: item.printDate,
+                sumTotal: item.sumTotal,
+                vat: item.vat
+            }))
+            setChecks(newData);
+            console.log(newData)
             setIsLoading(false);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
@@ -60,15 +71,30 @@ export default function useFilterChecks() {
     };
 
     const onSubmit = () => {
+        let parameters = {};
         const values = getValues();
         if (values.start && values.end && values.id_employee) {
-            const parameters = {
+            parameters = {
                 id_employee: values.id_employee,
                 start: values.start,
                 end: values.end
             }
             fetchAllChecks("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", parameters);
         }
+        else if(!values.id_employee && values.start && values.end) {
+            parameters = {
+                start: values.start,
+                end: values.end
+            }
+            fetchAllChecks("GET_ALL_CHECKS_BY_TIME_PERIOD", parameters);
+        }
+        else if(values.id_employee && !values.start && !values.end){
+            parameters = {
+                id_employee: values.id_employee,
+            }
+            fetchAllChecks("GET_ALL_CHECKS_BY_CASHIER", parameters);
+        }
+        else fetchAllChecks("GET_ALL_CHECKS", parameters)
     }
 
     return {
@@ -77,7 +103,8 @@ export default function useFilterChecks() {
         onSubmit,
         errors,
         cashier,
-        checks
+        checks,
+        isLoading
     };
 
 }

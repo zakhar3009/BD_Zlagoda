@@ -146,7 +146,7 @@ function Row({
     );
 }
 
-export default function CollapsibleTable({
+export default function StoreProductCollapsibleTable({
                                              columnNames,
                                              rows,
                                              deleteStoreProduct,
