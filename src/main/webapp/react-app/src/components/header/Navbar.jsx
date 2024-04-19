@@ -6,22 +6,24 @@ import {classNames} from "@/constants/utils/helpers.js";
 import EmployeeMenu from "./flyout-menus/EmployeeMenu";
 import CategoryMenu from "./flyout-menus/CategoryMenu";
 import ProductMenu from "./flyout-menus/ProductMenu.jsx";
-import {ToastContainer, Bounce} from "react-toastify";
+import {Bounce, ToastContainer} from "react-toastify";
 import CustomerCardMenu from './flyout-menus/CustomerCardMenu.jsx';
 import "react-toastify/dist/ReactToastify.css";
 import StoreProductMenu from "@/components/header/flyout-menus/StoreProductMenu.jsx";
 import useAuth from "@/hooks/auth/useAuth.js";
+import ChecksMenu from "@/components/header/flyout-menus/Checks.jsx";
 
 const navigation = [
     {menu: <EmployeeMenu/>},
     {menu: <CategoryMenu/>},
     {menu: <ProductMenu/>},
     {menu: <CustomerCardMenu/>},
-    {menu: <StoreProductMenu/>}
+    {menu: <StoreProductMenu/>},
+    {menu: <ChecksMenu/>}
 ];
 
 export default function Navbar() {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
 
     return (
         <>
