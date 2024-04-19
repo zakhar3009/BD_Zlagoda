@@ -26,6 +26,11 @@ public class CheckService {
         return checkDao.getAll();
     }
 
+    public List<Check> getAllByCashier(String id){
+        CheckDao checkDao = daoFactory.createCheckDao();
+        return checkDao.getAllByCashier(id);
+    }
+
     public Optional<Check> getById(String id){
         CheckDao checkDao = daoFactory.createCheckDao();
         return checkDao.getById(id);

@@ -3,7 +3,7 @@ import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
 import {productsTableMap} from "../../constants/ProductsCommandName.js";
 
-export default function Products({command}) {
+export default function Products({command, properties}) {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -14,6 +14,7 @@ export default function Products({command}) {
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
                     command_name: command,
+                    ...properties
                 })
             );
             const data = await response.json();

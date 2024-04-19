@@ -5,7 +5,6 @@ import java.util.Optional;
 
 public interface GenericDao<T, K> {
     List<T> getAll();
-
     Optional<T> getById(K id);
 
     void create(T e);
