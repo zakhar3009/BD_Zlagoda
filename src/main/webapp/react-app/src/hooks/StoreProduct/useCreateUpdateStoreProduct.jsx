@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-export default function useCreateUpdateStoreProduct(id, product) {
+export default function useCreateUpdateStoreProduct(id, storeProduct) {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
 
@@ -16,11 +16,13 @@ export default function useCreateUpdateStoreProduct(id, product) {
     } = useForm();
 
     useEffect(() => {
-        setValue("sellingPrice", product.sellingPrice);
-        setValue("productsNumber", product.productsNumber);
-        setValue("promotionalProduct", product.promotionalProduct);
-        setValue("product", product.product);
-    }, [product, setValue]);
+        setValue("UPC", storeProduct.UPC)
+        setValue("sellingPrice", storeProduct.sellingPrice);
+        setValue("productsNumber", storeProduct.productsNumber);
+        setValue("promotionalProduct", storeProduct.promotionalProduct);
+        setValue("promStoreProduct", storeProduct.promStoreProduct);
+        setValue("product", storeProduct.product);
+    }, [storeProduct, setValue]);
 
     const fetchAllProducts = async () => {
         try {
@@ -46,15 +48,18 @@ export default function useCreateUpdateStoreProduct(id, product) {
 
     const addEditStoreProductRequest = async (command) => {
         const formData = getValues();
-        console.log(products)
-        console.log(formData)
+        console.log("FORM DATA:", formData)
         const product = products.find((item) => (item.id === Number(formData.product)));
         const newStoreProduct = {
-            UPC: id,
+
             ...formData,
-            "product": product
+            sellingPrice: Number(formData.sellingPrice),
+            productsNumber: Number(formData.productsNumber),
+            product: product ? product : storeProduct.product
         }
-        console.log(newStoreProduct)
+        console.log("FORMDATAAA", newStoreProduct)
+
+        //console.log("NEW PRODUCT", newStoreProduct)
         const requestOptions = {
             method: "POST",
             headers: {
@@ -69,8 +74,8 @@ export default function useCreateUpdateStoreProduct(id, product) {
                 requestOptions
             );
             const data = await response.json();
-            if (id) toast.success("Store product was updated");
-            else toast.success("New store product was added");
+            if (id) toast.success("Store storeProduct was updated");
+            else toast.success("New store storeProduct was added");
         } catch (err) {
             toast.error(`Error: ${err}`);
         } finally {

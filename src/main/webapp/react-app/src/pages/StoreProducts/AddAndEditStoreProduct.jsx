@@ -18,7 +18,7 @@ export default function AddAndEditStoreProduct() {
                     <h2 className="text-base font-semibold leading-7 text-gray-900">
                         {id ? "Update Product" : "Create new product"}
                     </h2>
-                    <div className="sm:col-span-6">
+                    {!id && <div className="sm:col-span-6">
                         <label
                             htmlFor="product"
                             className="block text-sm font-medium leading-6 text-gray-900">
@@ -47,7 +47,7 @@ export default function AddAndEditStoreProduct() {
                         {errors.product && (
                             <span className="text-red-500 text-sm">{errors.product.message}</span>
                         )}
-                    </div>
+                    </div>}
                     <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div className="sm:col-span-3">
                             <FormInput
@@ -73,11 +73,6 @@ export default function AddAndEditStoreProduct() {
                                 validateFunc={checkProductsNumber}
                             />
                         </div>
-                        <div className="flex items-center ps-4 rounded-md border-1  border-gray-200  dark:border-gray-700 sm:col-span-3 shadow-sm">
-                            <input id="promotionalProduct" type="checkbox" name="promotionalProduct" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                            <label htmlFor="promotionalProduct" className="w-full py-2.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Is promotional product?</label>
-                        </div>
-
                     </div>
                 </div>
                 <button

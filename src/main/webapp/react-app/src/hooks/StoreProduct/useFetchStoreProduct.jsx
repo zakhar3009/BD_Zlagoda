@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 const defaultProduct = {
     UPC: "",
-    storeProduct: "",
+    promStoreProduct: null,
     product: "",
     sellingPrice: 0.0,
     productsNumber: 0,
@@ -22,7 +22,7 @@ export default function useFetchStoreProduct() {
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
                     command_name: "GET_PRODUCT_BY_UPC",
-                    id_product: id,
+                    UPC: id,
                 })
             );
             const productID = await response.json();

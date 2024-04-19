@@ -49,6 +49,11 @@ public class StoreProductService {
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         return storeProductDao.getAllOrderByName();
     }
+    public List<StoreProduct> getAllOrderByQuantity(){
+        StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
+        return storeProductDao.getAllOrderByQuantity();
+    }
+
 
     public void createPromStoreProduct(StoreProduct storeProduct){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();

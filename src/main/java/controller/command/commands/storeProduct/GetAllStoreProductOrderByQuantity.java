@@ -1,27 +1,25 @@
 package controller.command.commands.storeProduct;
 
 import controller.command.Command;
-import controller.command.commands.CommandFactory;
 import controller.utils.JSON;
 import entity.StoreProduct;
 import service.StoreProductService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
-public class CreateStoreProductCommand implements Command {
+public class GetAllStoreProductOrderByQuantity implements Command {
 
     private final StoreProductService storeProductService;
 
-    public CreateStoreProductCommand(StoreProductService storeProductService) {
+    public GetAllStoreProductOrderByQuantity(StoreProductService storeProductService) {
         this.storeProductService = storeProductService;
     }
 
     @Override
     public String execute(HttpServletRequest request) throws IOException {
-        StoreProduct storeProduct = CommandFactory.getAttributes(request, StoreProduct.class);
-        storeProduct.setPromStoreProduct(new StoreProduct.Builder().build());
-        storeProductService.create(storeProduct);
-        return JSON.gson().toJson("");
+        List<StoreProduct> list = storeProductService.getAllOrderByQuantity();
+        return JSON.gson().toJson(list);
     }
 }
