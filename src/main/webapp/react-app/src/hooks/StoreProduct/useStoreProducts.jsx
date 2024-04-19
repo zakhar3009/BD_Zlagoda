@@ -16,19 +16,7 @@ export default function useStoreProducts(command) {
                 })
             );
             let data = await response.json();
-
-
-            const filteredData = data.filter((item) => !item.promotionalProduct);
-            // data.forEach((item) => {
-            //     if(item.promStoreProduct) {
-            //         let upc = item.promStoreProduct.UPC;
-            //         let idxToRemove = data.findIndex((item) =>
-            //             (upc === item.UPC));
-            //         console.log(idxToRemove);
-            //         filteredData.splice(idxToRemove, 1);
-            //     }
-            // })
-            setStoreProducts(filteredData.map(
+            setStoreProducts(data.map(
                 (item) => ({
                     UPC: item.UPC,
                     name: item.product.name,
@@ -70,6 +58,7 @@ export default function useStoreProducts(command) {
             console.log(data);
             toast.success("Product in shop was removed!")
         } catch (err) {
+            console.log(err)
             toast.error(`ERROR: ${err}`)
         }
     };

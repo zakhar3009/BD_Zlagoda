@@ -20,6 +20,7 @@ public class UpdateStoreProductCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         StoreProduct storeProduct = CommandFactory.getAttributes(request, StoreProduct.class);
+        if(storeProduct.getPromStoreProduct() == null) storeProduct.setPromStoreProduct(new StoreProduct.Builder().build());
         storeProductService.update(storeProduct);
         return JSON.gson().toJson("");
     }

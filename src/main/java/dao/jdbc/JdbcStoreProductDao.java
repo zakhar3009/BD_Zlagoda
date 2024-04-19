@@ -31,7 +31,11 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " INNER JOIN category ON product.category_number = category.category_number)" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC";
 
-
+    private static String GET_ALL_ORDER_BY_QUANTITY = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*" +
+            " FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC"+
+            " ORDER BY t1.products_number ASC";
     private static String UPC = "UPC";
     private static String UPC_PROM = "UPC_prom";
     private static String PRODUCT_ID = "id_product";
@@ -110,7 +114,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
             query.setString(1, id);
             query.executeUpdate();
         } catch (SQLException e) {
-            throw new ServerException(e);
+            throw new ServerException(e.getMessage(), e);
         }
     }
 
@@ -126,6 +130,19 @@ public class JdbcStoreProductDao implements StoreProductDao {
         }
         return storeProducts;
     }
+    @Override
+    public List<StoreProduct> getAllOrderByQuantity() {
+        List<StoreProduct> storeProducts = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL_ORDER_BY_QUANTITY)) {
+            while (resultSet.next()) {
+                storeProducts.add(extractStoreProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return storeProducts;
+    }
+
 
     @Override
     public void createPromStoreProduct(StoreProduct storeProduct) {

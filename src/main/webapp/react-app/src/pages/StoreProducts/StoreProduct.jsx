@@ -9,7 +9,6 @@ export default function StoreProduct({command}) {
     const {
         storeProducts,
         isLoading,
-        fetchStoreProductsData,
         deleteStoreProduct,
         deletePromStoreProduct,
         createPromStoreProduct

@@ -3,8 +3,7 @@ import {toast} from "react-toastify";
 import MatTable from "@/components/table/MatTable.jsx";
 import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
 
-export default function ()
-{
+export default function SearchClientsByPartOfSurname({command}) {
     const [query, setQuery] = useState("");
     const [clients, setClients] = useState();
     const [isLoading, setLoading] = useState(true);
@@ -16,7 +15,7 @@ export default function ()
             const response = await fetch(
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
-                    command_name: "GET_CLIENTS_BY_PART_OF_SURNAME",
+                    command_name: command,
                     query: query,
                 })
             );
@@ -65,9 +64,9 @@ export default function ()
                     className="grid sm:grid-cols-2 gap-3 mb-4"
                 >
                     <input
-                        type="text"
                         id="default-input"
-                        placeholder="Surname"
+                        placeholder={command === "GET_CLIENTS_BY_PART_OF_SURNAME" ? "Surname" : "Percent"}
+                        type={command === "GET_CLIENTS_BY_PART_OF_SURNAME" ? "text" : "number"}
                         value={query}
                         onChange={(event) => {
                             setQuery(event.target.value);
@@ -84,7 +83,7 @@ export default function ()
                 {!isLoading && (
                     <MatTable
                         columnNames={customerCardTableMap.get(
-                            "GET_CLIENTS_BY_PART_OF_SURNAME"
+                            command
                         )}
                         rows={clients}
                         deleteFunc={deleteClient}

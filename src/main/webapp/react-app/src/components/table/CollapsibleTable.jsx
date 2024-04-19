@@ -14,10 +14,15 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {MdDeleteOutline} from "react-icons/md";
 import {storeProductsTableMap} from "@/constants/StoreProductsCommandName.js";
 import {capitalizeFirsLetter} from "@/constants/utils/helpers.js";
+import {GoGear} from "react-icons/go";
+import {useNavigate} from "react-router-dom";
 
-function Row({row, columns, deleteStoreProduct,
+function Row({
+                 row, columns, deleteStoreProduct,
                  deletePromStoreProduct,
-                 createPromStoreProduct}) {
+                 createPromStoreProduct
+             }) {
+    const navigate = useNavigate();
     let promProduct = undefined;
 
     if (row.promStoreProduct) {
@@ -30,6 +35,7 @@ function Row({row, columns, deleteStoreProduct,
             productsNumber: row.promStoreProduct.productsNumber
         };
     }
+
 
     const [open, setOpen] = React.useState(false);
 
@@ -55,57 +61,85 @@ function Row({row, columns, deleteStoreProduct,
             <TableRow className="border-t-2 border-l-2 border-r-2 border-gray-400"
                       sx={{'& > *': {borderBottom: 'unset'}}}>
                 <TableCell>
-                    <IconButton onClick={() => setOpen(!open)} aria-label="expand row" size="small">
+                    {row.promotionalProduct === "False" &&
+                        <IconButton onClick={() => setOpen(!open)} aria-label="expand row" size="small">
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
-                </TableCell>
+                    }
+                        </TableCell>
                 {columns.map((column, index) => (
                         <TableCell
                             align="center"
                             key={index}
-                            scope="row">
-                            {row[column]}
+                            scope="row"
+                            style={{
+                                whiteSpace: "normal",
+                                wordWrap: "break-word",
+                                fontFamily: "Bahnschrift",
+                                fontSize: "18px",
+                                ...(row.promotionalProduct === "True" && {
+                                    color: "darkGray",
+                                })
+                            }}
+                           >
+                            {column === "actions" ?
+                                <div className="flex justify-center items-center">
+                                    {row.promotionalProduct === "False" && <GoGear
+                                        onClick={() => navigate("../" + row.UPC + "/post_update_product_in_shop")}
+                                        className="text-blue-700 hover:bg-blue-100 text-xl mr-1 rounded-md active:text-opacity-70"/>
+                                    }
+                                    <MdDeleteOutline
+                                        onClick={() => row.promotionalProduct === "True" ? deletePromStoreProduct(row.UPC) : deleteStoreProduct(row.UPC)}
+                                        className=" text-red-600 text-2xl hover:bg-red-100 rounded active:text-opacity-50"
+                                    />
+                                </div>
+                                : row[column]
+                            }
                         </TableCell>
                     )
                 )}
             </TableRow>
             <TableRow className="border-l-2 border-r-2 last:border-b-2 border-gray-400">
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{margin: 1}}>
-                            {row.promStoreProduct &&
-                                <div className="bg-gray-200 px-4 py-2 rounded-xl">
-                                    <div className="relative overflow-x-auto">
-                                        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                                            <thead
-                                                className="text-xs text-gray-700 bg-gray-200 border-b-2 border-gray-400">
-                                            <tr>
-                                                {storeProductsTableMap.get("PROM_PRODUCT_COLUMNS").map((colTitle, idx) => (
-                                                    <th className="py-2" key={idx}>{capitalizeFirsLetter(colTitle)}</th>
-                                                ))}
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr className="border-b bg-gray-200">
-                                                {storeProductsTableMap.get("PROM_PRODUCT_COLUMNS").map((column, idx) =>
-                                                    showRowData(column, idx))
-                                                }
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                    {row.promotionalProduct === "False" &&
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            <Box sx={{margin: 1}}>
+                                {row.promStoreProduct &&
+                                    <div className="bg-gray-200 px-4 py-2 rounded-xl">
+                                        <div className="relative overflow-x-auto">
+                                            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                                                <thead
+                                                    className="text-xs text-gray-700 bg-gray-200 border-b-2 border-gray-400">
+                                                <tr>
+                                                    {storeProductsTableMap.get("PROM_PRODUCT_COLUMNS").map((colTitle, idx) => (
+                                                        <th className="py-2"
+                                                            key={idx}>{capitalizeFirsLetter(colTitle)}</th>
+                                                    ))}
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr className="border-b bg-gray-200">
+                                                    {storeProductsTableMap.get("PROM_PRODUCT_COLUMNS").map((column, idx) =>
+                                                        showRowData(column, idx))
+                                                    }
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            }
-                            {!row.promStoreProduct &&
-                                <div className="bg-gray-200 px-4 py-2 w-80 rounded-xl text-center">
-                                    <button
-                                        onClick={() => createPromStoreProduct(row.UPC)}
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Make
-                                        the product promotional
-                                    </button>
-                                </div>}
-                        </Box>
+                                }
+                                {!row.promStoreProduct &&
+                                    <div className="bg-gray-200 px-4 py-2 w-80 rounded-xl text-center">
+                                        <button
+                                            onClick={() => createPromStoreProduct(row.UPC)}
+                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Make
+                                            the product promotional
+                                        </button>
+                                    </div>}
+                            </Box>
+
                     </Collapse>
+                    }
                 </TableCell>
             </TableRow>
         </React.Fragment>

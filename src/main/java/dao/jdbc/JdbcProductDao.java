@@ -21,7 +21,7 @@ public class JdbcProductDao implements ProductDao {
             + " SET  category_number=?, product_name=?, characteristics=?" + " WHERE id_product=? ";
     private static String DELETE = "DELETE FROM product WHERE id_product=?";
     private static String GET_ALL_ORDER_BY_QUANTITY = "SELECT *" +
-            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
+            "FROM (store_product INNER JOIN product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
             "ORDER BY products_number ASC";
 
     private static String SEARCH_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME = "SELECT *" +

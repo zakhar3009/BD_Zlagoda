@@ -114,19 +114,15 @@ const router = createBrowserRouter(
                     element={<CustomerCard command={"GET_ALL_CLIENTS_ORDER_BY_SURNAME"}/>}
                 />
                 <Route path="get_clients_by_percent_order_by_surname"
-                       element={<CustomerCard command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
+                       element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
                 <Route path="get_clients_by_part_of_surname"
-                       element={<SearchClientsByPartOfSurname/>}
+                       element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PART_OF_SURNAME"}/>}
                 />
                 <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
             </Route>
 
             <Route path="store-products">
-                <Route
-                    path="get_all_products_in_shop"
-                    element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>}
-                />
                 <Route
                     path="get_all_products_in_shop"
                     element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>}
