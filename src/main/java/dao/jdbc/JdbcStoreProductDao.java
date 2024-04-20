@@ -37,8 +37,6 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC"+
             " ORDER BY t1.products_number ASC";
 
-    private static String UPDATE_PROM_STORE_PRODUCT = "UPDATE store_product" +
-            " SET selling_price=?, products_number=? " + " WHERE UPC=?";
 
     private static String UPC = "UPC";
     private static String UPC_PROM = "UPC_prom";
@@ -82,6 +80,8 @@ public class JdbcStoreProductDao implements StoreProductDao {
         return storeProduct;
     }
 
+
+
     @Override
     public void create(StoreProduct storeProduct) {
         String randomId = UUID.randomUUID().toString().substring(0, 12);
@@ -98,17 +98,6 @@ public class JdbcStoreProductDao implements StoreProductDao {
         }
     }
 
-    private void updatePromStoreProduct(StoreProduct storeProduct){
-        try (PreparedStatement query = connection.prepareStatement(UPDATE_PROM_STORE_PRODUCT)) {
-            query.setDouble(1, storeProduct.getSellingPrice() * 0.8 );
-            query.setDouble(2, storeProduct.getProductsNumber());
-            query.setString(3, storeProduct.getPromStoreProduct().getUPC());
-            query.executeUpdate();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
     @Override
     public void update(StoreProduct storeProduct) {
         try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
@@ -118,7 +107,6 @@ public class JdbcStoreProductDao implements StoreProductDao {
             query.setBoolean(4, storeProduct.getPromotionalProduct());
             query.setString(5, storeProduct.getUPC());
             query.executeUpdate();
-            updatePromStoreProduct(storeProduct);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -161,7 +149,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
 
 
     @Override
-    public void createPromStoreProduct(StoreProduct storeProduct) {
+    public void createPromStoreProduct(StoreProduct storeProduct, int productsNumber) {
         String randomId = UUID.randomUUID().toString().substring(0, 12);
         storeProduct.setPromStoreProduct(new StoreProduct.Builder().setUpc(randomId).build());
         try (PreparedStatement query = connection.prepareStatement(CREATE)) {
@@ -169,7 +157,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
             query.setString(2, null);
             query.setInt(3, storeProduct.getProductID());
             query.setDouble(4, storeProduct.getSellingPrice() * 0.8);
-            query.setInt(5, storeProduct.getProductsNumber());
+            query.setInt(5, productsNumber);
             query.setBoolean(6, true);
             query.executeUpdate();
             update(storeProduct);
