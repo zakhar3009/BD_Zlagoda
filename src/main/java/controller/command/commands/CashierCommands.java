@@ -13,6 +13,7 @@ import controller.command.commands.cutomerCard.GetCustomerCardsByPartOfSurname;
 import controller.command.commands.cutomerCard.UpdateCustomerCardCommand;
 import controller.command.commands.employee.GetEmployeeById;
 import controller.command.commands.product.*;
+import controller.command.commands.sale.GetFullCheckByNumber;
 import controller.command.commands.storeProduct.GetAllStoreProductsOrderByName;
 import controller.command.commands.storeProduct.GetStoreProductByIdCommand;
 import service.*;
@@ -33,6 +34,7 @@ public enum CashierCommands {
     GET_SELF_DAILY_CHECKS("GET_SELF_DAILY_CHECKS", new GetSelfDailyChecksCommand(CheckService.getInstance())),
     GER_SELF_CHECKS_PER_PERIOD("GET_SELF_CHECKS_PER_PERIOD", new GetSelfChecksPerPeriod(CheckService.getInstance())),
     GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", new GetCheckById(CheckService.getInstance())),
+    GET_FULL_CHECK_BY_NUMBER("GET_FULL_CHECK_BY_NUMBER", new GetFullCheckByNumber(SaleService.getInstance())),
     GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetPromProductsOrderByQuantity(ProductService.getInstance())),
     GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", new GetPromProductsOrderByName(ProductService.getInstance())),
     GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(ProductService.getInstance())),

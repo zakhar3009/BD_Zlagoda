@@ -28,6 +28,7 @@ export default function useStoreProducts(command) {
                 })
             ));
             setIsLoading(false);
+            console.log("StoreProducts: ", data);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }

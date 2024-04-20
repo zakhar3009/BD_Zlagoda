@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
-import {productsTableMap} from "../../constants/ProductsCommandName.js";
+import {productsTableMap} from "../../constants/ProductsCommandMap.js";
 
 export default function Products({command, properties}) {
     const [data, setData] = useState(null);

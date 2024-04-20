@@ -36,6 +36,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " INNER JOIN category ON product.category_number = category.category_number)" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC"+
             " ORDER BY t1.products_number ASC";
+
     private static String UPC = "UPC";
     private static String UPC_PROM = "UPC_prom";
     private static String PRODUCT_ID = "id_product";

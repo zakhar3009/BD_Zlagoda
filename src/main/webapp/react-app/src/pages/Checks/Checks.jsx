@@ -1,15 +1,25 @@
 import MatTable from "@/components/table/MatTable.jsx";
-import {categoriesTableMap} from "@/constants/CategoiesCommandMap.js";
 import React, {useState} from "react";
-import {employeesTableMap} from "@/constants/EmployeesCommandMap.js";
-import useCreateUpdateEmployee from "@/hooks/Employee/useCreateUpdateEmployee.jsx";
 import useFilterChecks from "@/hooks/Checks/useFilterChecks.jsx";
-import {checksCommandMap, checksTableMap} from "@/constants/ChecksCommandMap.js";
+import {checksTableMap} from "@/constants/ChecksCommandMap.js";
 import Card from "./../../components/cards/Card.jsx";
+import ViewCheckModal from "@/components/modals/ViewCheckModal.jsx";
 
 
 export default function Checks() {
     const {register, handleSubmit, onSubmit, cashier, checks, isLoading} = useFilterChecks();
+    const [viewModalOpen, setViewModalOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState({});
+
+    const onOpenViewModal = (item) => {
+        setSelectedItem(item);
+        setViewModalOpen(true);
+    }
+
+    const onCloseViewModal = () => {
+        setSelectedItem({});
+        setViewModalOpen(false);
+    }
 
     return (
         <main className="px-8 py-2 pt-6 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
@@ -63,15 +73,22 @@ export default function Checks() {
             </Card>
 
             {!isLoading && (
-                <MatTable
-                    columnNames={checksTableMap.get(
-                        "GET_ALL_CHECKS")}
-                    rows={checks}
-                    deleteProperty={"number"}
-                    pathToCreateUpdate={"/post_update_employee"}
-                    pathToView={"/view_check_products"}
-                    clickable={true}
-                ></MatTable>
+                <>
+                    <MatTable
+                        columnNames={checksTableMap.get(
+                            "GET_ALL_CHECKS")}
+                        rows={checks}
+                        deleteProperty={"number"}
+                        pathToCreateUpdate={"/post_update_employee"}
+                        clickable={true}
+                        onViewClick={onOpenViewModal}
+                    ></MatTable>
+                    <ViewCheckModal
+                        open={viewModalOpen}
+                        handleClose={onCloseViewModal}
+                        selectedCheck={selectedItem}
+                    />
+                </>
             )}
         </main>
     )

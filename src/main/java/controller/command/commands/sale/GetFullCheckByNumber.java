@@ -22,7 +22,7 @@ public class GetFullCheckByNumber implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        List<Sale> sales = saleService.getFullCheckByNumber(hashMap.get("UPC"));
+        List<Sale> sales = saleService.getFullCheckByNumber(hashMap.get("check_number"));
         return JSON.gson().toJson(sales);
     }
 }
