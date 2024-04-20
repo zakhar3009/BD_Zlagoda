@@ -73,36 +73,10 @@ export default function useStoreProducts(command) {
         }
     };
 
-    const createPromStoreProduct = async (productUPC) => {
-        const requestOptions = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                command_name: "POST_ADD_PROM_PRODUCT_IN_SHOP",
-            },
-            body: JSON.stringify({
-                UPC: productUPC,
-            }),
-        };
-        try {
-            const response = await fetch(
-                "http://localhost:8080/controller",
-                requestOptions
-            );
-            const data = await response.json();
-            fetchStoreProductsData();
-            console.log(data);
-            toast.success("Promotional was created!")
-        } catch (err) {
-            toast.error(`ERROR: ${err}`)
-        }
-    };
-
 
     return {
         storeProducts,
         isLoading,
         deleteStoreProduct,
-        createPromStoreProduct
     }
 }

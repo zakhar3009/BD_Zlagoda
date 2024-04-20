@@ -27,7 +27,7 @@ export default function NewMatTable({
     const getLineDiscount =(row) => {
         if(row.promotionalProduct)
         return <MdOutlineDiscount
-            className="text-gray-300 hover:bg-gray-100 text-xl mr-1 rounded-md active:text-opacity-70"
+            className="text-gray-300 text-xl mr-1 rounded-md"
         />
         else
             return <MdOutlineDiscount
@@ -38,7 +38,7 @@ export default function NewMatTable({
     const getLineEdit =(row) => {
         if(row.promotionalProduct)
             return <GoGear
-                className="text-gray-300 hover:bg-gray-100 text-xl mr-1 rounded-md active:text-opacity-70"/>
+                className="text-gray-300 text-xl mr-1 rounded-md"/>
         else
             return <GoGear
                 onClick={() => onEditClick(row)}
@@ -47,7 +47,7 @@ export default function NewMatTable({
     const getLineRemove =(row) =>{
         if(row.productsNumber === 0)
             return  <MdDeleteOutline
-            className="text-gray-300 hover:bg-red-100 text-2xl rounded active:text-opacity-70"
+            className="text-gray-300 text-2xl rounded"
         />
         else  return  <MdDeleteOutline
             onClick={() => onDeleteClick(row)}
@@ -104,7 +104,7 @@ export default function NewMatTable({
 
     return (
         <Paper className="w-full drop-shadow-xl overflow-hidden">
-            <TableContainer className="w-screen table-for-print" sx={{maxHeight: 440}}>
+            <TableContainer className="w-screen table-for-print" sx={{maxHeight: 700}}>
                 <Table className="w-full table-for-print" stickyHeader aria-label="sticky table">
                     <TableHead className="rounded-full">
                         <TableRow>
