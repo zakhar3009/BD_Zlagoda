@@ -12,7 +12,7 @@ export default function Profile() {
     const {auth} = useAuth();
     console.log(auth)
     return (
-        <Card height="screen">
+        <Card height="screen" maxW="max-w-3xl">
             <div className="flex justify-center">
                 <label className="font-mono text-lg font-bold text-justify">Your profile</label>
             </div>

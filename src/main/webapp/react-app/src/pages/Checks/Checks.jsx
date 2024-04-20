@@ -24,7 +24,7 @@ export default function Checks() {
 
     return (
         <main className="px-8 py-2 pt-6 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
-            <Card>
+            <Card maxW="max-w-3xl">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="grid sm:grid-cols-2 gap-3"
