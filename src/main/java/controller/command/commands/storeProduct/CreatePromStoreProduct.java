@@ -21,8 +21,19 @@ public class CreatePromStoreProduct implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getAttributes(request, HashMap.class);
-        Optional<StoreProduct> storeProduct = storeProductService.getById(hashMap.get("UPC"));
-        storeProduct.ifPresent(storeProductService::createPromStoreProduct);
+        Optional<StoreProduct> optionalStoreProduct = storeProductService.getById(hashMap.get("UPC"));
+        int productsNumber = Integer.parseInt(hashMap.get("products_number"));
+        if(optionalStoreProduct.isPresent()){
+            StoreProduct storeProduct = optionalStoreProduct.get();
+            if(storeProduct.getPromStoreProduct().getUPC() == null) storeProductService.createPromStoreProduct(storeProduct, productsNumber);
+            else storeProductService.update(new StoreProduct.Builder()
+                            .setPromStoreProduct(new StoreProduct.Builder().build())
+                            .setSellingPrice(storeProduct.getSellingPrice() * 0.8)
+                            .setProductsNumber(productsNumber)
+                            .setIsProm(true)
+                            .setUpc(storeProduct.getPromStoreProduct().getUPC())
+                            .build());
+        }
         return JSON.gson().toJson("");
     }
 }

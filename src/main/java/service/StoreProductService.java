@@ -55,8 +55,8 @@ public class StoreProductService {
     }
 
 
-    public void createPromStoreProduct(StoreProduct storeProduct){
+    public void createPromStoreProduct(StoreProduct storeProduct, int productsNumber){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
-        storeProductDao.createPromStoreProduct(storeProduct);
+        storeProductDao.createPromStoreProduct(storeProduct, productsNumber);
     }
 }
