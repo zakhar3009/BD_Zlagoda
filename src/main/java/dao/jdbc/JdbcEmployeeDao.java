@@ -164,7 +164,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
     public void update(Employee employee) {
         try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
             query.setString(1, employee.getEmail());
-            query.setString(2, employee.getPassword());
+            query.setString(2, Encryption.hashPassword(employee.getPassword()));
             query.setString(3, employee.getName());
             query.setString(4, employee.getSurname());
             query.setString(5, employee.getPatronymic());

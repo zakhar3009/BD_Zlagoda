@@ -25,5 +25,5 @@ export const checksCommandMap = new Map([
     // cashier commands
     // ["GET_SELF_DAILY_CHECKS (c)", "Get self daily checks"],
     // ["GER_SELF_CHECKS_PER_PERIOD (c)", "Get self checks per period"],
-    // ["POST_ADD_CHECK (c)", "Add new check"],
+    ["POST_ADD_CHECK", "Add new check"],
 ]);

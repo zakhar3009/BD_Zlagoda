@@ -12,7 +12,7 @@ import {MdDeleteOutline} from "react-icons/md";
 import {GoGear} from "react-icons/go";
 import DeleteModal from "../modals/DeleteModal";
 import {capitalizeFirsLetter} from "@/constants/utils/helpers.js";
-import { FaRegFaceRollingEyes } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 export default function MatTable({
                                      columnNames,
@@ -21,7 +21,7 @@ export default function MatTable({
                                      deleteProperty,
                                      pathToCreateUpdate,
                                      clickable,
-                                     pathToView
+                                     onViewClick
                                  }) {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(0);
@@ -57,7 +57,6 @@ export default function MatTable({
         }),
         {id: "actions", label: "Actions", minWidth: 50, align: "center"},
     ];
-    console.log(rows)
 
     const whatColumn = (column, row) => {
         const value = row[column.label];
@@ -75,8 +74,8 @@ export default function MatTable({
                             onClick={() => navigate("../" + row[deleteProperty] + pathToCreateUpdate)}
                             className="text-blue-700 hover:bg-blue-100 text-xl mr-1 rounded-md active:text-opacity-70"/>
                             :
-                            <FaRegFaceRollingEyes
-                                onClick={() => navigate("../"+ row[deleteProperty] + pathToView)}
+                            <MdOutlineRemoveRedEye className="text-xl text-blue-700 hover:bg-blue-100 rounded-md active:text-opacity-70"
+                                onClick={() => onViewClick(row)}
                             />
                         }
                         <MdDeleteOutline
@@ -87,8 +86,6 @@ export default function MatTable({
                 </TableCell>
             );
         }
-
-
         return (
             <TableCell key={column.id} align={column.align}>
                 {value}

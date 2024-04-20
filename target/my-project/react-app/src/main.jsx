@@ -18,11 +18,12 @@ import AddAndEditProduct from "@/pages/Products/AddAndEditProduct.jsx";
 import CustomerCard from "@/pages/CustomerCard/CustomerCard.jsx";
 import AddAndEditCustomerCard from "@/pages/CustomerCard/AddAndEditCustomerCard.jsx";
 import {AuthProvider} from "@/context/AuthProvider.jsx";
-import RequireAuth from "@/components/auth/RequireAuth.jsx";
 import SearchClientsByPartOfSurname from "@/pages/CustomerCard/SearchClientsByPartOfSurname.jsx";
 import StoreProduct from "@/pages/StoreProducts/StoreProduct.jsx";
 import Profile from "@/pages/Profile/Profile.jsx";
 import AddAndEditStoreProduct from "@/pages/StoreProducts/AddAndEditStoreProduct.jsx";
+import Checks from "@/pages/Checks/Checks.jsx";
+import AddCheck from "@/pages/Checks/AddCheck.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -133,7 +134,11 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>}/>
             </Route>
 
-
+            <Route path="checks">
+                <Route path="get_all_checks" element={<Checks />} />
+                <Route path=":id/view_check_products" element={<Products />} />
+                <Route path="post_add_check" element={<AddCheck />} />
+            </Route>
 
         </Route>
     )

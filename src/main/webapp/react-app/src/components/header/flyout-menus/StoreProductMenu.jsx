@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import {Menu, Popover, Transition} from "@headlessui/react";
 import { NavLink } from "react-router-dom";
-import { storeProductsCommandMap } from "@/constants/StoreProductsCommandName.js";
+import { storeProductsCommandMap } from "@/constants/StoreProductsCommandMap.js";
 import { classNames } from "@/constants/utils/helpers.js";
 
 export default function StoreProductMenu() {
