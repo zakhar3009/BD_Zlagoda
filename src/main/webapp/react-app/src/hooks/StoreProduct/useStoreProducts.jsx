@@ -68,8 +68,7 @@ export default function useStoreProducts(command) {
                 toast.success("Product in shop was removed!")
             else toast.success("Prom product in shop was removed!")
         } catch (err) {
-            console.log(err)
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!")
         }
     };
 

@@ -8,5 +8,6 @@ public interface StoreProductDao extends GenericDao<StoreProduct, String>{
     List<StoreProduct> getAllOrderByName();
     List<StoreProduct> getAllOrderByQuantity();
     void createPromStoreProduct(StoreProduct storeProduct, int productsNumber);
+    List<String> getAllUpcs();
 
 }

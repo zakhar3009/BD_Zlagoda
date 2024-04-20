@@ -35,7 +35,7 @@ export default function EditStoreProductDiscountModal({
             },
             body: JSON.stringify({
                 UPC: selectedStoreProduct.UPC,
-                productsNumber: productsNumber
+                products_number: productsNumber
             }),
         };
         try {

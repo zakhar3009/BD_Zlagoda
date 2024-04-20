@@ -2,6 +2,7 @@ package service;
 
 import dao.DaoFactory;
 import dao.SaleDao;
+import entity.Check;
 import entity.Sale;
 
 import java.sql.Date;
@@ -47,11 +48,11 @@ public class SaleService {
         saleDao.delete(id);
     }
 
-    public List<List<Sale>> getFullChecksByEmployeeIdPerPeriod(String employeeId, Date start, Date end){
+    public List<Check> getFullChecksByEmployeeIdPerPeriod(String employeeId, Date start, Date end){
         SaleDao saleDao = daoFactory.createSaleDao();
         return saleDao.getFullChecksByEmployeeIdPerPeriod(employeeId, start, end);
     }
-    public List<List<Sale>> getFullChecksPerPeriod(Date start, Date end){
+    public List<Check> getFullChecksPerPeriod(Date start, Date end){
         SaleDao saleDao = daoFactory.createSaleDao();
         return saleDao.getFullChecksPerPeriod(start, end);
     }
