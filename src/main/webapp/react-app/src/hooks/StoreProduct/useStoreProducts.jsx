@@ -23,7 +23,7 @@ export default function useStoreProducts(command) {
                     name: item.product.name,
                     category_name: item.product.category.name,
                     productsNumber : item.productsNumber,
-                    promotionalProduct: item.promotionalProduct === "True",
+                    promotionalProduct: item.promotionalProduct,
                     sellingPrice: item.sellingPrice,
                 })));
             setIsLoading(false);
@@ -34,7 +34,7 @@ export default function useStoreProducts(command) {
                     name: item.product.name,
                     category_name: item.product.category.name,
                     productsNumber : item.productsNumber,
-                    promotionalProduct: item.promotionalProduct === "True",
+                    promotionalProduct: item.promotionalProduct,
                     sellingPrice: item.sellingPrice,
                 })));
         } catch (err) {
@@ -46,12 +46,12 @@ export default function useStoreProducts(command) {
         fetchStoreProductsData();
     }, [command]);
 
-    const deleteStoreProduct = async (productUPC) => {
+    const deleteStoreProduct = async (command, productUPC) => {
         const requestOptions = {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                command_name: "DELETE_PRODUCT_IN_SHOP",
+                command_name: command,
             },
             body: JSON.stringify({
                 UPC: productUPC,
@@ -64,61 +64,11 @@ export default function useStoreProducts(command) {
             );
             const data = await response.json();
             fetchStoreProductsData();
-            console.log(data);
-            toast.success("Product in shop was removed!")
+            if (command === "DELETE_PRODUCT_IN_SHOP")
+                toast.success("Product in shop was removed!")
+            else toast.success("Prom product in shop was removed!")
         } catch (err) {
-            console.log(err)
-            toast.error(`ERROR: ${err}`)
-        }
-    };
-
-    const deletePromStoreProduct = async (productUPC) => {
-        const requestOptions = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                command_name: "DELETE_PROM_STORE_PRODUCT",
-            },
-            body: JSON.stringify({
-                UPC: productUPC,
-            }),
-        };
-        try {
-            const response = await fetch(
-                "http://localhost:8080/controller",
-                requestOptions
-            );
-            const data = await response.json();
-            fetchStoreProductsData();
-            console.log(data);
-            toast.success("Promotional was removed!")
-        } catch (err) {
-            toast.error(`ERROR: ${err}`)
-        }
-    };
-
-    const createPromStoreProduct = async (productUPC) => {
-        const requestOptions = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                command_name: "POST_ADD_PROM_PRODUCT_IN_SHOP",
-            },
-            body: JSON.stringify({
-                UPC: productUPC,
-            }),
-        };
-        try {
-            const response = await fetch(
-                "http://localhost:8080/controller",
-                requestOptions
-            );
-            const data = await response.json();
-            fetchStoreProductsData();
-            console.log(data);
-            toast.success("Promotional was created!")
-        } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!")
         }
     };
 
@@ -126,9 +76,6 @@ export default function useStoreProducts(command) {
     return {
         storeProducts,
         isLoading,
-        fetchStoreProductsData,
         deleteStoreProduct,
-        deletePromStoreProduct,
-        createPromStoreProduct
     }
 }

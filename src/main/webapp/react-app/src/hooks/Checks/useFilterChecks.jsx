@@ -20,6 +20,7 @@ export default function useFilterChecks() {
             end: ""
         }
     });
+
     const fetchCashier = async () => {
         try {
             const response = await fetch(

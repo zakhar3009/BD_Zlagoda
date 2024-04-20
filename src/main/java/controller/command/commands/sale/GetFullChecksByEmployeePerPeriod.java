@@ -3,6 +3,7 @@ package controller.command.commands.sale;
 import controller.command.Command;
 import controller.command.commands.CommandFactory;
 import controller.utils.JSON;
+import entity.Check;
 import entity.Sale;
 import service.SaleService;
 
@@ -23,7 +24,7 @@ public class GetFullChecksByEmployeePerPeriod implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        List<List<Sale>> sales = saleService.getFullChecksByEmployeeIdPerPeriod(hashMap.get("id_employee"), Date.valueOf(hashMap.get("start")), Date.valueOf(hashMap.get("end")));
-        return JSON.gson().toJson(sales);
+        List<Check> checks = saleService.getFullChecksByEmployeeIdPerPeriod(hashMap.get("id_employee"), Date.valueOf(hashMap.get("start")), Date.valueOf(hashMap.get("end")));
+        return JSON.gson().toJson(checks);
     }
 }
