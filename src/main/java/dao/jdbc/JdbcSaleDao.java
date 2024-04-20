@@ -31,6 +31,7 @@ public class JdbcSaleDao implements SaleDao {
             " WHERE employee.id_employee=? AND (checks.print_date>=? AND checks.print_date<=?)" +
             " GROUP BY sale.check_number";
 
+
     private static String UPC = "UPC";
     private static String CHECK_NUMBER = "check_number";
     private static String PRODUCT_NUMBER = "product_number";
