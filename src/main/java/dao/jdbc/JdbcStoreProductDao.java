@@ -37,6 +37,9 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC"+
             " ORDER BY t1.products_number ASC";
 
+    private static String UPDATE_PROM_STORE_PRODUCT = "UPDATE store_product" +
+            " SET selling_price=?, products_number=? " + " WHERE UPC=?";
+
     private static String UPC = "UPC";
     private static String UPC_PROM = "UPC_prom";
     private static String PRODUCT_ID = "id_product";
@@ -95,6 +98,17 @@ public class JdbcStoreProductDao implements StoreProductDao {
         }
     }
 
+    private void updatePromStoreProduct(StoreProduct storeProduct){
+        try (PreparedStatement query = connection.prepareStatement(UPDATE_PROM_STORE_PRODUCT)) {
+            query.setDouble(1, storeProduct.getSellingPrice() * 0.8 );
+            query.setDouble(2, storeProduct.getProductsNumber());
+            query.setString(3, storeProduct.getPromStoreProduct().getUPC());
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     @Override
     public void update(StoreProduct storeProduct) {
         try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
@@ -104,6 +118,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
             query.setBoolean(4, storeProduct.getPromotionalProduct());
             query.setString(5, storeProduct.getUPC());
             query.executeUpdate();
+            updatePromStoreProduct(storeProduct);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

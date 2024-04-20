@@ -1,5 +1,5 @@
 const columnsName =
-    ["name",
+    [   "name",
         "UPC",
         "id",
         "category_number",
@@ -21,12 +21,12 @@ const promProductCols =
         "actions"
     ];
 
-const simpleStoreProductCols = ["UPC", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice", "actions"]
+const simpleStoreProductCols = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice", "actions"]
 export const storeProductsTableMap = new Map([
-    ["GET_ALL_PRODUCTS_IN_SHOP", columnsName],
-    ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", columnsName],
+    ["GET_ALL_PRODUCTS_IN_SHOP", simpleStoreProductCols],
+    ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", simpleStoreProductCols],
     ["PROM_PRODUCT_COLUMNS", promProductCols],
-    ["SIMPLE_STORE_PRODUCT_COLUMNS", simpleStoreProductCols]
+    ["ALL_STORE_PRODUCTS_COLUMNS", simpleStoreProductCols]
 ]);
 export const storeProductsCommandMap = new Map([
     ["GET_ALL_PRODUCTS_IN_SHOP", "Get all products in shop"],

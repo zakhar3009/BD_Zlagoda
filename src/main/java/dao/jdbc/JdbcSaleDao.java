@@ -15,19 +15,25 @@ public class JdbcSaleDao implements SaleDao {
     private static String CREATE = "INSERT INTO sale" +
             " (UPC, check_number, product_number, selling_price) VALUES (?, ?, ?, ?)";
     private static String DELETE = "DELETE FROM sale WHERE UPC=? AND check_number=?";
-    private static String GET_BY_ID = "SELECT * FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number)) WHERE UPC=? AND check_number=?";
-    private static String GET_ALL = "SELECT * FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number))";
+    private static String GET_BY_ID = "SELECT * " +
+            "FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number)) WHERE UPC=? AND check_number=?";
+    private static String GET_ALL = "SELECT * " +
+            "FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number))";
     private static String GET_QUANTITY_OF_SOLD_PRODUCT_PER_PERIOD = "SELECT SUM(product_number) FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number)) JOIN checks USING(check_number)" +
             " WHERE UPC=? AND (print_date>=? AND print_date<=?)";
-    private static String GET_FULL_CHECK_BY_NUMBER = "SELECT * FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
+    private static String GET_FULL_CHECK_BY_NUMBER = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*, employee.*, sale.*, customer_card.*, check.*  " +
+            "FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
             " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
             " WHERE checks.check_number=?";
-    private static String GET_FULL_CHECKS_PER_PERIOD = "SELECT * FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
+    private static String GET_FULL_CHECKS_PER_PERIOD = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*, employee.*, sale.*, customer_card.*, check.*  " +
+            "FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
             " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
             " WHERE checks.print_date>=? AND checks.print_date<=?" +
             " GROUP BY sale.check_number";
-    private static String GET_FULL_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT * FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
+    private static String GET_FULL_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*, employee.*, sale.*, customer_card.*, check.* " +
+            " FROM (sale JOIN store_product USING(UPC) JOIN product USING(id_product) " +
             " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
+            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC" +
             " WHERE employee.id_employee=? AND (checks.print_date>=? AND checks.print_date<=?)" +
             " GROUP BY sale.check_number";
 

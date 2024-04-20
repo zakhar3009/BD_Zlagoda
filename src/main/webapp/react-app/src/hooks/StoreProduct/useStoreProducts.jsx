@@ -19,16 +19,24 @@ export default function useStoreProducts(command) {
             setStoreProducts(data.map(
                 (item) => ({
                     UPC: item.UPC,
+                    UPC_prom: item.promStoreProduct?.UPC ? item.promStoreProduct.UPC : "",
                     name: item.product.name,
                     category_name: item.product.category.name,
                     productsNumber : item.productsNumber,
-                    promotionalProduct: item.promotionalProduct ? "True" : "False",
+                    promotionalProduct: item.promotionalProduct === "True",
                     sellingPrice: item.sellingPrice,
-                    promStoreProduct: item.promStoreProduct,
-                })
-            ));
+                })));
             setIsLoading(false);
-            console.log("StoreProducts: ", data);
+            console.log("StoreProducts: ", data.map(
+                (item) => ({
+                    UPC: item.UPC,
+                    UPC_prom: item.promStoreProduct?.UPC ? item.promStoreProduct.UPC : "",
+                    name: item.product.name,
+                    category_name: item.product.category.name,
+                    productsNumber : item.productsNumber,
+                    promotionalProduct: item.promotionalProduct === "True",
+                    sellingPrice: item.sellingPrice,
+                })));
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
