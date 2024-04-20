@@ -54,7 +54,6 @@ export default function useFilterChecks() {
             const data = await response.json();
 
             const newData = data.map((item) =>({
-
                 number: item.number,
                 employee: item.employee.name + " "+ item.employee.surname,
                 customerCard: item.customerCard.customerName +" " + item.customerCard.customerSurname,
@@ -63,7 +62,7 @@ export default function useFilterChecks() {
                 vat: item.vat
             }))
             setChecks(newData);
-            console.log(newData)
+            console.log("CHECKS", newData)
             setIsLoading(false);
         } catch (err) {
             toast.error(`ERROR: ${err}`)

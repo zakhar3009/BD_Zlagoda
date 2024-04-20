@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {MdDeleteOutline} from "react-icons/md";
-import {storeProductsTableMap} from "@/constants/StoreProductsCommandName.js";
+import {storeProductsTableMap} from "@/constants/StoreProductsCommandMap.js";
 import {capitalizeFirsLetter} from "@/constants/utils/helpers.js";
 import {GoGear} from "react-icons/go";
 import {useNavigate} from "react-router-dom";
