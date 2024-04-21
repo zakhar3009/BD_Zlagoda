@@ -1,5 +1,5 @@
 const columnsName =
-    ["id",
+    [   "id",
         "name",
         "category_number",
         "category_name",

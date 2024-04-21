@@ -11,6 +11,7 @@ import {salesColumnsMap} from "@/constants/SalesCommandMap.js";
 import {IoIosClose} from "react-icons/io";
 import TablePagination from "@mui/material/TablePagination";
 import usePaginate from "@/hooks/pagination/usePaginate.jsx";
+import TableBody from "@mui/material/TableBody";
 
 export default function ViewCheckModal({
                                            selectedCheck,
@@ -54,10 +55,11 @@ export default function ViewCheckModal({
 
     return (
         <MatModal open={open} handleClose={handleClose}>
-            <div className="max-w-7xl">
-                <div className="flex justify-end items-center">
+            <div>
+                <div className="flex justify-between items-center">
+                    <label className="font-bold text-gray-500">Check: {selectedCheck.number}</label>
                     <IoIosClose onClick={handleClose}
-                                className="text-gray-400 text-5xl hover:text-opacity-80 active:text-opacity-50"/>
+                                className="text-gray-500 text-5xl hover:text-opacity-80 active:text-opacity-50"/>
                 </div>
                 <Paper sx={{width: '100%', overflow: 'hidden'}}>
                     <TableContainer sx={{maxHeight: 440}}>
@@ -69,26 +71,20 @@ export default function ViewCheckModal({
                                     })}
                                 </TableRow>
                             </TableHead>
-                            {/*<TableBody>*/}
-                            {/*    {sales*/}
-                            {/*        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)*/}
-                            {/*        .map((row) => {*/}
-                            {/*            return (*/}
-                            {/*                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>*/}
-                            {/*                    {columns.map((column) => {*/}
-                            {/*                        const value = row[column.id];*/}
-                            {/*                        return (*/}
-                            {/*                            <TableCell key={column.id} align={column.align}>*/}
-                            {/*                                {column.format && typeof value === 'number'*/}
-                            {/*                                    ? column.format(value)*/}
-                            {/*                                    : value}*/}
-                            {/*                            </TableCell>*/}
-                            {/*                        );*/}
-                            {/*                    })}*/}
-                            {/*                </TableRow>*/}
-                            {/*            );*/}
-                            {/*        })}*/}
-                            {/*</TableBody>*/}
+                            {!isLoading && <TableBody>
+                                {sales
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row, idx) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={idx}>
+                                                <TableCell>{row.storeProduct.product.name}</TableCell>
+                                                <TableCell>{row.storeProduct.product.category.name}</TableCell>
+                                                <TableCell>{row.productNumber}</TableCell>
+                                                <TableCell>{row.sellingPrice}</TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                            </TableBody>}
                         </Table>
                     </TableContainer>
                     <TablePagination

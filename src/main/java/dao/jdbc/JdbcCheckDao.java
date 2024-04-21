@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class JdbcCheckDao implements CheckDao {
 
@@ -124,7 +125,6 @@ public class JdbcCheckDao implements CheckDao {
 
     @Override
     public void create(Check check) {
-
         try(PreparedStatement query = connection.prepareStatement(CREATE)){
             query.setString(1, check.getNumber());
             query.setString(2, check.getEmployee().getId());

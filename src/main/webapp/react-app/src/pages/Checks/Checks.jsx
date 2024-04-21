@@ -4,10 +4,11 @@ import useFilterChecks from "@/hooks/Checks/useFilterChecks.jsx";
 import {checksTableMap} from "@/constants/ChecksCommandMap.js";
 import Card from "./../../components/cards/Card.jsx";
 import ViewCheckModal from "@/components/modals/ViewCheckModal.jsx";
+import FormInput from "./../../components/inputs/FormInput.jsx";
 
 
 export default function Checks() {
-    const {register, handleSubmit, onSubmit, cashier, checks, isLoading} = useFilterChecks();
+    const {register, handleSubmit, onSubmit, cashier, checks, errors, isLoading, deleteCheck } = useFilterChecks();
     const [viewModalOpen, setViewModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
 
@@ -23,7 +24,7 @@ export default function Checks() {
 
     return (
         <main className="px-8 py-2 pt-6 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
-            <Card>
+            <Card maxW="max-w-3xl">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="grid sm:grid-cols-2 gap-3"
@@ -47,22 +48,26 @@ export default function Checks() {
                             <option key={item.value} value={item.value}>{item.label}</option>
                         ))}
                     </select>
-                    <input
-                        {...register("start")}
-                        type="date"
-                        id="default-input"
-                        placeholder="Date from"
-                        name="start"
-                        className="col-span-1 bg-gray-50 md:place-self-end  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    />
-                    <input
-                        {...register("end")}
-                        type="date"
-                        id="default-input"
-                        placeholder="Date for"
-                        name="end"
-                        className=" col-span-1 bg-gray-50 md:place-self-end  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    />
+                    <div>
+                        <FormInput
+                            register={register}
+                            label="Date from"
+                            type="date"
+                            placeholder="Date from"
+                            name="start"
+                            errors={errors}
+                        />
+                    </div>
+                    <div>
+                        <FormInput
+                            register={register}
+                            label="Date end"
+                            type="date"
+                            placeholder="Date end"
+                            name="end"
+                            errors={errors}
+                        />
+                    </div>
                     <button
                         type="submit"
                         className="col-span-2 mt-4 text-white  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -82,6 +87,7 @@ export default function Checks() {
                         pathToCreateUpdate={"/post_update_employee"}
                         clickable={true}
                         onViewClick={onOpenViewModal}
+                        deleteFunc={deleteCheck}
                     ></MatTable>
                     <ViewCheckModal
                         open={viewModalOpen}

@@ -8,7 +8,6 @@ import service.CheckService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class CreateCheckCommand implements Command {
@@ -25,8 +24,6 @@ public class CreateCheckCommand implements Command {
         String randomId = UUID.randomUUID().toString().substring(0, 10);
         check.setNumber(randomId);
         checkService.create(check);
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("check_number", randomId);
-        return JSON.gson().toJson(hashMap);
+        return JSON.gson().toJson(check.getNumber());
     }
 }

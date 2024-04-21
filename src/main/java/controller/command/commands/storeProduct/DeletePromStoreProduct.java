@@ -25,7 +25,8 @@ public class DeletePromStoreProduct implements Command {
         Optional<StoreProduct> optionalStoreProduct = storeProductService.getById(hashMap.get("UPC"));
         if(optionalStoreProduct.isPresent()){
             StoreProduct storeProduct = optionalStoreProduct.get();
-            storeProduct.getPromStoreProduct().setProductsNumber(0);
+            storeProduct.setPromStoreProduct(new StoreProduct.Builder().build());
+            storeProduct.setProductsNumber(0);
             storeProductService.update(storeProduct);
         }
         return JSON.gson().toJson("");

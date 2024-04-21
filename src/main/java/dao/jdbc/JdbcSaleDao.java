@@ -1,6 +1,7 @@
 package dao.jdbc;
 
 import dao.SaleDao;
+import entity.Check;
 import entity.Sale;
 import exception.ServerException;
 
@@ -26,16 +27,12 @@ public class JdbcSaleDao implements SaleDao {
             " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC " +
             " WHERE checks.check_number=?";
-    private static String GET_FULL_CHECKS_PER_PERIOD = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*, employee.*, sale.*, customer_card.*, checks.*  " +
-            " FROM (sale JOIN store_product t1 USING(UPC) JOIN product USING(id_product) " +
-            " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
-            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC " +
+
+    private static String GET_CHECKS_PER_PERIOD = "SELECT * FROM checks" +
             " WHERE checks.print_date>=? AND checks.print_date<=?";
-    private static String GET_FULL_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*, employee.*, sale.*, customer_card.*, checks.* " +
-            " FROM (sale JOIN store_product t1 USING(UPC) JOIN product USING(id_product) " +
-            " JOIN category USING(category_number) JOIN checks USING(check_number) JOIN employee USING(id_employee) JOIN customer_card USING(card_number))" +
-            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC" +
+    private static String GET_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT * FROM checks" +
             " WHERE employee.id_employee=? AND (checks.print_date>=? AND checks.print_date<=?)";
+
 
 
     private static String UPC = "UPC";
@@ -106,32 +103,36 @@ public class JdbcSaleDao implements SaleDao {
     }
 
     @Override
-    public List<List<Sale>> getFullChecksByEmployeeIdPerPeriod(String employeeId, Date start, Date end) {
-        List<List<Sale>> sales;
-        try (PreparedStatement query = connection.prepareStatement(GET_FULL_CHECKS_BY_EMPLOYEE_PER_PERIOD)) {
+    public List<Check> getFullChecksByEmployeeIdPerPeriod(String employeeId, Date start, Date end) {
+        List<Check> checks = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(GET_CHECKS_BY_EMPLOYEE_PER_PERIOD)) {
             query.setString(1, employeeId);
             query.setDate(2, start);
             query.setDate(3, end);
             ResultSet resultSet = query.executeQuery();
-            sales = parseToSalesLists(resultSet);
+            while (resultSet.next()){
+                checks.add(JdbcCheckDao.extractCheckFromResultSet(resultSet));
+            }
         } catch (SQLException e) {
             throw new ServerException(e);
         }
-        return sales;
+        return checks;
     }
 
     @Override
-    public List<List<Sale>> getFullChecksPerPeriod(Date start, Date end) {
-        List<List<Sale>> sales;
-        try (PreparedStatement query = connection.prepareStatement(GET_FULL_CHECKS_PER_PERIOD)) {
+    public List<Check> getFullChecksPerPeriod(Date start, Date end) {
+        List<Check> checks = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(GET_CHECKS_PER_PERIOD)) {
             query.setDate(1, start);
             query.setDate(2, end);
             ResultSet resultSet = query.executeQuery();
-            sales = parseToSalesLists(resultSet);
+            while (resultSet.next()){
+                checks.add(JdbcCheckDao.extractCheckFromResultSet(resultSet));
+            }
         } catch (SQLException e) {
             throw new ServerException(e);
         }
-        return sales;
+        return checks;
     }
 
     @Override

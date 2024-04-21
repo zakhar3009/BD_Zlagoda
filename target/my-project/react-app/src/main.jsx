@@ -24,6 +24,7 @@ import Profile from "@/pages/Profile/Profile.jsx";
 import AddAndEditStoreProduct from "@/pages/StoreProducts/AddAndEditStoreProduct.jsx";
 import Checks from "@/pages/Checks/Checks.jsx";
 import AddCheck from "@/pages/Checks/AddCheck.jsx";
+import AddNewCheck from "@/pages/Checks/AddNewCheck.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -137,7 +138,7 @@ const router = createBrowserRouter(
             <Route path="checks">
                 <Route path="get_all_checks" element={<Checks />} />
                 <Route path=":id/view_check_products" element={<Products />} />
-                <Route path="post_add_check" element={<AddCheck />} />
+                <Route path="post_add_check" element={<AddNewCheck />} />
             </Route>
 
         </Route>

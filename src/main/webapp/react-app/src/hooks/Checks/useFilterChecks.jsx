@@ -20,6 +20,31 @@ export default function useFilterChecks() {
             end: ""
         }
     });
+    const deleteCheck = async (checkID) => {
+        console.log("deleting CHECK");
+        const requestOptions = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                command_name: "DELETE_CHECK",
+            },
+            body: JSON.stringify({
+                check_number: checkID,
+            }),
+        };
+        try {
+            const response = await fetch(
+                "http://localhost:8080/controller",
+                requestOptions
+            );
+            const data = await response.json();
+            fetchAllChecks("GET_ALL_CHECKS", {});
+            console.log(data);
+            toast.success("Check was removed!")
+        } catch (err) {
+            toast.error(`ERROR: ${err}`)
+        }
+    };
     const fetchCashier = async () => {
         try {
             const response = await fetch(
@@ -99,6 +124,7 @@ export default function useFilterChecks() {
     return {
         register,
         handleSubmit,
+        deleteCheck,
         onSubmit,
         errors,
         cashier,

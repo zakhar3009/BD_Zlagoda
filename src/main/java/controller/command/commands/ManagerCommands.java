@@ -8,10 +8,7 @@ import controller.command.commands.check.*;
 import controller.command.commands.cutomerCard.*;
 import controller.command.commands.employee.*;
 import controller.command.commands.product.*;
-import controller.command.commands.sale.GetFullCheckByNumber;
-import controller.command.commands.sale.GetFullChecksByEmployeePerPeriod;
-import controller.command.commands.sale.GetFullChecksPerPeriod;
-import controller.command.commands.sale.GetQuantityOfSoldProductPerPeriod;
+import controller.command.commands.sale.*;
 import controller.command.commands.storeProduct.*;
 import service.*;
 
@@ -24,6 +21,7 @@ public enum ManagerCommands {
     POST_ADD_CATEGORY("POST_ADD_CATEGORY", new CreateCategoryCommand(CategoryService.getInstance())),
     POST_ADD_PRODUCT("POST_ADD_PRODUCT", new CreateProductCommand(ProductService.getInstance())),
     POST_ADD_PRODUCT_IN_SHOP("POST_ADD_PRODUCT_IN_SHOP", new CreateStoreProductCommand(StoreProductService.getInstance())),
+    POST_ADD_SALE("POST_ADD_SALE", new CreateSaleCommand(SaleService.getInstance())),
     POST_ADD_PROM_PRODUCT_IN_SHOP("POST_ADD_PROM_PRODUCT_IN_SHOP", new CreatePromStoreProduct(StoreProductService.getInstance())),
     POST_UPDATE_EMPLOYEE("POST_UPDATE_EMPLOYEE", new UpdateEmployeeCommand(EmployeeService.getInstance())),
     POST_UPDATE_CLIENT("POST_UPDATE_CLIENT", new UpdateCustomerCardCommand(CustomerService.getInstance())),
@@ -51,7 +49,6 @@ public enum ManagerCommands {
     GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", new GetAllStoreProductOrderByQuantity(StoreProductService.getInstance())),
     SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME("SEARCH_EMPLOYEE_BY_SURNAME", new GetEmployeeAddressAndPhoneBySurname(EmployeeService.getInstance())),
     GET_CLIENTS_BY_PART_OF_SURNAME("GET_CLIENTS_BY_PART_OF_SURNAME", new GetCustomerCardsByPartOfSurname(CustomerService.getInstance())),
-    // Command to get clients by percent from user and order surname
     GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME("GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME", new GetCustomersByPercentOrderBySurname(CustomerService.getInstance())),
     GET_EMPLOYEE_BY_ID("GET_EMPLOYEE_BY_ID", new GetEmployeeById(EmployeeService.getInstance())),
     GET_CATEGORY_BY_ID("GET_CATEGORY_BY_ID", new GetCategoryByID(CategoryService.getInstance())),
@@ -68,8 +65,9 @@ public enum ManagerCommands {
     GET_FULL_CHECK_BY_NUMBER("GET_FULL_CHECK_BY_NUMBER", new GetFullCheckByNumber(SaleService.getInstance())),
     GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD("GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD", new GetChecksSumByEmployeePerPeriod(CheckService.getInstance())),
     GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD("GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD", new GetChecksSumPerPeriod(CheckService.getInstance())),
-    GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", new GetQuantityOfSoldProductPerPeriod(SaleService.getInstance()));
-
+    GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", new GetQuantityOfSoldProductPerPeriod(SaleService.getInstance())),
+    // delete later (just for testing purpose)
+    POST_ADD_CHECK("POST_ADD_CHECK", new CreateCheckCommand(CheckService.getInstance()));
     ManagerCommands(String commandKey, Command command) {
         this.key = commandKey;
         this.command = command;
