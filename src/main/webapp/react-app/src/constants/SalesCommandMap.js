@@ -1,10 +1,11 @@
 
 const salesColumns =
     [
-        "storeProduct",
-        "check",
-        "productNumber",
-        "sellingPrice",
+        "Product",
+        "Category",
+        "Amount",
+        "Price",
+        "Total price"
     ];
 export const salesColumnsMap = new Map([
     ["SALES", salesColumns],
