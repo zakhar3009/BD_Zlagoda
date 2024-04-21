@@ -132,13 +132,13 @@ const router = createBrowserRouter(
                 <Route path="get_all_products_in_shop_order_by_quantity"
                            element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>} />
                 <Route path="get_prom_products_order_by_name"
-                       element={<Products command={"GET_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
+                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
                 <Route path="get_prom_products_order_by_quantity"
-                       element={<Products command={"GET_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
+                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
                 <Route path="get_non_prom_products_order_by_quantity"
-                       element={<Products command={"GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
+                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
                 <Route path="get_non_prom_products_order_by_name"
-                       element={<Products command={"GET_NON_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
+                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
                 <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>} />
                 <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>} />
             </Route>

@@ -27,7 +27,11 @@ export const storeProductsTableMap = new Map([
     ["GET_ALL_PRODUCTS_IN_SHOP", simpleStoreProductCols],
     ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", simpleStoreProductCols],
     ["PROM_PRODUCT_COLUMNS", promProductCols],
-    ["ALL_STORE_PRODUCTS_COLUMNS", simpleStoreProductCols]
+    ["ALL_STORE_PRODUCTS_COLUMNS", simpleStoreProductCols],
+    ["GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", simpleStoreProductCols],
+    ["GET_PROM_PRODUCTS_ORDER_BY_NAME", simpleStoreProductCols],
+    ["GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", simpleStoreProductCols],
+    ["GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", simpleStoreProductCols]
 ]);
 export const storeProductsCommandMap = new Map([
     ["GET_ALL_PRODUCTS_IN_SHOP", "Store Products"],
