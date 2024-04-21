@@ -5,13 +5,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {toast} from "react-toastify";
 import {salesColumnsMap} from "@/constants/SalesCommandMap.js";
 import {IoIosClose} from "react-icons/io";
 import TablePagination from "@mui/material/TablePagination";
 import usePaginate from "@/hooks/pagination/usePaginate.jsx";
 import TableBody from "@mui/material/TableBody";
+import TableForPrint from "@/components/table/TableForPrint.jsx";
+import {employeesTableMap} from "@/constants/EmployeesCommandMap.js";
+import {useReactToPrint} from "react-to-print";
 
 export default function ViewCheckModal({
                                            selectedCheck,
@@ -25,7 +28,12 @@ export default function ViewCheckModal({
         handleChangeRowsPerPage
     } = usePaginate();
 
-    console.log("CURRENT CHECK", selectedCheck)
+    const componentRef = useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
     const [isLoading, setIsLoading] = useState(true);
     const [sales, setSales] = useState([]);
     const getCheckInfo = async (command) => {
@@ -47,6 +55,7 @@ export default function ViewCheckModal({
             toast.error(err);
         }
     }
+    console.log(sales)
 
     useEffect(() => {
         console.log("useEffect", open)
@@ -81,6 +90,7 @@ export default function ViewCheckModal({
                                                 <TableCell>{row.storeProduct.product.category.name}</TableCell>
                                                 <TableCell>{row.productNumber}</TableCell>
                                                 <TableCell>{row.sellingPrice}</TableCell>
+                                                <TableCell>{row.sellingPrice * row.productNumber}</TableCell>
                                             </TableRow>
                                         );
                                     })}
@@ -97,6 +107,19 @@ export default function ViewCheckModal({
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                 </Paper>
+                <div ref={componentRef}>
+                    <TableForPrint
+                        columnNames = {salesColumnsMap.get("SALES")}
+                        rows={sales}
+                    />
+                </div>
+                <div className="flex justify-content-end mt-2">
+                    <button
+                        className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        onClick={handlePrint}>To PDF
+                    </button>
+                </div>
+
             </div>
         </MatModal>
     );

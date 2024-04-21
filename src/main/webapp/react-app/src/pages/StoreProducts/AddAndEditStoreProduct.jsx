@@ -41,7 +41,7 @@ export default function AddAndEditStoreProduct() {
                             className="block pl-3 w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                             <option value="">Choose product...</option>
                             {products.map((item) => (
-                                <option key={item.id} value={item.id}>{item.name} id: {item.id}</option>
+                                <option key={item.id} value={item.id}>{item.name}</option>
                             ))}
                         </select>
                         {errors.product && (

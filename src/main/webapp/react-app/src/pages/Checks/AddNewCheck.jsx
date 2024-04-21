@@ -99,9 +99,8 @@ export default function AddNewCheck() {
                 storeProduct: changedItem,
                 check: {number: check},
                 productNumber: item.sellingAmount,
-                sellingPrice: item.sellingPrice * item.sellingAmount
+                sellingPrice: item.sellingPrice
             }
-            console.log("SALEEE!!!! ", sale)
             const requestOptions = {
                 method: "POST",
                 headers: {

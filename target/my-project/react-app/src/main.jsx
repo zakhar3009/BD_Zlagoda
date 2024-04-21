@@ -25,6 +25,7 @@ import AddAndEditStoreProduct from "@/pages/StoreProducts/AddAndEditStoreProduct
 import Checks from "@/pages/Checks/Checks.jsx";
 import AddCheck from "@/pages/Checks/AddCheck.jsx";
 import AddNewCheck from "@/pages/Checks/AddNewCheck.jsx";
+import StoreProductButtonGroup from "@/pages/StoreProducts/StoreProductButtonGroup.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -124,13 +125,13 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
             </Route>
 
-            <Route path="store-products">
-                <Route
-                    path="get_all_products_in_shop"
-                    element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>}
-                />
+            <Route path="store-products" element={<StoreProductButtonGroup />}>
+            <Route
+                        path="get_all_products_in_shop"
+                        element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>}
+                    />
                 <Route path="get_all_products_in_shop_order_by_quantity"
-                       element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>}/>
+                           element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>}/>
                 <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>}/>
                 <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>}/>
             </Route>

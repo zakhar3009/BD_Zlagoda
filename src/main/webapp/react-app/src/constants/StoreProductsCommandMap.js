@@ -21,6 +21,7 @@ const promProductCols =
         "actions"
     ];
 
+export const storeProductTablePrintMap = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice"]
 const simpleStoreProductCols = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice", "actions"]
 export const storeProductsTableMap = new Map([
     ["GET_ALL_PRODUCTS_IN_SHOP", simpleStoreProductCols],
@@ -29,8 +30,8 @@ export const storeProductsTableMap = new Map([
     ["ALL_STORE_PRODUCTS_COLUMNS", simpleStoreProductCols]
 ]);
 export const storeProductsCommandMap = new Map([
-    ["GET_ALL_PRODUCTS_IN_SHOP", "Get all products in shop"],
-    ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", "Get all store products order by quantity"],
+    ["GET_ALL_PRODUCTS_IN_SHOP", "Store Products"],
+    // ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", "Get all store products order by quantity"],
     ["POST_ADD_PRODUCT_IN_SHOP", "Add new store product"],
     ["POST_UPDATE_PRODUCT_IN_SHOP", "Update store product"],
     ["DELETE_PRODUCT_IN_SHOP", "Delete product in shop"],

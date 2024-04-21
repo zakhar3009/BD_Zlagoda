@@ -208,6 +208,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 .setPatronymic(resultSet.getString(PATRONYMIC))
                 .setSalary(resultSet.getDouble(SALARY))
                 .setZipCode(resultSet.getString(ZIP_CODE))
+                .setEmail(resultSet.getString(EMAIL))
                 .build();
     }
     protected static Employee extractAddressAndPhoneUserFromResultSet(ResultSet resultSet) throws SQLException {

@@ -1,14 +1,21 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import useStoreProducts from "@/hooks/StoreProduct/useStoreProducts.jsx";
-import {storeProductsTableMap} from "@/constants/StoreProductsCommandMap.js";
+import {storeProductsTableMap, storeProductTablePrintMap} from "@/constants/StoreProductsCommandMap.js";
 import NewMatTable from "@/components/table/NewMatTable.jsx";
 import {useNavigate} from "react-router-dom";
 import EditStoreProductDiscountModal from "@/components/modals/EditStoreProductDiscountModal.jsx";
+import TableForPrint from "@/components/table/TableForPrint.jsx";
+import {useReactToPrint} from "react-to-print";
 
 export default function StoreProduct({command}) {
     const navigate = useNavigate();
     const [selectedStoreProduct, setSelectedProduct] = useState({});
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const componentRef = useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
 
     const {
         storeProducts,
@@ -38,7 +45,6 @@ export default function StoreProduct({command}) {
     }
 
     return (
-        <main className="px-8 py-4 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
             <div className="grid">
                 {!isLoading &&
                     <>
@@ -56,9 +62,20 @@ export default function StoreProduct({command}) {
                                 handleClose={onCloseEditModal}
                             />
                         }
+                        <div ref={componentRef}>
+                            <TableForPrint
+                                columnNames={storeProductTablePrintMap}
+                                rows={storeProducts}
+                            />
+                        </div>
+                        <div className="flex justify-content-end mt-2">
+                            <button
+                                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                onClick={handlePrint}>To PDF
+                            </button>
+                        </div>
                     </>
                 }
             </div>
-        </main>
     );
 }

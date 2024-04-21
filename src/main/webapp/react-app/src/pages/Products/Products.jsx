@@ -1,12 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
 import {productsTableMap} from "../../constants/ProductsCommandMap.js";
+import TableForPrint from "@/components/table/TableForPrint.jsx";
+import {categoriesTableMap} from "@/constants/CategoiesCommandMap.js";
+import {useReactToPrint} from "react-to-print";
 
 export default function Products({command, properties}) {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const componentRef = useRef();
 
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
     const fetchProductsData = async () => {
         try {
             setIsLoading(true);
@@ -68,13 +75,27 @@ export default function Products({command, properties}) {
         <main className="px-8 py-4 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
             <div className="grid">
                 {!isLoading && (
-                    <MatTable
-                        columnNames={productsTableMap.get(command)}
-                        rows={data}
-                        deleteFunc={deleteProduct}
-                        deleteProperty={"id"}
-                        pathToCreateUpdate={"/post_update_product"}
-                    ></MatTable>
+                    <>
+                        <MatTable
+                            columnNames={productsTableMap.get(command)}
+                            rows={data}
+                            deleteFunc={deleteProduct}
+                            deleteProperty={"id"}
+                            pathToCreateUpdate={"/post_update_product"}
+                        ></MatTable>
+                        <div ref={componentRef}>
+                            <TableForPrint
+                                columnNames={productsTableMap.get(command)}
+                                rows={data}
+                            />
+                        </div>
+                        <div className="flex justify-content-end mt-2">
+                            <button
+                                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                onClick={handlePrint}>To PDF
+                            </button>
+                        </div>
+                    </>
                 )}
             </div>
         </main>
