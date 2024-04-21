@@ -64,4 +64,21 @@ public class StoreProductService {
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         return storeProductDao.getAllUpcs();
     }
+
+    public List<StoreProduct> getPromProductsOrderByQuantity(){
+        StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
+        return storeProductDao.getPromProductsOrderByQuantity();
+    }
+    public List<StoreProduct> getPromProductsOrderByName(){
+        StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
+        return storeProductDao.getPromProductsOrderByName();
+    }
+    public List<StoreProduct> getNonPromProductsOrderByQuantity(){
+        StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
+        return storeProductDao.getNonPromProductsOrderByQuantity();
+    }
+    public List<StoreProduct> getNonPromProductsOrderByName(){
+        StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
+        return storeProductDao.getNonPromProductsOrderByName();
+    }
 }
