@@ -8,6 +8,7 @@ import service.CheckService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.UUID;
 
 public class CreateCheckCommand implements Command {
 
@@ -20,7 +21,9 @@ public class CreateCheckCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         Check check = CommandFactory.getAttributes(request, Check.class);
+        String randomId = UUID.randomUUID().toString().substring(0, 10);
+        check.setNumber(randomId);
         checkService.create(check);
-        return JSON.gson().toJson("");
+        return JSON.gson().toJson(check.getNumber());
     }
 }

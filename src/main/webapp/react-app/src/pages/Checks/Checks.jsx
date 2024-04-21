@@ -8,7 +8,7 @@ import FormInput from "./../../components/inputs/FormInput.jsx";
 
 
 export default function Checks() {
-    const {register, handleSubmit, onSubmit, cashier, checks, errors, isLoading} = useFilterChecks();
+    const {register, handleSubmit, onSubmit, cashier, checks, errors, isLoading, deleteCheck } = useFilterChecks();
     const [viewModalOpen, setViewModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
 
@@ -87,6 +87,7 @@ export default function Checks() {
                         pathToCreateUpdate={"/post_update_employee"}
                         clickable={true}
                         onViewClick={onOpenViewModal}
+                        deleteFunc={deleteCheck}
                     ></MatTable>
                     <ViewCheckModal
                         open={viewModalOpen}
