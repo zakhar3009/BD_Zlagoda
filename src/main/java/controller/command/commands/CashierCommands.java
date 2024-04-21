@@ -14,8 +14,7 @@ import controller.command.commands.cutomerCard.UpdateCustomerCardCommand;
 import controller.command.commands.employee.GetEmployeeById;
 import controller.command.commands.product.*;
 import controller.command.commands.sale.GetFullCheckByNumber;
-import controller.command.commands.storeProduct.GetAllStoreProductsOrderByName;
-import controller.command.commands.storeProduct.GetStoreProductByIdCommand;
+import controller.command.commands.storeProduct.*;
 import service.*;
 
 public enum CashierCommands {
@@ -35,10 +34,10 @@ public enum CashierCommands {
     GER_SELF_CHECKS_PER_PERIOD("GET_SELF_CHECKS_PER_PERIOD", new GetSelfChecksPerPeriod(CheckService.getInstance())),
     GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", new GetCheckById(CheckService.getInstance())),
     GET_FULL_CHECK_BY_NUMBER("GET_FULL_CHECK_BY_NUMBER", new GetFullCheckByNumber(SaleService.getInstance())),
-    GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetPromProductsOrderByQuantity(ProductService.getInstance())),
-    GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", new GetPromProductsOrderByName(ProductService.getInstance())),
-    GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(ProductService.getInstance())),
-    GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(ProductService.getInstance())),
+    GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetPromProductsOrderByQuantity(StoreProductService.getInstance())),
+    GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", new GetPromProductsOrderByName(StoreProductService.getInstance())),
+    GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(StoreProductService.getInstance())),
+    GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(StoreProductService.getInstance())),
     GET_PRODUCT_INFO_BY_UPC("GET_PRODUCT_INFO_BY_UPC", new GetStoreProductByIdCommand(StoreProductService.getInstance())),
     GET_SELF_INFO("GET_SELF_INFO", new GetEmployeeById(EmployeeService.getInstance()));
 

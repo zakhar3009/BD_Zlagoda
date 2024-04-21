@@ -57,22 +57,7 @@ public class ProductService {
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.searchProductsByCategoryOrderByName(name);
     }
-    public List<Product> getPromProductsOrderByQuantity(){
-        ProductDao productDao = daoFactory.createProductDao();
-        return productDao.getPromProductsOrderByQuantity();
-    }
-    public List<Product> getPromProductsOrderByName(){
-        ProductDao productDao = daoFactory.createProductDao();
-        return productDao.getPromProductsOrderByName();
-    }
-    public List<Product> getNonPromProductsOrderByQuantity(){
-        ProductDao productDao = daoFactory.createProductDao();
-        return productDao.getNonPromProductsOrderByQuantity();
-    }
-    public List<Product> getNonPromProductsOrderByName(){
-        ProductDao productDao = daoFactory.createProductDao();
-        return productDao.getNonPromProductsOrderByName();
-    }
+
     public List<Product> getAllByPartOfName(String partOfName){
         ProductDao productDao = daoFactory.createProductDao();
         return productDao.getAllByPartOfName(partOfName);

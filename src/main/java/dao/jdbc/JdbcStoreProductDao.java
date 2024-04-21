@@ -36,6 +36,26 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " INNER JOIN category ON product.category_number = category.category_number)" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC"+
             " ORDER BY t1.products_number ASC";
+
+    private static String GET_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
+            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
+            "WHERE promotional_product = TRUE " +
+            "ORDER BY products_number ASC";
+
+    private static String GET_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
+            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
+            "WHERE promotional_product = TRUE " +
+            "ORDER BY product_name ASC";
+
+    private static String GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
+            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
+            "WHERE promotional_product = FALSE " +
+            "ORDER BY products_number ASC";
+
+    private static String GET_NON_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
+            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
+            "WHERE promotional_product = FALSE " +
+            "ORDER BY product_name ASC";
     private static String GET_ALL_UPCs = "SELECT UPC FROM sale";
     private static String GET_ALL_CHECK_NUMBERS = "SELECT check_number FROM sale";
 
@@ -181,7 +201,57 @@ public class JdbcStoreProductDao implements StoreProductDao {
         }
     }
 
+    @Override
+    public List<StoreProduct> getPromProductsOrderByQuantity() {
+        List<StoreProduct> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PROM_PRODUCT_ORDER_BY_QUANTITY)) {
+            while (resultSet.next()) {
+                products.add(extractStoreProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
+    }
 
+    @Override
+    public List<StoreProduct> getPromProductsOrderByName() {
+        List<StoreProduct> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PROM_PRODUCT_ORDER_BY_NAME)) {
+            while (resultSet.next()) {
+                products.add(extractStoreProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
+    }
+
+    @Override
+    public List<StoreProduct> getNonPromProductsOrderByQuantity() {
+        List<StoreProduct> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY)) {
+            while (resultSet.next()) {
+                products.add(extractStoreProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
+    }
+
+    @Override
+    public List<StoreProduct> getNonPromProductsOrderByName() {
+        List<StoreProduct> products = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_NON_PROM_PRODUCT_ORDER_BY_NAME)) {
+            while (resultSet.next()) {
+                products.add(extractStoreProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return products;
+    }
 
 
     protected static StoreProduct extractStoreProductFromResultSet(ResultSet resultSet) throws SQLException {
