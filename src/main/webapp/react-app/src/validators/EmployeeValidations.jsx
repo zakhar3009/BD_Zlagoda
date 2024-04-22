@@ -8,7 +8,8 @@ export const checkValidDateOfBirth = (value) => {
 
 export const checkValidDateOfStart =(value)=>{
     let dateStart = new Date(value);
-    if(Date.now < dateStart)
+    let dateNow = new Date();
+    if(dateNow < dateStart)
         return "Date start must be less then today date!";
 };
 
