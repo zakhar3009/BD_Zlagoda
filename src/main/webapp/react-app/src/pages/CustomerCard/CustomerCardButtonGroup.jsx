@@ -3,19 +3,18 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {NavLink, Outlet, useLocation} from "react-router-dom";
 
-export default function EmployeeButtonGroup() {
+export default function CustomerCardButtonGroup() {
     const location = useLocation();
-    const [alignment, setAlignment] = React.useState("get_all_employees");
+    const [alignment, setAlignment] = React.useState("get_all_clients");
 
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
     };
 
     const checkRoute = () => {
-        console.log(location.pathname)
         const routeName = location.pathname;
-        return routeName === "/employee/post_add_employee"
-            || routeName.includes("post_updatnpm e_employee")
+        return routeName === "/customer-card/post_add_client"
+            || routeName.includes("/post_update_client")
     }
 
     return (
@@ -33,25 +32,26 @@ export default function EmployeeButtonGroup() {
                                     exclusive
                                     onChange={handleChange}
                                     aria-label="Platform"
+                                    selectedColor="#00abc0"
                                 >
-                                    <ToggleButton value="get_all_employees">
-                                        <NavLink to="get_all_employees">
-                                            Get all employees
+                                    <ToggleButton value="get_all_clients">
+                                        <NavLink to="get_all_clients">
+                                            Get all clients
                                         </NavLink>
                                     </ToggleButton>
-                                    <ToggleButton value="get_all_employees_order_by_surname">
-                                        <NavLink to="get_all_employees_order_by_surname">
-                                            Get all employees order by surname
+                                    <ToggleButton value="get_all_clients_order_by_surname">
+                                        <NavLink to="get_all_clients_order_by_surname">
+                                            Get all clients order by surname
                                         </NavLink>
                                     </ToggleButton>
-                                    <ToggleButton value="get_all_cashiers_order_by_surname">
-                                        <NavLink to="get_all_cashiers_order_by_surname">
-                                            Get all cashiers order by surname
+                                    <ToggleButton value="get_clients_by_percent_order_by_surname">
+                                        <NavLink to="get_clients_by_percent_order_by_surname">
+                                            Get clients by percent order by surname
                                         </NavLink>
                                     </ToggleButton>
-                                    <ToggleButton value="search_employee_address_and_phone_by_surname">
-                                        <NavLink to="search_employee_address_and_phone_by_surname">
-                                            Search employee address and phone by surname
+                                    <ToggleButton value="get_clients_by_part_of_surname">
+                                        <NavLink to="get_clients_by_part_of_surname">
+                                            Search clients by part of surname
                                         </NavLink>
                                     </ToggleButton>
                                 </ToggleButtonGroup>

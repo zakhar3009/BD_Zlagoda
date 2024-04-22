@@ -3,7 +3,6 @@ import React, {useEffect, useRef, useState} from "react";
 import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
 import {toast} from "react-toastify";
 import TableForPrint from "@/components/table/TableForPrint.jsx";
-import {storeProductsTableMap} from "@/constants/StoreProductsCommandMap.js";
 import {useReactToPrint} from "react-to-print";
 
 export default function CustomerCard({command}) {
@@ -61,32 +60,30 @@ export default function CustomerCard({command}) {
     };
 
     return (
-        <main className="px-8 py-4 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
-            <div className="grid">
-                {!isLoading && (
-                    <>
-                        <MatTable
+        <div className="grid">
+            {!isLoading && (
+                <>
+                    <MatTable
+                        columnNames={customerCardTableMap.get(command)}
+                        rows={customerCards}
+                        deleteFunc={deleteCustomer}
+                        deleteProperty={"number"}
+                        pathToCreateUpdate={"/post_update_client"}
+                    ></MatTable>
+                    <div ref={componentRef}>
+                        <TableForPrint
                             columnNames={customerCardTableMap.get(command)}
                             rows={customerCards}
-                            deleteFunc={deleteCustomer}
-                            deleteProperty={"UPC"}
-                            pathToCreateUpdate={"/post_update_client"}
-                        ></MatTable>
-                        <div ref={componentRef}>
-                            <TableForPrint
-                                columnNames={customerCardTableMap.get(command)}
-                                rows={customerCards}
-                            />
-                        </div>
-                        <div className="flex justify-content-end mt-2">
-                            <button
-                                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                onClick={handlePrint}>To PDF
-                            </button>
-                        </div>
-                    </>
-                )}
-            </div>
-        </main>
+                        />
+                    </div>
+                    <div className="flex justify-content-end mt-2">
+                        <button
+                            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                            onClick={handlePrint}>To PDF
+                        </button>
+                    </div>
+                </>
+            )}
+        </div>
     )
 }

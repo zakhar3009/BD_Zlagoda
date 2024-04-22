@@ -137,7 +137,7 @@ export default function NewMatTable({
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[5, 10, 15]}
+                rowsPerPageOptions={[5, 10]}
                 component="div"
                 count={rows.length}
                 rowsPerPage={rowsPerPage}

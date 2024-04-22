@@ -4,9 +4,9 @@ export const categoriesTableMap = new Map([
 ]);
 
 export const categoriesCommandMap = new Map([
-  ["GET_ALL_CATEGORIES", "Get all categories"],
-  ["GET_ALL_CATEGORIES_ORDER_BY_NAME", "Get all categories order by name"],
+  ["GET_ALL_CATEGORIES", "Categories"],
+  // ["GET_ALL_CATEGORIES_ORDER_BY_NAME", "Get all categories order by name"],
   ["POST_ADD_CATEGORY", "Add new category"],
-  ["POST_UPDATE_CATEGORY", "Update category"],
-  ["DELETE_CATEGORY", "Delete category"],
+  // ["POST_UPDATE_CATEGORY", "Update category"],
+  // ["DELETE_CATEGORY", "Delete category"],
 ]);
