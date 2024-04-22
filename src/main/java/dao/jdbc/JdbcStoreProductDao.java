@@ -29,7 +29,8 @@ public class JdbcStoreProductDao implements StoreProductDao {
     private static String GET_ALL_ORDER_BY_NAME = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*" +
             " FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
             " INNER JOIN category ON product.category_number = category.category_number)" +
-            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC";
+            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC" +
+            " ORDER BY product.product_name ASC";
 
     private static String GET_ALL_ORDER_BY_QUANTITY = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*" +
             " FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
@@ -37,25 +38,29 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC"+
             " ORDER BY t1.products_number ASC";
 
-    private static String GET_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
-            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
-            "WHERE promotional_product = TRUE " +
-            "ORDER BY products_number ASC";
+    private static String GET_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT store_product.selling_price AS prom_selling_price, store_product.*, product.*, category.* " +
+            " FROM ((store_product INNER JOIN product ON store_product.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " WHERE promotional_product = TRUE" +
+            " ORDER BY products_number";
 
-    private static String GET_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
-            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
-            "WHERE promotional_product = TRUE " +
-            "ORDER BY product_name ASC";
+    private static String GET_PROM_PRODUCT_ORDER_BY_NAME = "SELECT store_product.selling_price AS prom_selling_price, store_product.*, product.*, category.* " +
+            " FROM ((store_product INNER JOIN product ON store_product.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " WHERE promotional_product = TRUE" +
+            " ORDER BY product.product_name";
 
-    private static String GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT *" +
-            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
-            "WHERE promotional_product = FALSE " +
-            "ORDER BY products_number ASC";
+    private static String GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY = "SELECT * " +
+            " FROM ((store_product INNER JOIN product ON store_product.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " WHERE promotional_product = False" +
+            " ORDER BY products_number";
 
-    private static String GET_NON_PROM_PRODUCT_ORDER_BY_NAME = "SELECT *" +
-            "FROM (product INNER JOIN store_product ON product.id_product = store_product.id_product) JOIN category USING(category_number) " +
-            "WHERE promotional_product = FALSE " +
-            "ORDER BY product_name ASC";
+    private static String GET_NON_PROM_PRODUCT_ORDER_BY_NAME = "SELECT * " +
+            " FROM ((store_product INNER JOIN product ON store_product.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " WHERE promotional_product = FALSE" +
+            " ORDER BY product.product_name";
     private static String GET_ALL_UPCs = "SELECT UPC FROM sale";
     private static String GET_ALL_CHECK_NUMBERS = "SELECT check_number FROM sale";
 
@@ -206,7 +211,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
         List<StoreProduct> products = new ArrayList<>();
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PROM_PRODUCT_ORDER_BY_QUANTITY)) {
             while (resultSet.next()) {
-                products.add(extractStoreProductFromResultSet(resultSet));
+                products.add(extractPromStoreProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
@@ -219,7 +224,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
         List<StoreProduct> products = new ArrayList<>();
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_PROM_PRODUCT_ORDER_BY_NAME)) {
             while (resultSet.next()) {
-                products.add(extractStoreProductFromResultSet(resultSet));
+                products.add(extractPromStoreProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
