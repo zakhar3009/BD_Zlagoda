@@ -7,6 +7,7 @@ const columnsName =
         "sumTotal",
         "vat",
     ];
+
 export const checksTableMap = new Map([
     ["GET_ALL_CHECKS", columnsName],
     ["GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", columnsName],

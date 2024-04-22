@@ -13,7 +13,6 @@ import {GoGear} from "react-icons/go";
 import DeleteModal from "../modals/DeleteModal";
 import {capitalizeFirsLetter} from "@/constants/utils/helpers.js";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-
 export default function MatTable({
                                      columnNames,
                                      rows,
@@ -48,14 +47,15 @@ export default function MatTable({
     };
 
     const columns = [
-        ...columnNames.map((col) => {
+        ...columnNames.map((col, index) => {
             return {
                 id: col.toLowerCase(),
                 label: col,
                 align: "center",
             };
         }),
-        {id: "actions", label: "Actions", minWidth: 50, align: "center"},
+
+        {id: "actions", label: "Actions", minWidth: 50, align: "center",  className: "print-hidden"},
     ];
 
     const whatColumn = (column, row) => {

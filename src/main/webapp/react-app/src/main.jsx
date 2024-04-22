@@ -23,8 +23,9 @@ import StoreProduct from "@/pages/StoreProducts/StoreProduct.jsx";
 import Profile from "@/pages/Profile/Profile.jsx";
 import AddAndEditStoreProduct from "@/pages/StoreProducts/AddAndEditStoreProduct.jsx";
 import Checks from "@/pages/Checks/Checks.jsx";
-import AddCheck from "@/pages/Checks/AddCheck.jsx";
 import AddNewCheck from "@/pages/Checks/AddNewCheck.jsx";
+import StoreProductButtonGroup from "@/pages/StoreProducts/StoreProductButtonGroup.jsx";
+import EmployeeButtonGroup from "@/pages/Employee/EmployeeButtonGroup.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -51,7 +52,8 @@ const router = createBrowserRouter(
             <Route path="/login" element={<LogIn/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="*" element={<Error/>}/>
-            <Route path="employee">
+
+            <Route path="employee" element={<EmployeeButtonGroup />}>
                 <Route
                     path="get_all_employees"
                     element={<Employee command={"GET_ALL_EMPLOYEES"}/>}
@@ -66,13 +68,13 @@ const router = createBrowserRouter(
                 />
                 <Route
                     path="search_employee_address_and_phone_by_surname"
-                    element={<SearchEmployee/>}
+                    element={<SearchEmployee />}
                 />
                 <Route path="post_add_employee"
-                       element={<AddAndEditEmployee/>}
+                       element={<AddAndEditEmployee />}
                 />
                 <Route path=":id/post_update_employee"
-                       element={<AddAndEditEmployee/>}
+                       element={<AddAndEditEmployee />}
                 />
             </Route>
 
@@ -124,15 +126,21 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
             </Route>
 
-            <Route path="store-products">
-                <Route
-                    path="get_all_products_in_shop"
-                    element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>}
-                />
+            <Route path="store-products" element={<StoreProductButtonGroup />}>
+                <Route path="get_all_products_in_shop"
+                        element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>} />
                 <Route path="get_all_products_in_shop_order_by_quantity"
-                       element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>}/>
-                <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>}/>
-                <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>}/>
+                           element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>} />
+                <Route path="get_prom_products_order_by_name"
+                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
+                <Route path="get_prom_products_order_by_quantity"
+                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
+                <Route path="get_non_prom_products_order_by_quantity"
+                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
+                <Route path="get_non_prom_products_order_by_name"
+                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
+                <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>} />
+                <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>} />
             </Route>
 
             <Route path="checks">

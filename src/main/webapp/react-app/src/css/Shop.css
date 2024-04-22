@@ -1,29 +1,11 @@
 @media print {
-    #printable-content {
-        visibility: visible;
+    .print-only {
+        display: block;
     }
 }
 
-@media print {
-    .table-for-print {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #f31818;
-    }
-    .table-for-print,
-    .table-for-print td {
-        border: 1px solid #000;
-        padding: 8px;
-    }
-    .table-for-print th {
-        background-color: #f31818;
-        font-weight: bold;
-        text-align: center;
-    }
-    .table-for-print tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    .table-for-print tr:hover {
-        background-color: #ddd;
+@media screen {
+    .print-only {
+        display: none;
     }
 }
