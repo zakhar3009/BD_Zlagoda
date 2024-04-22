@@ -55,7 +55,7 @@ export default function CustomerCard({command}) {
             fetchClientsData();
             toast.success("Customer was removed!")
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!")
         }
     };
 

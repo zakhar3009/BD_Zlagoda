@@ -29,6 +29,7 @@ import EmployeeButtonGroup from "@/pages/Employee/EmployeeButtonGroup.jsx";
 import CategoryButtonGroup from "@/pages/Category/CategoryButtonGroup.jsx";
 import ProductsButtonGroup from "@/pages/Products/ProductsButtonGroup.jsx";
 import CustomerCardButtonGroup from "@/pages/CustomerCard/CustomerCardButtonGroup.jsx";
+import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -55,6 +56,7 @@ const router = createBrowserRouter(
             <Route path="/login" element={<LogIn/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="*" element={<Error/>}/>
+            <Route path="/welcome" element={<WelcomePage/>}/>
 
             <Route path="employee" element={<EmployeeButtonGroup />}>
                 <Route
