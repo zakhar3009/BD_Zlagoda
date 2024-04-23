@@ -237,7 +237,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
         List<StoreProduct> products = new ArrayList<>();
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_NON_PROM_PRODUCT_ORDER_BY_QUANTITY)) {
             while (resultSet.next()) {
-                products.add(extractStoreProductFromResultSet(resultSet));
+                products.add(extractNonPromStoreProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
@@ -250,7 +250,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
         List<StoreProduct> products = new ArrayList<>();
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_NON_PROM_PRODUCT_ORDER_BY_NAME)) {
             while (resultSet.next()) {
-                products.add(extractStoreProductFromResultSet(resultSet));
+                products.add(extractNonPromStoreProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
@@ -280,6 +280,18 @@ public class JdbcStoreProductDao implements StoreProductDao {
                 .setSellingPrice(resultSet.getDouble(PROM_SELLING_PRICE))
                 .setProductsNumber(resultSet.getInt(PRODUCT_QUANTITY))
                 .setIsProm(true)
+                .build();
+    }
+
+    protected static StoreProduct extractNonPromStoreProductFromResultSet(ResultSet resultSet) throws SQLException {
+
+        return new StoreProduct.Builder()
+                .setUpc(resultSet.getString(UPC))
+                .setPromStoreProduct(null)
+                .setProduct(JdbcProductDao.extractProductFromResultSet(resultSet))
+                .setSellingPrice(resultSet.getDouble(PRODUCT_PRICE))
+                .setProductsNumber(resultSet.getInt(PRODUCT_QUANTITY))
+                .setIsProm(false)
                 .build();
     }
 }
