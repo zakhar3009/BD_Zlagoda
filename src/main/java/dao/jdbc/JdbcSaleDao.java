@@ -30,8 +30,8 @@ public class JdbcSaleDao implements SaleDao {
 
     private static String GET_CHECKS_PER_PERIOD = "SELECT * FROM checks" +
             " WHERE checks.print_date>=? AND checks.print_date<=?";
-    private static String GET_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT * FROM checks" +
-            " WHERE employee.id_employee=? AND (checks.print_date>=? AND checks.print_date<=?)";
+    private static String GET_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT * FROM checks JOIN employee USING(id_employee)" +
+            " WHERE id_employee=? AND (checks.print_date>=? AND checks.print_date<=?)";
 
     private static String GET_ALL_UPCs = "SELECT UPC FROM sale";
 

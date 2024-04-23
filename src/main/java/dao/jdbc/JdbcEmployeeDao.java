@@ -23,8 +23,12 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private static String UPDATE = "UPDATE employee"
             + " SET email=?, password=?, empl_name=?, empl_surname=?, empl_patronymic=?, empl_role=?, salary=?, date_of_birth=?, date_of_start=?, phone_number=?, city=?, street=?, zip_code=?" + " WHERE id_employee=? ";
     private static String DELETE = "DELETE FROM employee WHERE id_employee=?";
-
     private static String SEARCH_ADDRESS_AND_PHONE_BY_SURNAME = "SELECT street, phone_number, city, empl_surname FROM employee WHERE empl_surname=?";
+    private static String GET_CASHIERS_CHECK_AND_SALES_REPORT = "SELECT employee.empl_surname, employee.empl_name, COUNT(checks.check_number) AS checks_number, COUNT(sale.check_number) AS products_number " +
+            " FROM employee LEFT JOIN checks ON employee.id_employee = checks.id_employee " +
+            " LEFT JOIN sale ON checks.check_number = sale.check_number" +
+            " GROUP BY employee.id_employee, employee.empl_surname, employee.empl_name " +
+            " ORDER BY checks_number DESC";
 
     // table columns names
     private static String ID = "id_employee";
@@ -102,6 +106,22 @@ public class JdbcEmployeeDao implements EmployeeDao {
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()){
                 result.add(extractAddressAndPhoneUserFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public HashMap<String, String> getCashierChecksAndSalesReport() {
+        HashMap<String, String> result = new HashMap<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_CASHIERS_CHECK_AND_SALES_REPORT)) {
+            while (resultSet.next()) {
+                result.put(SURNAME, result.get(SURNAME));
+                result.put(NAME, result.get(NAME));
+                result.put("checks_number", result.get("checks_number"));
+                result.put("products_number", result.get("products_number"));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
@@ -211,6 +231,10 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 .setEmail(resultSet.getString(EMAIL))
                 .build();
     }
+
+
+
+
     protected static Employee extractAddressAndPhoneUserFromResultSet(ResultSet resultSet) throws SQLException {
 
         return new Employee.Builder()

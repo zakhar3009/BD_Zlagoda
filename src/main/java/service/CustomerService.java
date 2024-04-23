@@ -58,4 +58,9 @@ public class CustomerService {
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getCustomersByPercentOrderBySurname(percent);
     }
+
+    public List<CustomerCard> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
+        CustomerDao customerDao = daoFactory.createCustomerDao();
+        return customerDao.getCustomerCheckedOutByCashiers(cashiersIds);
+    }
 }

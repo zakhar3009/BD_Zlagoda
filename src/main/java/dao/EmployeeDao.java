@@ -11,5 +11,6 @@ public interface EmployeeDao extends GenericDao<Employee, String> {
     List<Employee> getEmployeesOrderBySurname();
     List<Employee> getCashiersOrderBySurname();
     List<Employee> searchEmployeeAddressAndPhoneBySurname(String surname);
+    HashMap<String, String> getCashierChecksAndSalesReport();
 
 }
