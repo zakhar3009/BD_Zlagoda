@@ -57,7 +57,7 @@ export default function Employee({command}) {
             console.log(data);
             toast.success("Employee was removed!")
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!");
         }
     };
     return (

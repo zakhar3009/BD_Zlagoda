@@ -15,6 +15,7 @@ export default function useCreateUpdateEmployee(id, employee) {
   } = useForm();
 
   useEffect(() => {
+    setValue("id", employee.id);
     setValue("name", employee.name);
     setValue("surname", employee.surname);
     setValue("patronymic", employee.patronymic);
@@ -32,6 +33,7 @@ export default function useCreateUpdateEmployee(id, employee) {
 
   // Toast needed
   const addEditEmployeeRequest = async (command) => {
+    console.log(command)
     const formData = getValues();
     const requestOptions = {
       method: "POST",

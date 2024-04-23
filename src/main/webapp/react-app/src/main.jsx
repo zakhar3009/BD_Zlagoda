@@ -26,6 +26,7 @@ import Checks from "@/pages/Checks/Checks.jsx";
 import AddNewCheck from "@/pages/Checks/AddNewCheck.jsx";
 import StoreProductButtonGroup from "@/pages/StoreProducts/StoreProductButtonGroup.jsx";
 import EmployeeButtonGroup from "@/pages/Employee/EmployeeButtonGroup.jsx";
+import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -52,6 +53,7 @@ const router = createBrowserRouter(
             <Route path="/login" element={<LogIn/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="*" element={<Error/>}/>
+            <Route path="/welcome" element={<WelcomePage/>}/>
 
             <Route path="employee" element={<EmployeeButtonGroup />}>
                 <Route

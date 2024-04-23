@@ -37,7 +37,9 @@ export default function CustomerCard({command}) {
     }, [command]);
 
     const deleteCustomer = async (customerId) => {
+        console.log(customerId);
         const requestOptions = {
+
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -56,7 +58,7 @@ export default function CustomerCard({command}) {
             fetchClientsData();
             toast.success("Customer was removed!")
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!")
         }
     };
 
@@ -69,7 +71,7 @@ export default function CustomerCard({command}) {
                             columnNames={customerCardTableMap.get(command)}
                             rows={customerCards}
                             deleteFunc={deleteCustomer}
-                            deleteProperty={"UPC"}
+                            deleteProperty={"number"}
                             pathToCreateUpdate={"/post_update_client"}
                         ></MatTable>
                         <div ref={componentRef}>
