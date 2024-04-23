@@ -12,4 +12,5 @@ public interface SaleDao extends GenericDao<Sale, HashMap<String, String>>{
     List<Check> getFullChecksPerPeriod(Date start, Date end);
     int getQuantityOfSoldProductPerPeriod(String UPC, Date start, Date end);
     List<Sale> getFullCheckByNumber(String checkNumber);
+    List<String> getAllUpcs();
 }
