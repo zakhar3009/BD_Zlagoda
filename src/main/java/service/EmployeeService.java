@@ -67,5 +67,10 @@ public class EmployeeService {
         return employeeDao.searchEmployeeAddressAndPhoneBySurname(surname);
     }
 
+    public HashMap<String, String> getCashierChecksAndSalesReport(){
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.getCashierChecksAndSalesReport();
+    }
+
 
 }

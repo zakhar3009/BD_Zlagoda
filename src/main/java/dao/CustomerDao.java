@@ -9,4 +9,6 @@ public interface CustomerDao extends GenericDao<CustomerCard, String>{
     List<CustomerCard> searchCustomersByPartOfSurname(String partOfSurname);
     List<CustomerCard> getCustomersByPercentOrderBySurname(int percent);
 
+    List<CustomerCard> getCustomerCheckedOutByCashiers(List<String> employeesIds);
+
 }
