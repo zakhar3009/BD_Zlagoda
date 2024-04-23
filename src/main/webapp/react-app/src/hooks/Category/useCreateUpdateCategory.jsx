@@ -15,6 +15,7 @@ export default function useCreateUpdateCategory(id, category) {
     } = useForm();
 
     useEffect(() => {
+        setValue("number", category.number)
         setValue("name", category.name);
     }, [category, setValue]);
 

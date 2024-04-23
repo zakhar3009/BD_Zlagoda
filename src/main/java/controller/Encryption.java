@@ -13,7 +13,8 @@ public class Encryption {
     }
 
     public static void main(String[] args){
-        String password = "54321";
+        String password = "12345678912";
+
         //String loginAttemptPassword = "54321";
         //System.out.println(hashPassword(password));
         System.out.println(hashPassword(password));

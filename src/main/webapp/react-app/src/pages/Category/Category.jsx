@@ -58,7 +58,7 @@ export default function Category({command}) {
             console.log(data);
             toast.success("Category was removed!")
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!");
         }
     };
 
