@@ -61,7 +61,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " INNER JOIN category ON product.category_number = category.category_number)" +
             " WHERE promotional_product = FALSE" +
             " ORDER BY product.product_name";
-    private static String GET_ALL_UPCs = "SELECT UPC FROM sale";
+
     private static String GET_ALL_CHECK_NUMBERS = "SELECT check_number FROM sale";
 
 
@@ -93,18 +93,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
         return storeProducts;
     }
 
-    @Override
-    public List<String> getAllUpcs(){
-        List<String> strings = new ArrayList<>();
-        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL_UPCs)) {
-            while (resultSet.next()) {
-                strings.add(resultSet.getString(UPC));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return strings;
-    }
+
 
     @Override
     public Optional<StoreProduct> getById(String id) {

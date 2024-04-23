@@ -64,4 +64,9 @@ public class SaleService {
         SaleDao saleDao = daoFactory.createSaleDao();
         return saleDao.getFullCheckByNumber(checkNumber);
     }
+
+    public List<String> getAllUpcs(){
+        SaleDao saleDao = daoFactory.createSaleDao();
+        return saleDao.getAllUpcs();
+    }
 }

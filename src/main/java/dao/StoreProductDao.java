@@ -12,6 +12,6 @@ public interface StoreProductDao extends GenericDao<StoreProduct, String>{
     List<StoreProduct> getPromProductsOrderByName();
     List<StoreProduct> getNonPromProductsOrderByQuantity();
     List<StoreProduct> getNonPromProductsOrderByName();
-    List<String> getAllUpcs();
+
 
 }
