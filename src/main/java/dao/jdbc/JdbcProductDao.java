@@ -28,7 +28,8 @@ public class JdbcProductDao implements ProductDao {
             "FROM product JOIN category USING(category_number)" +
             "WHERE product.category_number IN (SELECT category_number" +
             "                          FROM category" +
-            "                          WHERE category_name=?)";
+            "                          WHERE category_name=?)" +
+            " ORDER BY product.product_name";
 
     private static String GET_PRODUCT_BY_PART_OF_NAME = "SELECT * " +
             "FROM product JOIN category USING(category_number) " +
