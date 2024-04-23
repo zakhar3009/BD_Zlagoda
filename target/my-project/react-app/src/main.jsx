@@ -26,6 +26,9 @@ import Checks from "@/pages/Checks/Checks.jsx";
 import AddNewCheck from "@/pages/Checks/AddNewCheck.jsx";
 import StoreProductButtonGroup from "@/pages/StoreProducts/StoreProductButtonGroup.jsx";
 import EmployeeButtonGroup from "@/pages/Employee/EmployeeButtonGroup.jsx";
+import CategoryButtonGroup from "@/pages/Category/CategoryButtonGroup.jsx";
+import ProductsButtonGroup from "@/pages/Products/ProductsButtonGroup.jsx";
+import CustomerCardButtonGroup from "@/pages/CustomerCard/CustomerCardButtonGroup.jsx";
 import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
 
 // const router = createBrowserRouter([
@@ -80,7 +83,7 @@ const router = createBrowserRouter(
                 />
             </Route>
 
-            <Route path="category">
+            <Route path="category" element={<CategoryButtonGroup />}>
                 <Route
                     path="get_all_categories"
                     element={<Category command={"GET_ALL_CATEGORIES"}/>}
@@ -93,7 +96,7 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_category" element={<AddAndEditCategory/>}/>
             </Route>
 
-            <Route path="products">
+            <Route path="products" element={<ProductsButtonGroup />}>
                 <Route
                     path="get_all_products"
                     element={<Products command={"GET_ALL_PRODUCTS"}/>}
@@ -110,7 +113,7 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_product" element={<AddAndEditProduct/>}/>
             </Route>
 
-            <Route path="customer-card">
+            <Route path="customer-card" element={<CustomerCardButtonGroup />}>
                 <Route
                     path="get_all_clients"
                     element={<CustomerCard command={"GET_ALL_CLIENTS"}/>}

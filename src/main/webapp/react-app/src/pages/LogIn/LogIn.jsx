@@ -15,8 +15,6 @@ export default function LogIn() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [user, setUser] = useState(null);
-
     const getUserByCredentials = async () => {
         const requestOptions = {
             method: "POST",
@@ -37,14 +35,15 @@ export default function LogIn() {
                 requestOptions
             );
             const userData = await response.json();
-            setUser(userData);
+            if(userData == null) {
+                setError("Not valid credantials");
+                return;
+            }
             setAuth({
                 user: userData
             });
             toast.success("You successfully logged in!")
-            console.log(userData);
         } catch (err) {
-            console.log(err);
             setError(err);
         } finally {
             setTimeout(() => setIsLoading(false), 500)
