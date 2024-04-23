@@ -55,6 +55,7 @@ public enum ManagerCommands {
     GET_CLIENT_BY_ID("GET_CLIENT_BY_ID", new GetCustomerCardByIdCommand(CustomerService.getInstance())),
     GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME("GET_PRODUCTS_BY_CATEGORY_ORDER_BY_NAME", new GetProductsByCategoryOrderByName(ProductService.getInstance())),
     GET_PRODUCT_BY_UPC("GET_PRODUCT_BY_UPC", new GetStoreProductByIdCommand(StoreProductService.getInstance())),
+    GET_PRODUCT_BY_ID("GET_PRODUCT_BY_ID", new GetProductByID(ProductService.getInstance())),
     GET_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetPromProductsOrderByQuantity(StoreProductService.getInstance())),
     GET_PROM_PRODUCTS_ORDER_BY_NAME("GET_PROM_PRODUCTS_ORDER_BY_NAME", new GetPromProductsOrderByName(StoreProductService.getInstance())),
     GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(StoreProductService.getInstance())),

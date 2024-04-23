@@ -27,6 +27,7 @@ import AddNewCheck from "@/pages/Checks/AddNewCheck.jsx";
 import StoreProductButtonGroup from "@/pages/StoreProducts/StoreProductButtonGroup.jsx";
 import EmployeeButtonGroup from "@/pages/Employee/EmployeeButtonGroup.jsx";
 import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
+import SearchStoreProductByUPC from "@/pages/StoreProducts/SearchStoreProductByUPC.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -143,6 +144,7 @@ const router = createBrowserRouter(
                        element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
                 <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>} />
                 <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>} />
+                <Route path="get_product_by_UPC" element={<SearchStoreProductByUPC/>}/>
             </Route>
 
             <Route path="checks">

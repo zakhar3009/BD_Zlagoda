@@ -22,7 +22,7 @@ public class GetCustomersByPercentOrderBySurname implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        List<CustomerCard> customerCards = customerService.getCustomersByPercentOrderBySurname(Integer.parseInt(hashMap.get("percent")));
+        List<CustomerCard> customerCards = customerService.getCustomersByPercentOrderBySurname(Integer.parseInt(hashMap.get("query")));
         return JSON.gson().toJson(customerCards);
     }
 }

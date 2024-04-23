@@ -43,10 +43,20 @@ export default function ProductsByCategoryOrderByName() {
                 })
             );
             const products = await response.json();
-            console.log(categories);
-            setProducts(products);
-            console.log(products)
+            let filteredProduct =[];
+            products.map((item) =>{
+                const filteredItem ={
+                    category_number: item.category_number,
+                    category_name: item.category.name,
+                    id: item.id,
+                    name: item.name,
+                    characteristic: item.characteristic
+                };
+                filteredProduct.add(filteredItem);
+
+            })
             setIsLoading(false);
+            console.log(filteredProduct)
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }

@@ -11,7 +11,9 @@ export default function SearchClientsByPartOfSurname({command}) {
     const fetchClientsData = async () => {
         try {
             setLoading(true);
-            console.log("GET_CLIENTS_BY_PART_OF_SURNAME");
+
+                console.log(command);
+
             const response = await fetch(
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
