@@ -42,6 +42,8 @@ export default function LogIn() {
             setAuth({
                 user: userData
             });
+            sessionStorage.setItem("user", JSON.stringify(userData))
+            navigate("/welcome")
             toast.success("You successfully logged in!")
         } catch (err) {
             setError(err);

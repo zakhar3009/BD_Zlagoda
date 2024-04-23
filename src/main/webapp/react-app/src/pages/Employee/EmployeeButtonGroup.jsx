@@ -15,7 +15,7 @@ export default function EmployeeButtonGroup() {
         console.log(location.pathname)
         const routeName = location.pathname;
         return routeName === "/employee/post_add_employee"
-            || routeName.includes("post_updatnpm e_employee")
+            || routeName.includes("post_update_employee")
     }
 
     return (

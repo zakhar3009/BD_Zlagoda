@@ -18,9 +18,12 @@ export default function NewMatTable({
                                      onViewClick,
                                      onDiscountClick,
                                      onEditClick,
+                                     discountEnabled,
+                                     editEnabled,
+                                     deleteEnabled,
                                  }) {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(15);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -82,15 +85,15 @@ export default function NewMatTable({
                     align={column.align}
                 >
                     <div className="flex flex-row justify-center items-center">
-                        {onDiscountClick && getLineDiscount(row)}
-                        {onEditClick && getLineEdit(row)}
+                        {onDiscountClick && discountEnabled && getLineDiscount(row)}
+                        {onEditClick && editEnabled && getLineEdit(row)}
                         {onViewClick &&
                             <MdOutlineRemoveRedEye
                                 className="text-xl text-blue-700 hover:bg-blue-100 rounded-md active:text-opacity-70"
                                 onClick={() => onViewClick(row)}
                             />
                         }
-                        {onDeleteClick && getLineRemove(row)}
+                        {onDeleteClick && deleteEnabled && getLineRemove(row)}
                     </div>
                 </TableCell>
             );

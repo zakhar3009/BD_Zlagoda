@@ -1,15 +1,12 @@
-import { Fragment, useState } from "react";
-import {Menu, Popover, Transition} from "@headlessui/react";
-import { NavLink } from "react-router-dom";
-import { storeProductsCommandMap } from "@/constants/StoreProductsCommandMap.js";
-import { classNames } from "@/constants/utils/helpers.js";
+import {Fragment} from "react";
+import {Menu, Transition} from "@headlessui/react";
+import {NavLink} from "react-router-dom";
+import {classNames} from "@/constants/utils/helpers.js";
+import useAuth from "@/hooks/auth/useAuth.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
 export default function StoreProductMenu() {
-
-    const storeProductsCommands = Array.from(storeProductsCommandMap.entries()).filter(
-        (item) =>
-            item[0] !== "DELETE_PRODUCT_IN_SHOP" && item[0] !== "POST_UPDATE_PRODUCT_IN_SHOP"
-    );
+    const {auth} = useAuth();
 
     return (
         <Menu as="div" className="relative ml-3">
@@ -30,21 +27,36 @@ export default function StoreProductMenu() {
             >
                 <Menu.Items
                     className="absolute left-1/2 z-10 -translate-x-1/2 mt-4 w-72 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    {storeProductsCommands.map((item) => (
-                        <Menu.Item key={item[0].toLowerCase()}>
+                    <Menu.Item>
+                        {({active}) => (
+                            <NavLink
+                                to={`/store-products/${auth?.user?.role === Roles.MANAGER
+                                    ? "get_all_products_in_shop_order_by_quantity"
+                                    : "get_all_products_in_shop_order_by_name"}`}
+                                className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm font-medium text-gray-700"
+                                )}
+                            >
+                                Store Products
+                            </NavLink>
+                        )}
+                    </Menu.Item>
+                    {auth?.user?.role === Roles.MANAGER && (
+                        <Menu.Item>
                             {({active}) => (
                                 <NavLink
-                                    to={"/store-products/" + item[0].toLowerCase()}
+                                    to="/store-products/post_add_product_in_shop"
                                     className={classNames(
                                         active ? "bg-gray-100" : "",
                                         "block px-4 py-2 text-sm font-medium text-gray-700"
                                     )}
                                 >
-                                    {item[1]}
+                                    Add new store product
                                 </NavLink>
                             )}
                         </Menu.Item>
-                    ))}
+                    )}
                 </Menu.Items>
             </Transition>
         </Menu>

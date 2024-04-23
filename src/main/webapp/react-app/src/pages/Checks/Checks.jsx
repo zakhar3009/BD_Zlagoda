@@ -34,10 +34,9 @@ export default function Checks() {
             <Card maxW="max-w-3xl">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="grid sm:grid-cols-2 gap-3"
-                >
+                    className="grid sm:grid-cols-2 gap-3">
                     <select
-                        {...register("id_employee", {                        })}
+                        {...register("id_employee", {})}
                         name="id_employee"
                         id="id_employee"
                         className="col-span-2 block pl-3 w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">

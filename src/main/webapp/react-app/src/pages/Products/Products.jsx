@@ -1,11 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
-import {productsTableMap} from "../../constants/ProductsCommandMap.js";
+import {productsTableMap} from "@/constants/ProductsCommandMap.js";
 import TableForPrint from "@/components/table/TableForPrint.jsx";
 import {useReactToPrint} from "react-to-print";
+import useAuth from "@/hooks/auth/useAuth.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
 export default function Products({command, properties}) {
+    const { auth } = useAuth();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const componentRef = useRef();
@@ -80,6 +83,7 @@ export default function Products({command, properties}) {
                         deleteFunc={deleteProduct}
                         deleteProperty={"id"}
                         pathToCreateUpdate={"/post_update_product"}
+                        deleteEnabled={auth?.user?.role === Roles.MANAGER}
                     ></MatTable>
                     <div ref={componentRef}>
                         <TableForPrint

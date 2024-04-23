@@ -20,7 +20,9 @@ export default function MatTable({
                                      deleteProperty,
                                      pathToCreateUpdate,
                                      clickable,
-                                     onViewClick
+                                     onViewClick,
+                                     deleteEnabled,
+                                     editEnabled,
                                  }) {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(0);
@@ -72,19 +74,16 @@ export default function MatTable({
                     align={column.align}
                 >
                     <div className="flex flex-row justify-center items-center">
-                        {!clickable ?
-                            <GoGear
-                            onClick={() => navigate("../" + row[deleteProperty] + pathToCreateUpdate)}
-                            className="text-blue-700 hover:bg-blue-100 text-xl mr-1 rounded-md active:text-opacity-70"/>
-                            :
+                        {editEnabled && <GoGear onClick={() => navigate("../" + row[deleteProperty] + pathToCreateUpdate)} className="text-blue-700 hover:bg-blue-100 text-xl mr-1 rounded-md active:text-opacity-70"/>}
+                        {clickable &&
                             <MdOutlineRemoveRedEye className="text-xl text-blue-700 hover:bg-blue-100 rounded-md active:text-opacity-70"
                                 onClick={() => onViewClick(row)}
                             />
                         }
-                        <MdDeleteOutline
+                        {deleteEnabled && <MdDeleteOutline
                             onClick={() => handleOpen(row)}
                             className="text-red-600 hover:bg-red-100 text-2xl rounded active:text-opacity-70"
-                        />
+                        />}
                     </div>
                 </TableCell>
             );

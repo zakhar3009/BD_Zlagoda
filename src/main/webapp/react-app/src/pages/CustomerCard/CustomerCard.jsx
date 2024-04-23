@@ -4,8 +4,11 @@ import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
 import {toast} from "react-toastify";
 import TableForPrint from "@/components/table/TableForPrint.jsx";
 import {useReactToPrint} from "react-to-print";
+import {Roles} from "@/constants/auth/allowedRoles.js";
+import useAuth from "@/hooks/auth/useAuth.js";
 
 export default function CustomerCard({command}) {
+    const { auth } = useAuth();
     const [customerCards, setCustomerCards] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const componentRef = useRef();
@@ -69,6 +72,8 @@ export default function CustomerCard({command}) {
                         deleteFunc={deleteCustomer}
                         deleteProperty={"number"}
                         pathToCreateUpdate={"/post_update_client"}
+                        editEnabled={true}
+                        deleteEnabled={auth?.user?.role === Roles.MANAGER}
                     ></MatTable>
                     <div ref={componentRef}>
                         <TableForPrint

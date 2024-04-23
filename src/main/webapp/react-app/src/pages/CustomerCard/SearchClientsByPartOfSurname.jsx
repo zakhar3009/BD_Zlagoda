@@ -2,8 +2,11 @@ import {useState} from "react";
 import {toast} from "react-toastify";
 import MatTable from "@/components/table/MatTable.jsx";
 import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
+import useAuth from "@/hooks/auth/useAuth.js";
 
 export default function SearchClientsByPartOfSurname({command}) {
+    const { auth } = useAuth();
     const [query, setQuery] = useState("");
     const [clients, setClients] = useState();
     const [isLoading, setLoading] = useState(true);
@@ -88,6 +91,8 @@ export default function SearchClientsByPartOfSurname({command}) {
                     deleteFunc={deleteClient}
                     deleteProperty={"number"}
                     pathToCreateUpdate={"/post_update_client"}
+                    editEnabled={true}
+                    deleteEnabled={auth?.user?.role === Roles.MANAGER}
                 ></MatTable>
             )}
         </div>

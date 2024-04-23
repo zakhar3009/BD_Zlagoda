@@ -32,7 +32,6 @@ export default function CategoryButtonGroup() {
                                     exclusive
                                     onChange={handleChange}
                                     aria-label="Platform"
-                                    selectedColor="#00abc0"
                                 >
                                     <ToggleButton value="get_all_categories">
                                         <NavLink to="get_all_categories">

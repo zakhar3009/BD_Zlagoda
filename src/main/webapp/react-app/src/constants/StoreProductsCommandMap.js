@@ -1,3 +1,5 @@
+import {Roles} from "@/constants/auth/allowedRoles.js";
+
 const columnsName =
     [   "name",
         "UPC",
@@ -24,7 +26,7 @@ const promProductCols =
 export const storeProductTablePrintMap = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice"]
 const simpleStoreProductCols = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice", "actions"]
 export const storeProductsTableMap = new Map([
-    ["GET_ALL_PRODUCTS_IN_SHOP", simpleStoreProductCols],
+    ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", simpleStoreProductCols],
     ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", simpleStoreProductCols],
     ["PROM_PRODUCT_COLUMNS", promProductCols],
     ["ALL_STORE_PRODUCTS_COLUMNS", simpleStoreProductCols],
@@ -33,10 +35,39 @@ export const storeProductsTableMap = new Map([
     ["GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", simpleStoreProductCols],
     ["GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", simpleStoreProductCols]
 ]);
-export const storeProductsCommandMap = new Map([
-    ["GET_ALL_PRODUCTS_IN_SHOP", "Store Products"],
-    // ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", "Get all store products order by quantity"],
-    ["POST_ADD_PRODUCT_IN_SHOP", "Add new store product"],
-    ["POST_UPDATE_PRODUCT_IN_SHOP", "Update store product"],
-    ["DELETE_PRODUCT_IN_SHOP", "Delete product in shop"],
-]);
+// export const storeProductsCommandMap = new Map([
+//     ["GET_ALL_PRODUCTS_IN_SHOP", "Store Products"],
+//     ["POST_ADD_PRODUCT_IN_SHOP", "Add new store product"],
+// ]);
+export const storeProductsCommands = [
+    {
+        path: "get_all_products_in_shop_order_by_quantity",
+        title: "Get all store products order by quantity",
+        allowedRoles: [Roles.MANAGER]
+    },
+    {
+        path: "get_all_products_in_shop_order_by_name",
+        title: "Get all store products order by name",
+        allowedRoles: [Roles.CASHIER]
+    },
+    {
+        path: "get_prom_products_order_by_name",
+        title: "Get all prom products order by name",
+        allowedRoles: [Roles.MANAGER, Roles.CASHIER]
+    },
+    {
+        path: "get_prom_products_order_by_quantity",
+        title: "Get all prom products order by quantity",
+        allowedRoles: [Roles.MANAGER, Roles.CASHIER]
+    },
+    {
+        path: "get_non_prom_products_order_by_name",
+        title: "Get all non prom products order by name",
+        allowedRoles: [Roles.MANAGER, Roles.CASHIER]
+    },
+    {
+        path: "get_non_prom_products_order_by_quantity",
+        title: "Get all non prom products order by quantity",
+        allowedRoles: [Roles.MANAGER, Roles.CASHIER]
+    }
+]
