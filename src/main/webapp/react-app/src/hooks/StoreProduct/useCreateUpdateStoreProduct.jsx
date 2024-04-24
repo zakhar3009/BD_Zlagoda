@@ -34,8 +34,6 @@ export default function useCreateUpdateStoreProduct(id, storeProduct) {
             );
             const data = await response.json();
             setProducts(data);
-            console.log(data)
-          //  setProducts(data.map((item) => ({label: item.name, value: item.id})))
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
@@ -51,15 +49,11 @@ export default function useCreateUpdateStoreProduct(id, storeProduct) {
         console.log("FORM DATA:", formData)
         const product = products.find((item) => (item.id === Number(formData.product)));
         const newStoreProduct = {
-
             ...formData,
             sellingPrice: Number(formData.sellingPrice),
             productsNumber: Number(formData.productsNumber),
             product: product ? product : storeProduct.product
         }
-        console.log("FORMDATAAA", newStoreProduct)
-
-        //console.log("NEW PRODUCT", newStoreProduct)
         const requestOptions = {
             method: "POST",
             headers: {
@@ -79,7 +73,8 @@ export default function useCreateUpdateStoreProduct(id, storeProduct) {
         } catch (err) {
             toast.error(`Error: ${err}`);
         } finally {
-            navigate("../get_all_products_in_shop");
+            if(id) navigate("../get_all_products_in_shop_order_by_quantity");
+            else navigate("/store-products/get_all_products_in_shop_order_by_quantity")
         }
     };
 

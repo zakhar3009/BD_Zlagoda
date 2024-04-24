@@ -1,22 +1,18 @@
 import {useState} from "react";
 import useAuth from "@/hooks/auth/useAuth.js";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {ClipLoader} from "react-spinners";
 
 export default function LogIn() {
     const {setAuth} = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [user, setUser] = useState(null);
-
     const getUserByCredentials = async () => {
         const requestOptions = {
             method: "POST",
@@ -31,20 +27,22 @@ export default function LogIn() {
         };
         try {
             setIsLoading(true);
-            console.log("fetching");
             const response = await fetch(
                 "http://localhost:8080/controller",
                 requestOptions
             );
             const userData = await response.json();
-            setUser(userData);
+            if(userData == null) {
+                setError(true);
+                return;
+            }
             setAuth({
                 user: userData
             });
+            sessionStorage.setItem("user", JSON.stringify(userData))
+            navigate("/welcome")
             toast.success("You successfully logged in!")
-            console.log(userData);
         } catch (err) {
-            console.log(err);
             setError(err);
         } finally {
             setTimeout(() => setIsLoading(false), 500)

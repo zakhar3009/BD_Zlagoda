@@ -1,7 +1,7 @@
-import {Fragment} from "react";
+import {Fragment, useEffect} from "react";
 import {Disclosure, Menu, Transition} from "@headlessui/react";
 import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink, Outlet, useLocation, useNavigate} from "react-router-dom";
 import {classNames} from "@/constants/utils/helpers.js";
 import EmployeeMenu from "./flyout-menus/EmployeeMenu";
 import CategoryMenu from "./flyout-menus/CategoryMenu";
@@ -11,19 +11,35 @@ import CustomerCardMenu from './flyout-menus/CustomerCardMenu.jsx';
 import "react-toastify/dist/ReactToastify.css";
 import StoreProductMenu from "@/components/header/flyout-menus/StoreProductMenu.jsx";
 import useAuth from "@/hooks/auth/useAuth.js";
-import ChecksMenu from "@/components/header/flyout-menus/Checks.jsx";
+import ChecksMenu from "@/components/header/flyout-menus/CheckMenu.jsx";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
 const navigation = [
-    {menu: <EmployeeMenu/>},
-    {menu: <CategoryMenu/>},
-    {menu: <ProductMenu/>},
-    {menu: <CustomerCardMenu/>},
-    {menu: <StoreProductMenu/>},
-    {menu: <ChecksMenu/>}
+    {menu: <EmployeeMenu/>, allowedRoles: [Roles.MANAGER]},
+    {menu: <CategoryMenu/>, allowedRoles: [Roles.MANAGER]},
+    {menu: <ProductMenu/>, allowedRoles: [Roles.MANAGER, Roles.CASHIER]},
+    {menu: <CustomerCardMenu/>, allowedRoles: [Roles.MANAGER, Roles.CASHIER]},
+    {menu: <StoreProductMenu/>, allowedRoles: [Roles.MANAGER, Roles.CASHIER]},
+    {menu: <ChecksMenu/>, allowedRoles: [Roles.MANAGER, Roles.CASHIER]}
 ];
 
 export default function Navbar() {
-    const {auth} = useAuth();
+    const navigate = useNavigate();
+    const {auth, setAuth, onLogout} = useAuth();
+
+    useEffect(() => {
+        const userInfo = sessionStorage.getItem("user");
+        if (userInfo) {
+            setAuth({
+                user: JSON.parse(userInfo)
+            })
+            navigate("/welcome")
+        } else navigate("/")
+    }, []);
+
+    const allowedNav = navigation.filter(
+        (menu) => menu.allowedRoles.includes(auth?.user?.role)
+    );
 
     return (
         <>
@@ -48,7 +64,7 @@ export default function Navbar() {
                                 <div
                                     className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start ">
                                     <div className="flex flex-shrink-0 items-center">
-                                        <NavLink to="/">
+                                        <NavLink to={auth?.user?.role ? "/welcome" : "/"}>
                                             <img
                                                 className="h-8 w-auto"
                                                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
@@ -58,10 +74,8 @@ export default function Navbar() {
                                     </div>
                                     <div className="hidden sm:ml-6 sm:block ">
                                         <div className="flex space-x-4 ml-12">
-                                            {navigation.map(
-                                                (item, index) => (
-                                                    <div key={index}>{item.menu}</div>
-                                                )
+                                            {allowedNav.map(
+                                                (item, index) => <div key={index}>{item.menu}</div>
                                             )}
                                         </div>
                                     </div>
@@ -108,6 +122,7 @@ export default function Navbar() {
                                                 <Menu.Item>
                                                     {({active}) => (
                                                         <NavLink
+                                                            onClick={() => onLogout()}
                                                             to={auth?.user ? "/" : "/login"}
                                                             className={classNames(
                                                                 active ? "bg-gray-100" : "",

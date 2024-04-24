@@ -3,11 +3,12 @@ import {categoriesTableMap} from "../../constants/CategoiesCommandMap.js";
 import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
 import TableForPrint from "@/components/table/TableForPrint.jsx";
-import {storeProductTablePrintMap} from "@/constants/StoreProductsCommandMap.js";
 import {useReactToPrint} from "react-to-print";
+import useAuth from "@/hooks/auth/useAuth.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
-// GET_ALL_CATEGORIES
 export default function Category({command}) {
+    const {auth} = useAuth();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const componentRef = useRef();
@@ -27,9 +28,8 @@ export default function Category({command}) {
             const data = await response.json();
             setData(data);
             setIsLoading(false);
-            console.log(data);
         } catch (err) {
-            console.log(err);
+            toast.error(err);
         }
     };
 
@@ -54,42 +54,42 @@ export default function Category({command}) {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             fetchCategoryData();
-            console.log(data);
             toast.success("Category was removed!")
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!");
         }
     };
 
     return (
-        <main className="px-8 py-4 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
-            <div className="grid">
-                {!isLoading && (
-                    <>
-                        <MatTable
+
+        <div className="grid">
+            {!isLoading && (
+                <>
+                    <MatTable
+                        columnNames={categoriesTableMap.get(command)}
+                        rows={data}
+                        deleteFunc={deleteCategory}
+                        deleteProperty={"number"}
+                        pathToCreateUpdate={"/post_update_category"}
+                        editEnabled={auth?.user?.role === Roles.MANAGER}
+                        deleteEnabled={auth?.user?.role === Roles.MANAGER}
+                    ></MatTable>
+                    <div ref={componentRef}>
+                        <TableForPrint
                             columnNames={categoriesTableMap.get(command)}
                             rows={data}
-                            deleteFunc={deleteCategory}
-                            deleteProperty={"number"}
-                            pathToCreateUpdate={"/post_update_category"}
-                        ></MatTable>
-                        <div ref={componentRef}>
-                            <TableForPrint
-                                columnNames={categoriesTableMap.get(command)}
-                                rows={data}
-                            />
-                        </div>
-                        <div className="flex justify-content-end mt-2">
-                            <button
-                                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                onClick={handlePrint}>To PDF
-                            </button>
-                        </div>
-                    </>
-                )}
-            </div>
-        </main>
+                        />
+                    </div>
+                    <div className="flex justify-content-end mt-2">
+                        <button
+                            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                            onClick={handlePrint}>To PDF
+                        </button>
+                    </div>
+                </>
+            )}
+        </div>
     );
 }

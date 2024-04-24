@@ -1,15 +1,9 @@
-import { Fragment, useState } from "react";
-import {Menu, Popover, Transition} from "@headlessui/react";
-import { NavLink } from "react-router-dom";
-import {customerCardMap} from "@/constants/CustomerCardCommandMap.js";
-import { classNames } from "@/constants/utils/helpers.js";
+import {Fragment} from "react";
+import {Menu, Transition} from "@headlessui/react";
+import {NavLink} from "react-router-dom";
+import {classNames} from "@/constants/utils/helpers.js";
 
 export default function CustomerCardMenu() {
-
-    const clientsCommands = Array.from(customerCardMap.entries()).filter(
-        (item) =>
-            item[0] !== "DELETE_CLIENT" && item[0] !== "POST_UPDATE_CLIENT"
-    );
 
     return (
         <Menu as="div" className="relative ml-3">
@@ -30,21 +24,32 @@ export default function CustomerCardMenu() {
             >
                 <Menu.Items
                     className="absolute left-1/2 z-10 -translate-x-1/2 mt-4 w-72 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    {clientsCommands.map((item) => (
-                        <Menu.Item key={item[0].toLowerCase()}>
-                            {({active}) => (
-                                <NavLink
-                                    to={"/customer-card/" + item[0].toLowerCase()}
-                                    className={classNames(
-                                        active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm font-medium text-gray-700"
-                                    )}
-                                >
-                                    {item[1]}
-                                </NavLink>
-                            )}
-                        </Menu.Item>
-                    ))}
+                    <Menu.Item>
+                        {({active}) => (
+                            <NavLink
+                                to="/customer-card/get_all_clients"
+                                className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm font-medium text-gray-700"
+                                )}
+                            >
+                                Clients
+                            </NavLink>
+                        )}
+                    </Menu.Item>
+                    <Menu.Item>
+                        {({active}) => (
+                            <NavLink
+                                to="/customer-card/post_add_client"
+                                className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm font-medium text-gray-700"
+                                )}
+                            >
+                                Add new customer
+                            </NavLink>
+                        )}
+                    </Menu.Item>
                 </Menu.Items>
             </Transition>
         </Menu>

@@ -3,24 +3,36 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {Navigate, NavLink, Outlet, useLocation} from "react-router-dom";
 import useAuth from "@/hooks/auth/useAuth.js";
+import {customerCardCommands} from "@/constants/CustomerCardCommandMap.js";
 
-export default function EmployeeButtonGroup ({ allowedRoles }) {
+export default function CustomerCardButtonGroup({ allowedRoles }) {
     const { auth } = useAuth();
     const location = useLocation();
-    const [alignment, setAlignment] = React.useState("get_all_employees");
+    const [alignment, setAlignment] = React.useState("get_all_clients");
+    const routeName = location.pathname;
 
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
     };
 
     const checkRoute = () => {
-        const routeName = location.pathname;
-        return routeName === "/employee/post_add_employee"
-            || routeName.includes("post_update_employee")
+        return routeName === "/customer-card/post_add_client" || routeName.includes("/post_update_client")
     }
 
-    const employeeButtonGroup = () => {
+    const hasPermissionOnBtn = (item) => {
+        if(!item.allowedRoles.includes(auth?.user?.role)) return;
+        if(item.path === "post_add_client" || item.path === "post_update_client")
+            return;
+        return (
+            <ToggleButton key={item.path} value={item.path}>
+                <NavLink to={item.path}>
+                    {item.title}
+                </NavLink>
+            </ToggleButton>
+        );
+    }
 
+    const customerCardButtonGroup = () => {
         return (
             <main
                 className={`px-8 py-1/2 ${!checkRoute() ? "h-screen" : "h-full"} bg-gradient-to-r from-violet-200 to-pink-200`}>
@@ -37,26 +49,7 @@ export default function EmployeeButtonGroup ({ allowedRoles }) {
                                         onChange={handleChange}
                                         aria-label="Platform"
                                     >
-                                        <ToggleButton value="get_all_employees">
-                                            <NavLink to="get_all_employees">
-                                                Get all employees
-                                            </NavLink>
-                                        </ToggleButton>
-                                        <ToggleButton value="get_all_employees_order_by_surname">
-                                            <NavLink to="get_all_employees_order_by_surname">
-                                                Get all employees order by surname
-                                            </NavLink>
-                                        </ToggleButton>
-                                        <ToggleButton value="get_all_cashiers_order_by_surname">
-                                            <NavLink to="get_all_cashiers_order_by_surname">
-                                                Get all cashiers order by surname
-                                            </NavLink>
-                                        </ToggleButton>
-                                        <ToggleButton value="search_employee_address_and_phone_by_surname">
-                                            <NavLink to="search_employee_address_and_phone_by_surname">
-                                                Search employee address and phone by surname
-                                            </NavLink>
-                                        </ToggleButton>
+                                        {customerCardCommands.map((item) => hasPermissionOnBtn(item))}
                                     </ToggleButtonGroup>
                                 </div>
                             </div>
@@ -64,12 +57,19 @@ export default function EmployeeButtonGroup ({ allowedRoles }) {
                     </div>}
                 <Outlet/>
             </main>
-        )
+        );
+    }
+
+    const allowedRoute = () => {
+        const route = customerCardCommands.find(
+            (item) => routeName.includes(item.path)) || {allowedRoles: []};
+        return route.allowedRoles.includes(auth?.user?.role)
     }
 
     return (
         allowedRoles.includes(auth?.user?.role)
-            ? employeeButtonGroup()
+        && allowedRoute()
+            ? customerCardButtonGroup()
             : auth?.user
                 ? <Navigate to="/unauthorised" state={{ from: location }} replace />
                 : <Navigate to="/login" state={{ from: location }} replace />

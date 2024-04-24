@@ -4,8 +4,11 @@ import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
 import {useReactToPrint} from 'react-to-print';
 import TableForPrint from "@/components/table/TableForPrint.jsx";
+import useAuth from "@/hooks/auth/useAuth.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
 export default function Employee({command}) {
+    const {auth} = useAuth();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const componentRef = useRef();
@@ -25,9 +28,8 @@ export default function Employee({command}) {
             const data = await response.json();
             setData(data);
             setIsLoading(false);
-            console.log(data);
         } catch (err) {
-            console.log(err);
+            toast.error(err);
         }
     };
 
@@ -36,7 +38,6 @@ export default function Employee({command}) {
     }, [command]);
 
     const deleteEmployee = async (employeeId) => {
-        console.log("deleting EMPLOYEE");
         const requestOptions = {
             method: "DELETE",
             headers: {
@@ -52,9 +53,8 @@ export default function Employee({command}) {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             fetchEmployeesData();
-            console.log(data);
             toast.success("Employee was removed!")
         } catch (err) {
             toast.error("Cannot be deleted, due to database integrity!");
@@ -70,6 +70,8 @@ export default function Employee({command}) {
                             deleteFunc={deleteEmployee}
                             deleteProperty={"id"}
                             pathToCreateUpdate={"/post_update_employee"}
+                            editEnabled={auth?.user?.role === Roles.MANAGER}
+                            deleteEnabled={auth?.user?.role === Roles.MANAGER}
                         ></MatTable>
                         <div ref={componentRef}>
                             <TableForPrint
