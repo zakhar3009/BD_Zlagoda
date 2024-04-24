@@ -46,12 +46,19 @@ export default function ProductsButtonGroup({ allowedRoles }) {
                                             <NavLink to="get_all_products_order_by_name">
                                                 Get all products order by name
                                             </NavLink>
-                                        </ToggleButton><
-                                        ToggleButton value="get_products_by_category_order_by_name">
-                                        <NavLink to="get_products_by_category_order_by_name">
-                                            Get products by category order by name
-                                        </NavLink>
-                                    </ToggleButton>
+                                        </ToggleButton>
+                                        <ToggleButton value="get_products_by_category_order_by_name">
+                                            <NavLink to="get_products_by_category_order_by_name">
+                                                Get products by category order by name
+                                            </NavLink>
+                                        </ToggleButton>
+                                        {auth?.user?.role === Roles.CASHIER && (
+                                            <ToggleButton value="search_product_by_part_of_name">
+                                                <NavLink to="search_product_by_part_of_name">
+                                                    Search products by part of name
+                                                </NavLink>
+                                            </ToggleButton>
+                                        )}
                                     </ToggleButtonGroup>
                                 </div>
                             </div>

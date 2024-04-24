@@ -74,7 +74,9 @@ public enum ManagerCommands {
     GER_SELF_CHECKS_PER_PERIOD("GET_SELF_CHECKS_PER_PERIOD", new GetSelfChecksPerPeriod(CheckService.getInstance())),
     GET_CASHIERS_CHECK_AND_SALES_REPORT ("GET_CASHIERS_CHECK_AND_SALES_REPORT", new GetCashierChecksAndSalesReport(EmployeeService.getInstance())),
     GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS("GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", new GetCustomerCheckedOutByCashiers(CustomerService.getInstance())),
-    GET_TOP_EMPLOYEES_BY_SALES("GET_TOP_EMPLOYEES_BY_SALES", new GetTopEmployeesBySales(EmployeeService.getInstance()));
+    GET_TOP_EMPLOYEES_BY_SALES("GET_TOP_EMPLOYEES_BY_SALES", new GetTopEmployeesBySales(EmployeeService.getInstance())),
+    GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY("GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", new GetSelfCountOfClientsGroupedByCity(CustomerService.getInstance())),
+    SEARCH_PRODUCT_BY_PART_OF_NAME("SEARCH_PRODUCT_BY_NAME", new GetAllProductsByPartOfNameCommand(ProductService.getInstance()));
 
     ManagerCommands(String commandKey, Command command) {
         this.key = commandKey;

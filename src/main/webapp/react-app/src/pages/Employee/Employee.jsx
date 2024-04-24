@@ -33,7 +33,9 @@ export default function Employee({command}) {
             {
                 setData(data.map((item) => ({
                     ...item,
-                    products_number: item.products_number ? item.products_number : "0"
+                    products_number: item.products_number ? item.products_number : "0",
+                    id: item.id_employee
+
                 })))
 
             }

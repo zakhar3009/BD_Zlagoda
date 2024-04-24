@@ -14,14 +14,16 @@ const columnNames =
     ]
 const columnNamesForCheckedOutByCashier =
     [
-        ""
+        "city",
+        "clients_count"
     ]
 export const customerCardTableMap = new Map([
     ["GET_ALL_CLIENTS", columnNames],
     ["GET_ALL_CLIENTS_ORDER_BY_SURNAME", columnNames],
     ["GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME", columnNames],
     ["GET_CLIENTS_BY_PART_OF_SURNAME", columnNames],
-    ["GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", columnNamesForCheckedOutByCashier ]
+    ["GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", columnNamesForCheckedOutByCashier ],
+    ["GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", columnNamesForCheckedOutByCashier]
     ]);
 
 export const customerCardCommands = [
@@ -43,12 +45,17 @@ export const customerCardCommands = [
     {
         path: "get_clients_by_part_of_surname",
         title: "Search clients by part of surname",
-        allowedRoles: [Roles.CASHIER, Roles.MANAGER]
+        allowedRoles: [Roles.CASHIER]
     },
     {
         path: "get_customer_cards_checked_out_by_cashiers",
         title: "Get customer cards checked out by cashier",
         allowedRoles: [Roles.MANAGER]
+    },
+    {
+        path: "get_served_clients_by_cities",
+        title: "Get served clients by cities",
+        allowedRoles: [Roles.CASHIER]
     },
     {
         path: "post_add_client",
@@ -59,5 +66,5 @@ export const customerCardCommands = [
         path: "post_update_client",
         title: "Update a client",
         allowedRoles: [Roles.CASHIER, Roles.MANAGER]
-    }
+    },
 ]
