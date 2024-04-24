@@ -29,7 +29,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
             " LEFT JOIN sale ON checks.check_number = sale.check_number" +
             " GROUP BY employee.id_employee" +
             " ORDER BY checks_number DESC";
-    private static String GET_TOP_EMPLOYEES_BY_SALES = "SELECT e.empl_surname, e.empl_name, e.empl_patronymic, SUM(s.product_number) AS total_products_sold, SUM(s.selling_price * s.product_number) AS total_sales " +
+    private static String GET_TOP_EMPLOYEES_BY_SALES = "SELECT e.id_employee, e.empl_surname, e.empl_name, e.empl_patronymic, SUM(s.product_number) AS total_products_sold, SUM(s.selling_price * s.product_number) AS total_sales " +
             " FROM Employee AS e " +
             " JOIN Checks AS c ON e.id_employee = c.id_employee " +
             " JOIN Sale AS s ON c.check_number = s.check_number " +
@@ -125,6 +125,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_CASHIERS_CHECK_AND_SALES_REPORT)) {
             while (resultSet.next()) {
                 HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(ID, resultSet.getString(ID));
                 hashMap.put(SURNAME, resultSet.getString(SURNAME));
                 hashMap.put(NAME, resultSet.getString(NAME));
                 hashMap.put("checks_number", resultSet.getString("checks_number"));
