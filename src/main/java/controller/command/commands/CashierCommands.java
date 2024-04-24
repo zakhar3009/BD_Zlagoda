@@ -39,7 +39,8 @@ public enum CashierCommands {
     GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(StoreProductService.getInstance())),
     GET_PRODUCT_INFO_BY_UPC("GET_PRODUCT_INFO_BY_UPC", new GetStoreProductByIdCommand(StoreProductService.getInstance())),
     GET_SELF_INFO("GET_SELF_INFO", new GetEmployeeById(EmployeeService.getInstance())),
-    CUSTOMERS_WITHOUT_СATEGORY_PURCHASES("CUSTOMERS_WITHOUT_СATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance()));
+    CUSTOMERS_WITHOUT_CATEGORY_PURCHASES("CUSTOMERS_WITHOUT_CATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance())),
+    GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY("GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", new GetSelfCountOfClientsGroupedByCity(CustomerService.getInstance()));
 
 
     private String key;

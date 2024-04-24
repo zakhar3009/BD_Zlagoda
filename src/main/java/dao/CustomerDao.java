@@ -13,4 +13,6 @@ public interface CustomerDao extends GenericDao<CustomerCard, String>{
     List<CustomerCard> getCustomersByPercentOrderBySurname(int percent);
     HashMap<String, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> employeesIds);
     List<CustomerCard> getCustomersWithoutCategoryPurchases(String categoryName);
+
+    HashMap<String, String> getSelfCountOfClientsGroupedByCity(String employeeId);
 }

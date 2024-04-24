@@ -43,7 +43,13 @@ public class JdbcCustomerDao implements CustomerDao {
             "        AND p.category_number = (SELECT category_number FROM Category WHERE category_name=?)" +
             "    )" +
             ")";
-
+    private static String GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY = "SELECT COUNT(C1.card_number) AS clients_count, C1.city AS city\n" +
+            "FROM customer_card AS C1 " +
+            "WHERE card_number IN (SELECT C2.card_number " +
+            "      FROM check AS C2 " +
+            "      WHERE C2.id_employee=?) " +
+            "GROUP BY city " +
+            "ORDER BY clients_count ASC";
     private static String CUSTOMER_NUMBER = "card_number";
     private static String CUSTOMER_SURNAME = "cust_surname";
     private static String CUSTOMER_NAME = "cust_name";
@@ -128,6 +134,22 @@ public class JdbcCustomerDao implements CustomerDao {
             throw new ServerException(e);
         }
         return clients;
+    }
+
+    @Override
+    public HashMap<String, String> getSelfCountOfClientsGroupedByCity(String employeeID) {
+        HashMap<String, String> result = new HashMap<>();
+        try (PreparedStatement query = connection.prepareStatement(GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY)) {
+            query.setString(1, employeeID);
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next()) {
+                result.put("clients_count", resultSet.getString("clients_count"));
+                result.put("city", resultSet.getString("city"));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return result;
     }
 
     @Override
