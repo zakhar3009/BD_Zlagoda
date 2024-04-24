@@ -5,7 +5,7 @@ import {classNames} from "@/constants/utils/helpers.js";
 import useAuth from "@/hooks/auth/useAuth.js";
 import {Roles} from "@/constants/auth/allowedRoles.js";
 
-export default function StoreProductMenu() {
+export default function ChecksMenu() {
     const {auth} = useAuth();
 
     return (
@@ -13,7 +13,7 @@ export default function StoreProductMenu() {
             <div>
                 <Menu.Button
                     className="rounded-md px-3 py-2 text-sm font-medium outline-0 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                    <span className="text-slate-300">Store Products</span>
+                    <span className="text-slate-300">Checks</span>
                 </Menu.Button>
             </div>
             <Transition
@@ -30,32 +30,30 @@ export default function StoreProductMenu() {
                     <Menu.Item>
                         {({active}) => (
                             <NavLink
-                                to={`/store-products/${auth?.user?.role === Roles.MANAGER
-                                    ? "get_all_products_in_shop_order_by_quantity"
-                                    : "get_all_products_in_shop_order_by_name"}`}
+                                to="/checks/get_all_checks"
                                 className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm font-medium text-gray-700"
                                 )}
                             >
-                                Store Products
+                                Checks
                             </NavLink>
                         )}
                     </Menu.Item>
-                    {auth?.user?.role === Roles.MANAGER && (
+                    {auth?.user?.role === Roles.CASHIER && (
                         <Menu.Item>
-                            {({active}) => (
-                                <NavLink
-                                    to="/store-products/post_add_product_in_shop"
-                                    className={classNames(
-                                        active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm font-medium text-gray-700"
-                                    )}
-                                >
-                                    Add new store product
-                                </NavLink>
-                            )}
-                        </Menu.Item>
+                        {({active}) => (
+                            <NavLink
+                                to="/checks/post_add_check"
+                                className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm font-medium text-gray-700"
+                                )}
+                            >
+                               Add new check
+                            </NavLink>
+                        )}
+                    </Menu.Item>
                     )}
                 </Menu.Items>
             </Transition>

@@ -6,7 +6,7 @@ export default function DeleteModal({
   open,
   handleClose,
   deleteFunc,
-  deleteProperty,
+  deleteProperty
 }) {
   const deleteRequest = async () => {
     console.log("Item", item)

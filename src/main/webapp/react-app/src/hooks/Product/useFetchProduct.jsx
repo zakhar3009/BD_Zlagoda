@@ -25,7 +25,6 @@ export default function useFetchProduct() {
             );
             const productID = await response.json();
             setProduct(productID);
-            console.log(productID)
         } catch (err) {
             toast.error(`Error: ${err}`);
             navigate("../get_all_products");

@@ -4,10 +4,10 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {Navigate, NavLink, Outlet, useLocation} from "react-router-dom";
 import useAuth from "@/hooks/auth/useAuth.js";
 
-export default function EmployeeButtonGroup ({ allowedRoles }) {
-    const { auth } = useAuth();
+export default function CategoryButtonGroup({ allowedRoles }) {
+    const {auth} = useAuth();
     const location = useLocation();
-    const [alignment, setAlignment] = React.useState("get_all_employees");
+    const [alignment, setAlignment] = React.useState("get_all_categories");
 
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
@@ -15,11 +15,11 @@ export default function EmployeeButtonGroup ({ allowedRoles }) {
 
     const checkRoute = () => {
         const routeName = location.pathname;
-        return routeName === "/employee/post_add_employee"
-            || routeName.includes("post_update_employee")
+        return routeName === "/category/post_add_category"
+            || routeName.includes("/post_update_category")
     }
 
-    const employeeButtonGroup = () => {
+    const categoryButtonGroup = () => {
 
         return (
             <main
@@ -37,24 +37,14 @@ export default function EmployeeButtonGroup ({ allowedRoles }) {
                                         onChange={handleChange}
                                         aria-label="Platform"
                                     >
-                                        <ToggleButton value="get_all_employees">
-                                            <NavLink to="get_all_employees">
-                                                Get all employees
+                                        <ToggleButton value="get_all_categories">
+                                            <NavLink to="get_all_categories">
+                                                Get all categories
                                             </NavLink>
                                         </ToggleButton>
-                                        <ToggleButton value="get_all_employees_order_by_surname">
-                                            <NavLink to="get_all_employees_order_by_surname">
-                                                Get all employees order by surname
-                                            </NavLink>
-                                        </ToggleButton>
-                                        <ToggleButton value="get_all_cashiers_order_by_surname">
-                                            <NavLink to="get_all_cashiers_order_by_surname">
-                                                Get all cashiers order by surname
-                                            </NavLink>
-                                        </ToggleButton>
-                                        <ToggleButton value="search_employee_address_and_phone_by_surname">
-                                            <NavLink to="search_employee_address_and_phone_by_surname">
-                                                Search employee address and phone by surname
+                                        <ToggleButton value="get_all_categories_order_by_name">
+                                            <NavLink to="get_all_categories_order_by_name">
+                                                Get all categories order by name
                                             </NavLink>
                                         </ToggleButton>
                                     </ToggleButtonGroup>
@@ -69,7 +59,7 @@ export default function EmployeeButtonGroup ({ allowedRoles }) {
 
     return (
         allowedRoles.includes(auth?.user?.role)
-            ? employeeButtonGroup()
+            ? categoryButtonGroup()
             : auth?.user
                 ? <Navigate to="/unauthorised" state={{ from: location }} replace />
                 : <Navigate to="/login" state={{ from: location }} replace />

@@ -2,11 +2,15 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
+import useAuth from "@/hooks/auth/useAuth.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
+import moment from "moment/moment.js";
 
 export default function useFilterChecks() {
     const [isLoading, setIsLoading] = useState(true);
     const [cashier, setCashier] = useState([]);
     const [checks, setChecks] = useState([]);
+    const {auth} = useAuth();
 
     const {
         register,
@@ -39,7 +43,6 @@ export default function useFilterChecks() {
             );
             const data = await response.json();
             fetchAllChecks("GET_ALL_CHECKS", {});
-            console.log(data);
             toast.success("Check was removed!")
         } catch (err) {
             toast.error(`ERROR: ${err}`)
@@ -62,10 +65,9 @@ export default function useFilterChecks() {
 
     useEffect(() => {
         fetchCashier();
-        fetchAllChecks("GET_ALL_CHECKS", {})
+       // fetchAllChecks("GET_ALL_CHECKS", {})
     }, []);
 
-    // Toast needed
     const fetchAllChecks = async (command, parameters) => {
         try {
             setIsLoading(true);
@@ -77,7 +79,6 @@ export default function useFilterChecks() {
                 })
             );
             const data = await response.json();
-
             const newData = data.map((item) =>({
                 number: item.number,
                 employee: item.employee.name + " "+ item.employee.surname,
@@ -87,38 +88,51 @@ export default function useFilterChecks() {
                 vat: item.vat
             }))
             setChecks(newData);
-            console.log("CHECKS", newData)
             setIsLoading(false);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
     };
+    const fetchDailyCheck =() =>{
+        const parameters ={
+            id_employee: auth.user.id,
+            day: moment().format("YYYY-MM-D")
+        }
+        fetchAllChecks("GET_SELF_DAILY_CHECKS",parameters )
+    }
 
     const onSubmit = () => {
         let parameters = {};
         const values = getValues();
-        if (values.start && values.end && values.id_employee) {
-            parameters = {
-                id_employee: values.id_employee,
-                start: values.start,
-                end: values.end
+        if (auth.user.role === Roles.CASHIER) {
+            if(values.start && values.end){
+                parameters = {
+                    ...values,
+                    id_employee: auth.user.id
+                }
+                fetchAllChecks("GER_SELF_CHECKS_PER_PERIOD", parameters);
             }
-            fetchAllChecks("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", parameters);
+        } else {
+            if (values.start && values.end && values.id_employee) {
+                parameters = {
+                    id_employee: values.id_employee,
+                    start: values.start,
+                    end: values.end
+                }
+                fetchAllChecks("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", parameters);
+            } else if (!values.id_employee && values.start && values.end) {
+                parameters = {
+                    start: values.start,
+                    end: values.end
+                }
+                fetchAllChecks("GET_ALL_CHECKS_BY_TIME_PERIOD", parameters);
+            } else if (values.id_employee && !values.start && !values.end) {
+                parameters = {
+                    id_employee: values.id_employee,
+                }
+                fetchAllChecks("GET_ALL_CHECKS_BY_CASHIER", parameters);
+            } else fetchAllChecks("GET_ALL_CHECKS", parameters)
         }
-        else if(!values.id_employee && values.start && values.end) {
-            parameters = {
-                start: values.start,
-                end: values.end
-            }
-            fetchAllChecks("GET_ALL_CHECKS_BY_TIME_PERIOD", parameters);
-        }
-        else if(values.id_employee && !values.start && !values.end){
-            parameters = {
-                id_employee: values.id_employee,
-            }
-            fetchAllChecks("GET_ALL_CHECKS_BY_CASHIER", parameters);
-        }
-        else fetchAllChecks("GET_ALL_CHECKS", parameters)
     }
 
     return {
@@ -126,10 +140,12 @@ export default function useFilterChecks() {
         handleSubmit,
         deleteCheck,
         onSubmit,
+        fetchDailyCheck,
         errors,
         cashier,
         checks,
-        isLoading
+        isLoading,
+        auth
     };
 
 }

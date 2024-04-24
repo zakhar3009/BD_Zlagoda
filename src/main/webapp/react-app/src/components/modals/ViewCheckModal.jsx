@@ -37,7 +37,6 @@ export default function ViewCheckModal({
     const [isLoading, setIsLoading] = useState(true);
     const [sales, setSales] = useState([]);
     const getCheckInfo = async (command) => {
-        console.log("Made Request")
         try {
             setIsLoading(true);
             const response = await fetch(
@@ -50,15 +49,12 @@ export default function ViewCheckModal({
             const data = await response.json();
             setSales(data);
             setIsLoading(false);
-            console.log("SALES FOR CHECK", data);
         } catch (err) {
             toast.error(err);
         }
     }
-    console.log(sales)
 
     useEffect(() => {
-        console.log("useEffect", open)
         if (open) getCheckInfo("GET_FULL_CHECK_BY_NUMBER");
     }, [open]);
 
@@ -81,8 +77,7 @@ export default function ViewCheckModal({
                                 </TableRow>
                             </TableHead>
                             {!isLoading && <TableBody>
-                                {sales
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                {sales.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, idx) => {
                                         return (
                                             <TableRow hover role="checkbox" tabIndex={-1} key={idx}>

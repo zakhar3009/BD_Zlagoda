@@ -26,8 +26,13 @@ import Checks from "@/pages/Checks/Checks.jsx";
 import AddNewCheck from "@/pages/Checks/AddNewCheck.jsx";
 import StoreProductButtonGroup from "@/pages/StoreProducts/StoreProductButtonGroup.jsx";
 import EmployeeButtonGroup from "@/pages/Employee/EmployeeButtonGroup.jsx";
+import CategoryButtonGroup from "@/pages/Category/CategoryButtonGroup.jsx";
+import ProductsButtonGroup from "@/pages/Products/ProductsButtonGroup.jsx";
+import CustomerCardButtonGroup from "@/pages/CustomerCard/CustomerCardButtonGroup.jsx";
 import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 import SearchStoreProductByUPC from "@/pages/StoreProducts/SearchStoreProductByUPC.jsx";
+import RequireAuth from "@/components/auth/RequireAuth.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -52,11 +57,11 @@ const router = createBrowserRouter(
         <Route path="/" element={<Navbar/>}>
             <Route index element={<Hero/>}/>
             <Route path="/login" element={<LogIn/>}/>
-            <Route path="/profile" element={<Profile/>}/>
             <Route path="*" element={<Error/>}/>
+            <Route path="/profile" element={<Profile/>}/>
             <Route path="/welcome" element={<WelcomePage/>}/>
 
-            <Route path="employee" element={<EmployeeButtonGroup />}>
+            <Route path="employee" element={<EmployeeButtonGroup allowedRoles={[Roles.MANAGER]} />}>
                 <Route
                     path="get_all_employees"
                     element={<Employee command={"GET_ALL_EMPLOYEES"}/>}
@@ -71,17 +76,17 @@ const router = createBrowserRouter(
                 />
                 <Route
                     path="search_employee_address_and_phone_by_surname"
-                    element={<SearchEmployee />}
+                    element={<SearchEmployee/>}
                 />
                 <Route path="post_add_employee"
-                       element={<AddAndEditEmployee />}
+                       element={<AddAndEditEmployee/>}
                 />
                 <Route path=":id/post_update_employee"
-                       element={<AddAndEditEmployee />}
+                       element={<AddAndEditEmployee/>}
                 />
             </Route>
 
-            <Route path="category">
+            <Route path="category" element={<CategoryButtonGroup allowedRoles={[Roles.MANAGER]} />}>
                 <Route
                     path="get_all_categories"
                     element={<Category command={"GET_ALL_CATEGORIES"}/>}
@@ -94,7 +99,7 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_category" element={<AddAndEditCategory/>}/>
             </Route>
 
-            <Route path="products">
+            <Route path="products" element={<ProductsButtonGroup allowedRoles={[Roles.CASHIER, Roles.MANAGER]}/>}>
                 <Route
                     path="get_all_products"
                     element={<Products command={"GET_ALL_PRODUCTS"}/>}
@@ -107,11 +112,14 @@ const router = createBrowserRouter(
                     path="get_products_by_category_order_by_name"
                     element={<ProductsByCategoryOrderByName/>}
                 />
+            </Route>
+            <Route path="products" element={<ProductsButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
                 <Route path="post_add_product" element={<AddAndEditProduct/>}/>
                 <Route path=":id/post_update_product" element={<AddAndEditProduct/>}/>
             </Route>
 
-            <Route path="customer-card">
+            <Route path="customer-card"
+                   element={<CustomerCardButtonGroup allowedRoles={[Roles.CASHIER, Roles.MANAGER]}/>}>
                 <Route
                     path="get_all_clients"
                     element={<CustomerCard command={"GET_ALL_CLIENTS"}/>}
@@ -120,37 +128,46 @@ const router = createBrowserRouter(
                     path="get_all_clients_order_by_surname"
                     element={<CustomerCard command={"GET_ALL_CLIENTS_ORDER_BY_SURNAME"}/>}
                 />
-                <Route path="get_clients_by_percent_order_by_surname"
-                       element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
                 <Route path="get_clients_by_part_of_surname"
                        element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PART_OF_SURNAME"}/>}
                 />
-                <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
+                <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
+            </Route>
+            <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
+                <Route path="get_clients_by_percent_order_by_surname"
+                       element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
             </Route>
 
-            <Route path="store-products" element={<StoreProductButtonGroup />}>
-                <Route path="get_all_products_in_shop"
-                        element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP"}/>} />
+            <Route path="store-products" element={<StoreProductButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
                 <Route path="get_all_products_in_shop_order_by_quantity"
-                           element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>} />
+                       element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY"}/>}/>
+                <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>}/>
+                <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>}/>
+            </Route>
+            <Route path="store-products" element={<StoreProductButtonGroup allowedRoles={[Roles.CASHIER]}/>}>
+                <Route path="get_all_products_in_shop_order_by_name"
+                       element={<StoreProduct command={"GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME"}/>}/>
+            </Route>
+            <Route path="store-products"
+                   element={<StoreProductButtonGroup allowedRoles={[Roles.MANAGER, Roles.CASHIER]}/>}>
                 <Route path="get_prom_products_order_by_name"
-                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
+                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_NAME"}/>}/>
                 <Route path="get_prom_products_order_by_quantity"
-                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
+                       element={<StoreProduct command={"GET_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>}/>
                 <Route path="get_non_prom_products_order_by_quantity"
-                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>} />
+                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>}/>
                 <Route path="get_non_prom_products_order_by_name"
-                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_NAME"}/>} />
-                <Route path="post_add_product_in_shop" element={<AddAndEditStoreProduct/>} />
-                <Route path=":id/post_update_product_in_shop" element={<AddAndEditStoreProduct/>} />
+                       element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_NAME"}/>}/>
                 <Route path="get_product_by_UPC" element={<SearchStoreProductByUPC/>}/>
             </Route>
 
-            <Route path="checks">
-                <Route path="get_all_checks" element={<Checks />} />
-                <Route path=":id/view_check_products" element={<Products />} />
-                <Route path="post_add_check" element={<AddNewCheck />} />
+            <Route path="checks" element={<RequireAuth allowedRoles={[Roles.MANAGER, Roles.CASHIER]} />}>
+                <Route path="get_all_checks" element={<Checks/>}/>
+                <Route path=":id/view_check_products" element={<Products/>}/>
+            </Route>
+            <Route path="checks" element={<RequireAuth allowedRoles={[Roles.CASHIER]} />}>
+                <Route path="post_add_check" element={<AddNewCheck/>}/>
             </Route>
 
         </Route>

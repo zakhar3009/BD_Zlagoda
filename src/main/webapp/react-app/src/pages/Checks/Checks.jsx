@@ -8,13 +8,15 @@ import FormInput from "./../../components/inputs/FormInput.jsx";
 import TableForPrint from "@/components/table/TableForPrint.jsx";
 import {productsTableMap} from "@/constants/ProductsCommandMap.js";
 import {useReactToPrint} from "react-to-print";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
 
 export default function Checks() {
-    const {register, handleSubmit, onSubmit, cashier, checks, errors, isLoading, deleteCheck } = useFilterChecks();
+    const {register, handleSubmit, onSubmit, fetchDailyCheck, cashier, checks, errors, isLoading, deleteCheck, auth } = useFilterChecks();
     const [viewModalOpen, setViewModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
     const componentRef = useRef();
+    const role = auth?.user?.role;
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -34,10 +36,9 @@ export default function Checks() {
             <Card maxW="max-w-3xl">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="grid sm:grid-cols-2 gap-3"
-                >
-                    <select
-                        {...register("id_employee", {                        })}
+                    className="grid sm:grid-cols-2 gap-3">
+                    {role === Roles.MANAGER && <select
+                        {...register("id_employee", {})}
                         name="id_employee"
                         id="id_employee"
                         className="col-span-2 block pl-3 w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -46,6 +47,7 @@ export default function Checks() {
                             <option key={item.value} value={item.value}>{item.label}</option>
                         ))}
                     </select>
+                    }
                     <div>
                         <FormInput
                             register={register}
@@ -72,6 +74,14 @@ export default function Checks() {
                     >
                         Search
                     </button>
+                    {role === Roles.CASHIER &&
+                        <button
+                            onClick={fetchDailyCheck}
+                            className="col-span-2 text-blue-700 border-2 border-blue-700 hover:text-white bg-transparent hover:bg-blue-500  from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                            Get self daily checks
+                        </button>
+                    }
                 </form>
             </Card>
 
@@ -86,6 +96,7 @@ export default function Checks() {
                         clickable={true}
                         onViewClick={onOpenViewModal}
                         deleteFunc={deleteCheck}
+                        deleteEnabled={role === Roles.MANAGER}
                     ></MatTable>
                     <ViewCheckModal
                         open={viewModalOpen}
