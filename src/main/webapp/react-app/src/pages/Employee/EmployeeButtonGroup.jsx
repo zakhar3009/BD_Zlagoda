@@ -57,6 +57,11 @@ export default function EmployeeButtonGroup ({ allowedRoles }) {
                                                 Search employee address and phone by surname
                                             </NavLink>
                                         </ToggleButton>
+                                        <ToggleButton value="get_cashiers_check_and_sales_report">
+                                            <NavLink to="get_cashiers_check_and_sales_report">
+                                                Get cashiers check and sales report
+                                            </NavLink>
+                                        </ToggleButton>
                                     </ToggleButtonGroup>
                                 </div>
                             </div>

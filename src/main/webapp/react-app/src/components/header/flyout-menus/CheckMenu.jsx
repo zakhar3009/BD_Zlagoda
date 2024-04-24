@@ -40,6 +40,7 @@ export default function ChecksMenu() {
                             </NavLink>
                         )}
                     </Menu.Item>
+
                     {auth?.user?.role === Roles.CASHIER && (
                         <Menu.Item>
                         {({active}) => (

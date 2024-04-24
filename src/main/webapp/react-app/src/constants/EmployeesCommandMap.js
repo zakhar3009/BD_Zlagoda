@@ -12,6 +12,14 @@ const defaultTableNames =
     "street",
     "zipCode"
 ]
+const reportTableNames =
+    [
+        "empl_surname",
+        "empl_name",
+        "products_number",
+        "checks_number",
+    ]
+
 export const employeesTableMap = new Map([
   ["GET_ALL_EMPLOYEES", defaultTableNames],
   ["GET_ALL_EMPLOYEES_ORDER_BY_SURNAME", defaultTableNames],
@@ -20,6 +28,7 @@ export const employeesTableMap = new Map([
     "SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME",
     ["surname", "phoneNumber", "city", "street"],
   ],
+    ["GET_CASHIERS_CHECK_AND_SALES_REPORT", reportTableNames]
 ]);
 
 export const employeesCommandMap = new Map([
