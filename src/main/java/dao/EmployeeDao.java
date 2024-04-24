@@ -2,6 +2,7 @@ package dao;
 
 import entity.Employee;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,6 @@ public interface EmployeeDao extends GenericDao<Employee, String> {
     List<Employee> getEmployeesOrderBySurname();
     List<Employee> getCashiersOrderBySurname();
     List<Employee> searchEmployeeAddressAndPhoneBySurname(String surname);
-    HashMap<String, String> getCashierChecksAndSalesReport();
-
+    ArrayList<HashMap<String, String>> getCashierChecksAndSalesReport();
+    HashMap<String, String> getTopEmployeesBySales();
 }

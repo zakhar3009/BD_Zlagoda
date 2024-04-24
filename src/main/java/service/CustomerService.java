@@ -62,8 +62,13 @@ public class CustomerService {
         return customerDao.getCustomersByPercentOrderBySurname(percent);
     }
 
-    public HashMap<CustomerCard, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
+    public HashMap<String, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getCustomerCheckedOutByCashiers(cashiersIds);
+    }
+
+    public List<CustomerCard> getCustomersWithoutCategoryPurchases(String categoryName){
+        CustomerDao customerDao = daoFactory.createCustomerDao();
+        return customerDao.getCustomersWithoutCategoryPurchases(categoryName);
     }
 }

@@ -5,6 +5,7 @@ import dao.EmployeeDao;
 import dto.CredentialsDto;
 import entity.Employee;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -67,9 +68,14 @@ public class EmployeeService {
         return employeeDao.searchEmployeeAddressAndPhoneBySurname(surname);
     }
 
-    public HashMap<String, String> getCashierChecksAndSalesReport(){
+    public ArrayList<HashMap<String, String>> getCashierChecksAndSalesReport(){
         EmployeeDao employeeDao = daoFactory.createEmployeeDao();
         return employeeDao.getCashierChecksAndSalesReport();
+    }
+
+    public HashMap<String, String> getTopEmployeesBySales() {
+        EmployeeDao employeeDao = daoFactory.createEmployeeDao();
+        return employeeDao.getTopEmployeesBySales();
     }
 
 

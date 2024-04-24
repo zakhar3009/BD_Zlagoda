@@ -70,6 +70,7 @@ public class JdbcCategoryDao implements CategoryDao {
     @Override
     public void create(Category category) {
         int randomId = UUID.randomUUID().toString().hashCode();
+        if(randomId < 0) randomId *= -1;
         try (PreparedStatement query = connection.prepareStatement(CREATE)) {
             query.setInt(1, randomId);
             query.setString(2, category.getName());

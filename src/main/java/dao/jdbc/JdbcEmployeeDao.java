@@ -24,11 +24,17 @@ public class JdbcEmployeeDao implements EmployeeDao {
             + " SET email=?, password=?, empl_name=?, empl_surname=?, empl_patronymic=?, empl_role=?, salary=?, date_of_birth=?, date_of_start=?, phone_number=?, city=?, street=?, zip_code=?" + " WHERE id_employee=? ";
     private static String DELETE = "DELETE FROM employee WHERE id_employee=?";
     private static String SEARCH_ADDRESS_AND_PHONE_BY_SURNAME = "SELECT street, phone_number, city, empl_surname FROM employee WHERE empl_surname=?";
-    private static String GET_CASHIERS_CHECK_AND_SALES_REPORT = "SELECT employee.empl_surname, employee.empl_name, COUNT(checks.check_number) AS checks_number, COUNT(sale.check_number) AS products_number " +
+    private static String GET_CASHIERS_CHECK_AND_SALES_REPORT = "SELECT employee.empl_surname, employee.empl_name, COUNT(checks.check_number) AS checks_number, SUM(sale.product_number) AS products_number " +
             " FROM employee LEFT JOIN checks ON employee.id_employee = checks.id_employee " +
             " LEFT JOIN sale ON checks.check_number = sale.check_number" +
-            " GROUP BY employee.id_employee, employee.empl_surname, employee.empl_name " +
+            " GROUP BY employee.id_employee" +
             " ORDER BY checks_number DESC";
+    private static String GET_TOP_EMPLOYEES_BY_SALES = "SELECT e.empl_surname, e.empl_name, e.empl_patronymic, SUM(s.product_number) AS total_products_sold, SUM(s.selling_price * s.product_number) AS total_sales " +
+            " FROM Employee AS e " +
+            " JOIN Checks AS c ON e.id_employee = c.id_employee " +
+            " JOIN Sale AS s ON c.check_number = s.check_number " +
+            " GROUP BY e.id_employee " +
+            " ORDER BY total_sales DESC";
 
     // table columns names
     private static String ID = "id_employee";
@@ -67,7 +73,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 user = Optional.of(extractUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            
+            throw new ServerException("");
         }
         return user;
     }
@@ -114,14 +120,33 @@ public class JdbcEmployeeDao implements EmployeeDao {
     }
 
     @Override
-    public HashMap<String, String> getCashierChecksAndSalesReport() {
-        HashMap<String, String> result = new HashMap<>();
+    public ArrayList<HashMap<String, String>> getCashierChecksAndSalesReport() {
+        ArrayList<HashMap<String, String>> result = new ArrayList<>();
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_CASHIERS_CHECK_AND_SALES_REPORT)) {
             while (resultSet.next()) {
-                result.put(SURNAME, result.get(SURNAME));
-                result.put(NAME, result.get(NAME));
-                result.put("checks_number", result.get("checks_number"));
-                result.put("products_number", result.get("products_number"));
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(SURNAME, resultSet.getString(SURNAME));
+                hashMap.put(NAME, resultSet.getString(NAME));
+                hashMap.put("checks_number", resultSet.getString("checks_number"));
+                hashMap.put("products_number", resultSet.getString("products_number"));
+                result.add(hashMap);
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public HashMap<String, String> getTopEmployeesBySales() {
+        HashMap<String, String> result = new HashMap<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_TOP_EMPLOYEES_BY_SALES)) {
+            while (resultSet.next()) {
+               result.put("empl_surname", resultSet.getString("empl_surname"));
+               result.put("empl_name", resultSet.getString("empl_name"));
+               result.put("empl_patronymic", resultSet.getString("empl_patronymic"));
+               result.put("total_products_sold", resultSet.getString("total_products_sold"));
+               result.put("total_sales", resultSet.getString("total_sales"));
             }
         } catch (SQLException e) {
             throw new ServerException(e);

@@ -75,6 +75,7 @@ public class JdbcProductDao implements ProductDao {
     @Override
     public void create(Product product) {
         int randomId = UUID.randomUUID().toString().hashCode();
+        if(randomId < 0) randomId *= -1;
         try (PreparedStatement query = connection.prepareStatement(CREATE)) {
             query.setInt(1, randomId);
             query.setInt(2, product.getCategory().getNumber());

@@ -7,12 +7,11 @@ import controller.command.commands.check.CreateCheckCommand;
 import controller.command.commands.check.GetCheckById;
 import controller.command.commands.check.GetSelfChecksPerPeriod;
 import controller.command.commands.check.GetSelfDailyChecksCommand;
-import controller.command.commands.cutomerCard.CreateCustomerCardCommand;
-import controller.command.commands.cutomerCard.GetAllCustomerCardsOrderBySurname;
-import controller.command.commands.cutomerCard.GetCustomerCardsByPartOfSurname;
-import controller.command.commands.cutomerCard.UpdateCustomerCardCommand;
+import controller.command.commands.cutomerCard.*;
 import controller.command.commands.employee.GetEmployeeById;
-import controller.command.commands.product.*;
+import controller.command.commands.product.GetAllProductsByPartOfNameCommand;
+import controller.command.commands.product.GetAllProductsOrderByName;
+import controller.command.commands.product.GetProductsByCategoryOrderByName;
 import controller.command.commands.sale.GetFullCheckByNumber;
 import controller.command.commands.storeProduct.*;
 import service.*;
@@ -39,7 +38,8 @@ public enum CashierCommands {
     GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY("GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", new GetNonPromProductsOrderByQuantity(StoreProductService.getInstance())),
     GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(StoreProductService.getInstance())),
     GET_PRODUCT_INFO_BY_UPC("GET_PRODUCT_INFO_BY_UPC", new GetStoreProductByIdCommand(StoreProductService.getInstance())),
-    GET_SELF_INFO("GET_SELF_INFO", new GetEmployeeById(EmployeeService.getInstance()));
+    GET_SELF_INFO("GET_SELF_INFO", new GetEmployeeById(EmployeeService.getInstance())),
+    CUSTOMERS_WITHOUT_СATEGORY_PURCHASES("CUSTOMERS_WITHOUT_СATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance()));
 
 
     private String key;

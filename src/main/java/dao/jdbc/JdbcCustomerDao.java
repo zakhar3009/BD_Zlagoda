@@ -20,14 +20,29 @@ public class JdbcCustomerDao implements CustomerDao {
     private static String DELETE = "DELETE FROM customer_card WHERE card_number=?";
     private static String SEARCH_CUSTOMERS_BY_PART_OF_SURNAME = "SELECT * FROM customer_card WHERE cust_surname LIKE ?";
     private static String GET_CUSTOMERS_BY_PERCENT_ORDER_BY_SURNAME = "SELECT * FROM customer_card WHERE percent=? ORDER BY cust_surname";
-    private static String GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.*,  employee.*" +
-            "FROM customer_card JOIN checks USING (card_number) JOIN employee USING (id_employee)" +
+    private static String GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.card_number,  e1.*" +
+            "FROM customer_card JOIN checks USING (card_number) JOIN employee e1 USING (id_employee)" +
             "WHERE " +
             "    NOT EXISTS ( " +
             "        SELECT * " +
             "        FROM employee " +
-            "        WHERE " +
-            "            employee.id_employee NOT IN (?))";
+            "        WHERE employee.id_employee = e1.id_employee" +
+            "        AND employee.id_employee NOT IN (?))";
+    private static String GET_CUSTOMERS_WITHOUT_CATEGORY_PURCHASES = "SELECT c.*" +
+            " FROM customer_card c" +
+            " WHERE NOT EXISTS (" +
+            "    SELECT o.check_number" +
+            "    FROM Checks o" +
+            "    WHERE o.card_number = c.card_number" +
+            "    AND NOT EXISTS (" +
+            "        SELECT s.UPC" +
+            "        FROM Sale s" +
+            "        INNER JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "        INNER JOIN Product p ON sp.id_product = p.id_product" +
+            "        WHERE s.check_number = o.check_number" +
+            "        AND p.category_number = (SELECT category_number FROM Category WHERE category_name=?)" +
+            "    )" +
+            ")";
 
     private static String CUSTOMER_NUMBER = "card_number";
     private static String CUSTOMER_SURNAME = "cust_surname";
@@ -88,18 +103,31 @@ public class JdbcCustomerDao implements CustomerDao {
     }
 
     @Override
-    public HashMap<CustomerCard, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiers) {
-        HashMap<CustomerCard, ArrayList<Employee>> result = new HashMap<>();
+    public HashMap<String, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiers) {
+        HashMap<String, ArrayList<Employee>> result = new HashMap<>();
         try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS)) {
             query.setString(1, String.join(", ", cashiers));
             ResultSet resultSet = query.executeQuery();
             while(resultSet.next()) {
-                result.computeIfAbsent(extractCustomerCardFromResultSet(resultSet), k -> new ArrayList<>()).add(JdbcEmployeeDao.extractUserFromResultSet(resultSet));
+                result.computeIfAbsent(resultSet.getString(CUSTOMER_NUMBER), k -> new ArrayList<>()).add(JdbcEmployeeDao.extractUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);
         }
         return result;
+    }
+
+    @Override
+    public List<CustomerCard> getCustomersWithoutCategoryPurchases(String categoryName) {
+        List<CustomerCard> clients = new ArrayList<>();
+        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_CUSTOMERS_WITHOUT_CATEGORY_PURCHASES)) {
+            while (resultSet.next()) {
+                clients.add(extractCustomerCardFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return clients;
     }
 
     @Override
