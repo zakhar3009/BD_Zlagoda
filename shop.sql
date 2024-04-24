@@ -40,7 +40,7 @@ CREATE TABLE Store_Product
     products_number     INT            NOT NULL,
     promotional_product BOOLEAN        NOT NULL,
     FOREIGN KEY (UPC_prom) REFERENCES Store_Product (UPC) ON UPDATE CASCADE
-         ON DELETE SET NULL,
+        ON DELETE SET NULL,
     FOREIGN KEY (id_product) REFERENCES Product (id_product) ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
@@ -83,32 +83,46 @@ CREATE TABLE Sale
 
 
 -- Insert data into Employee table
-INSERT INTO Employee (email, password, id_employee, empl_surname, empl_name, empl_patronymic, empl_role, salary, date_of_birth,
+INSERT INTO Employee (email, password, id_employee, empl_surname, empl_name, empl_patronymic, empl_role, salary,
+                      date_of_birth,
                       date_of_start, phone_number, city, street, zip_code)
 VALUES ('smith@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3utl3hkVsgoD2xg8eMLUUtxeTio4So726', 'E001', 'Smith', 'John',
-        'James', 'Manager', 6000.00, '1990-05-15', '2022-01-01', '123-456-7890', 'New York','Broadway', '10001'), /*7878787878*/
+        'James', 'Manager', 6000.00, '1990-05-15', '2022-01-01', '123-456-7890', 'New York', 'Broadway',
+        '10001'), /*7878787878*/
        ('semytskyi@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3uPLDo36PNZC95ZhoIa8HKxtlVYUlTxZW', 'E002', 'Semytskyi',
-        'Oleksandr', 'Yaroslavovish', 'Manager', 10000.00, '2005-09-05', '2022-01-01', '+380967784563', 'Kiyv', 'obolonska', '07400'), /*1234567890*/
+        'Oleksandr', 'Yaroslavovish', 'Manager', 10000.00, '2005-09-05', '2022-01-01', '+380967784563', 'Kiyv',
+        'obolonska', '07400'), /*1234567890*/
        ('synak@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3uCL2T7m.Mf77.35SyAuPNpxJmaJQGnoK', 'E003', 'Synak',
-        'Oleksandr', 'Yaroslavovish', 'Manager', 5000.00, '1990-02-28', '2022-04-05', '+380970102032', 'Irpin', 'Central', '61000'), /*87654321*/
+        'Oleksandr', 'Yaroslavovish', 'Manager', 5000.00, '1990-02-28', '2022-04-05', '+380970102032', 'Irpin',
+        'Central', '61000'), /*87654321*/
        ('zakhar@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3uPx8U4mwD2HMV3XRUTam6XRWa26VodRG', 'E004', 'Litvinchuk',
-        'Zakhar', 'Viktorovich', 'Manager', 5000.00, '2005-09-30', '2022-04-20', '+380978330997', 'Rivne', 'Central', '15785'), /*30092005*/
+        'Zakhar', 'Viktorovich', 'Manager', 5000.00, '2005-09-30', '2022-04-20', '+380978330997', 'Rivne', 'Central',
+        '15785'), /*30092005*/
        ('ivanov@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3usZtx4TV4ZCXvRMj7o.ExLbR1fvlHzqa', 'E005', 'Ivanov',
-        'Petro', 'Oleksiyovych', 'Cashier', 1000.00, '1988-12-20', '2022-02-15', '+380501234567', 'Kyiv', 'Shevchenka', '03150'), /*12345678*/
+        'Petro', 'Oleksiyovych', 'Cashier', 1000.00, '1988-12-20', '2022-02-15', '+380501234567', 'Kyiv', 'Shevchenka',
+        '03150'), /*12345678*/
        ('petrenko@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u1MPC4tpGFFErJlPIi/p37JdwULdw3Ne', 'E006', 'Petrenko',
-        'Maria', 'Olehivna', 'Cashier', 1500.00, '1995-07-10', '2022-03-10', '+380504554568', 'Lviv', 'Bandery', '79000'), /*2020202020*/
+        'Maria', 'Olehivna', 'Cashier', 1500.00, '1995-07-10', '2022-03-10', '+380504554568', 'Lviv', 'Bandery',
+        '79000'), /*2020202020*/
        ('kachynska.gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u7KaKJKuDHZVAgAYRGcdZVCUJhVUuifq', 'E007', 'Kachynska',
-        'Iryna', 'Vasylivna', 'Cashier', 2000.00, '2005-05-18', '2022-04-01', '789-012-3456', 'Gatne', 'Kvitneva', '12005'), /*32165487*/
+        'Iryna', 'Vasylivna', 'Cashier', 2000.00, '2005-05-18', '2022-04-01', '789-012-3456', 'Gatne', 'Kvitneva',
+        '12005'), /*32165487*/
        ('kovalenko@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3usZtx4TV4ZCXvRMj7o.ExLbR1fvlHzqa', 'E008',
-        'Kovalenko', 'Andrii', 'Viktorovych', 'Cashier', 1500.00, '1990-02-28', '2022-04-05', '+380970102032', 'Kharkiv', 'Central', '61000'), /*12345678*/
+        'Kovalenko', 'Andrii', 'Viktorovych', 'Cashier', 1500.00, '1990-02-28', '2022-04-05', '+380970102032',
+        'Kharkiv', 'Central', '61000'), /*12345678*/
        ('grace@ukr.net.ua', '$2a$10$c7XAOdvq40jde1A5nUvJ3uKMbLHFiFvoTwDWXfJGKlfdmReSlyJkq', 'E009', 'Grace',
-        'Emily', 'Grace', 'Cashier', 3000.00, '1992-08-20', '2022-02-01', '987-654-3210', 'Los Angeles', 'Main St', '90001'), /*123456789*/
+        'Emily', 'Grace', 'Cashier', 3000.00, '1992-08-20', '2022-02-01', '987-654-3210', 'Los Angeles', 'Main St',
+        '90001'), /*123456789*/
        ('genocidArmian@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3uj5AvybDZm/eSmonRDePVEsnT9p1kN/S', 'E0010', 'Williams',
-        'Robert', 'Andrew', 'Cashier', 2500.00, '1995-03-10', '2022-03-01', '456-789-0123', 'Chicago', 'Elm St', '60601'),  /*12345678910*/
+        'Robert', 'Andrew', 'Cashier', 2500.00, '1995-03-10', '2022-03-01', '456-789-0123', 'Chicago', 'Elm St',
+        '60601'), /*12345678910*/
        ('jones@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u8mNZAHDj56shzUa2OhI4uEzctmj1Xtu', 'E0011', 'Jones',
-        'Mary', 'Elizabeth', 'Cashier', 2000.00, '1998-11-25', '2022-04-01', '789-012-1252','San Francisco', 'Market St', '94102'),  /*12345678911*/
+        'Mary', 'Elizabeth', 'Cashier', 2000.00, '1998-11-25', '2022-04-01', '789-012-1252', 'San Francisco',
+        'Market St', '94102'), /*12345678911*/
        ('brown@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u/bpnq/MRSqMOZ10RIW9ZT3vxO7jhzhS', 'E0012', 'Brown',
-        'David', 'Michael', 'Manager', 3500.00, '1993-07-05', '2022-05-01', '012-345-6789', 'Houston', 'Oak St', '77001');/*12345678912*/
+        'David', 'Michael', 'Manager', 3500.00, '1993-07-05', '2022-05-01', '012-345-6789', 'Houston', 'Oak St',
+        '77001');
+/*12345678912*/
 
 -- Insert data into Category table
 INSERT INTO Category (category_number, category_name)
@@ -146,9 +160,9 @@ VALUES (1, 1, 'Laptop', '16GB RAM, 512GB SSD'),
        (24, 2, 'Jacket', 'Waterproof, windproof, insulated lining, zip closure'),
        (25, 2, 'Skirt', 'A-line silhouette, knee-length, plaid pattern');
 -- Insert data into Store_Product table
-INSERT INTO Store_Product (UPC, UPC_prom,  id_product, selling_price, products_number, promotional_product)
-VALUES ('SP002',NULL, 1, 4000.00, 1000, TRUE),
-       ('SP001','SP002', 1, 5000.00, 1000, FALSE),
+INSERT INTO Store_Product (UPC, UPC_prom, id_product, selling_price, products_number, promotional_product)
+VALUES ('SP002', NULL, 1, 4000.00, 1000, TRUE),
+       ('SP001', 'SP002', 1, 5000.00, 1000, FALSE),
        ('SP004', NULL, 2, 2000.00, 1200, TRUE),
        ('SP003', 'SP002', 2, 2500.00, 1200, FALSE),
        ('SP006', NULL, 7, 2736.00, 20, TRUE),
@@ -191,9 +205,13 @@ INSERT INTO Customer_Card (card_number, cust_surname, cust_name, cust_patronymic
                            percent)
 VALUES ('C001', 'Doe', 'Alice', 'Marie', '456-789-0123', 'Chicago', 'Elm St', '60601', 5),
        ('C002', 'Brown', 'James', 'Michael', '789-012-3456', 'San Francisco', 'Market St', '94102', 10),
-       ('C003', 'Williams', 'Emma', 'Grace', '123-456-7890', 'New York', 'Broadway', '10001', 7),
+       ('C003', 'Williams', 'Emma', 'Grace', '123-456-7890', 'New York', 'Broadway', '10001', 8),
        ('C004', 'Taylor', 'Olivia', 'Sophia', '987-654-3210', 'Los Angeles', 'Main St', '90001', 8),
-       ('C005', 'Anderson', 'Noah', 'William', '012-345-6789', 'Houston', 'Oak St', '77001', 6);
+       ('C005', 'Anderson', 'Noah', 'William', '012-345-6789', 'Houston', 'Oak St', '77001', 5),
+       ('C006', 'Depp', 'Johnny', 'David', '567-890-1234', 'Caribbean Islands', 'Cedar St', '19101', 10),
+       ('C007', 'Lopez', 'Isabella', 'Sofia', '234-567-8901', 'Miami', 'Palm St', '33101', 10),
+       ('C008', 'Martinez', 'Alexander', 'David', '345-678-9012', 'Dallas', 'Maple St', '75201', 10),
+       ('C009', 'Hernandez', 'Mia', 'Victoria', '456-789-0123', 'Phoenix', 'Pine St', '85001', 10);
 
 -- Insert data into Checks table
 INSERT INTO Checks (check_number, id_employee, card_number, print_date, sum_total, vat)

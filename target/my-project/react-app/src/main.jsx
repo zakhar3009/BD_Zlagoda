@@ -32,6 +32,7 @@ import CustomerCardButtonGroup from "@/pages/CustomerCard/CustomerCardButtonGrou
 import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
 import {Roles} from "@/constants/auth/allowedRoles.js";
 import SearchStoreProductByUPC from "@/pages/StoreProducts/SearchStoreProductByUPC.jsx";
+import RequireAuth from "@/components/auth/RequireAuth.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -60,7 +61,7 @@ const router = createBrowserRouter(
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/welcome" element={<WelcomePage/>}/>
 
-            <Route path="employee" element={<EmployeeButtonGroup/>}>
+            <Route path="employee" element={<EmployeeButtonGroup allowedRoles={[Roles.MANAGER]} />}>
                 <Route
                     path="get_all_employees"
                     element={<Employee command={"GET_ALL_EMPLOYEES"}/>}
@@ -85,7 +86,7 @@ const router = createBrowserRouter(
                 />
             </Route>
 
-            <Route path="category" element={<CategoryButtonGroup/>}>
+            <Route path="category" element={<CategoryButtonGroup allowedRoles={[Roles.MANAGER]} />}>
                 <Route
                     path="get_all_categories"
                     element={<Category command={"GET_ALL_CATEGORIES"}/>}
@@ -161,9 +162,11 @@ const router = createBrowserRouter(
                 <Route path="get_product_by_UPC" element={<SearchStoreProductByUPC/>}/>
             </Route>
 
-            <Route path="checks">
+            <Route path="checks" element={<RequireAuth allowedRoles={[Roles.MANAGER, Roles.CASHIER]} />}>
                 <Route path="get_all_checks" element={<Checks/>}/>
                 <Route path=":id/view_check_products" element={<Products/>}/>
+            </Route>
+            <Route path="checks" element={<RequireAuth allowedRoles={[Roles.CASHIER]} />}>
                 <Route path="post_add_check" element={<AddNewCheck/>}/>
             </Route>
 

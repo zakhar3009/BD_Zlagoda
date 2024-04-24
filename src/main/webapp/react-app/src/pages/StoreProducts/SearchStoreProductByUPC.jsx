@@ -58,28 +58,39 @@ export default function SearchStoreProductByUPC() {
                 </form>
                 {!isLoading &&
                     <Card height="screen" maxW="max-w-3xl">
-                        <div className="flex justify-center">
-                            <label className="font-mono text-lg font-bold text-justify">Product by UPC '{query}'
-                                :</label>
+                        {product &&
+                            <>
+                                <div className="flex justify-center">
+                                    <label className="font-mono text-lg font-bold text-justify">Product by UPC '{query}'
+                                        :</label>
+                                </div>
+
+                                <div className="p-3">
+                                    <div>
+                                        <label className="font-mono  text-justify m-2">Name: </label>
+                                        <label className="font-mono  text-justify">{product.product.name}</label>
+                                    </div>
+                                    <div>
+                                        <label className="font-mono  text-justify m-2">Selling price: </label>
+                                        <label className="font-mono  text-justify">{product.sellingPrice}</label>
+                                    </div>
+                                    <div>
+                                        <label className="font-mono  text-justify m-2">Products number: </label>
+                                        <label className="font-mono  text-justify ">{product.productsNumber}</label>
+                                    </div>
+                                    <div>
+                                        <label className="font-mono  text-justify m-2">Characteristic: </label>
+                                        <label
+                                            className="font-mono  text-justify">{product.product.characteristic}</label>
+                                    </div>
+                                </div>
+                            </>
+                        }
+                        {!product &&
+                            <div className="flex justify-center">
+                            <label className="font-mono text-lg font-bold text-justify">Product by UPC '{query}' doesn't exist!</label>
                         </div>
-                        <div className="p-3">
-                                <div>
-                                    <label className="font-mono  text-justify m-2">Name: </label>
-                                    <label className="font-mono  text-justify">{product.product.name}</label>
-                                </div>
-                                <div>
-                                    <label className="font-mono  text-justify m-2">Selling price: </label>
-                                    <label className="font-mono  text-justify">{product.sellingPrice}</label>
-                                </div>
-                                <div>
-                                    <label className="font-mono  text-justify m-2">Products number: </label>
-                                    <label className="font-mono  text-justify ">{product.productsNumber}</label>
-                                </div>
-                                <div>
-                                    <label className="font-mono  text-justify m-2">Characteristic: </label>
-                                    <label className="font-mono  text-justify">{product.product.characteristic}</label>
-                                </div>
-                        </div>
+                        }
                     </Card>
                 }
 
