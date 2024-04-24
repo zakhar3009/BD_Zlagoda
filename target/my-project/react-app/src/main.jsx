@@ -33,24 +33,9 @@ import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
 import {Roles} from "@/constants/auth/allowedRoles.js";
 import SearchStoreProductByUPC from "@/pages/StoreProducts/SearchStoreProductByUPC.jsx";
 import RequireAuth from "@/components/auth/RequireAuth.jsx";
-
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <App />,
-//     errorElement: <Error />,
-//     children: [
-//       {
-//         path: '/home',
-//         element: <Home />
-//       },
-//       {
-//         path: '/shop',
-//         element: <Shop />
-//       }
-//     ]
-//   }
-// ]);
+import SearchClientsAndCashierById from "@/pages/CustomerCard/SearchClientsAndCashierById.jsx";
+import GetSelfCustomerByCity from "@/pages/CustomerCard/GetSelfCustomerByCity.jsx";
+import SearchProductsByPartOfName from "@/pages/Products/SearchProductsByPartOfName.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -84,6 +69,8 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_employee"
                        element={<AddAndEditEmployee/>}
                 />
+                <Route path="get_cashiers_check_and_sales_report"
+                       element={<Employee command={"GET_CASHIERS_CHECK_AND_SALES_REPORT"}/>}/>
             </Route>
 
             <Route path="category" element={<CategoryButtonGroup allowedRoles={[Roles.MANAGER]} />}>
@@ -117,6 +104,9 @@ const router = createBrowserRouter(
                 <Route path="post_add_product" element={<AddAndEditProduct/>}/>
                 <Route path=":id/post_update_product" element={<AddAndEditProduct/>}/>
             </Route>
+            <Route path="products" element={<ProductsButtonGroup allowedRoles={[Roles.CASHIER]}/>}>
+                <Route path="search_product_by_part_of_name" element={<SearchProductsByPartOfName />}/>
+            </Route>
 
             <Route path="customer-card"
                    element={<CustomerCardButtonGroup allowedRoles={[Roles.CASHIER, Roles.MANAGER]}/>}>
@@ -128,15 +118,20 @@ const router = createBrowserRouter(
                     path="get_all_clients_order_by_surname"
                     element={<CustomerCard command={"GET_ALL_CLIENTS_ORDER_BY_SURNAME"}/>}
                 />
+                <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
+                <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
+                <Route path="get_customer_cards_checked_out_by_cashiers" element={<SearchClientsAndCashierById/>}/>
+            </Route>
+
+            <Route path="customer-card" allowedRoles={[Roles.CASHIER]}>
                 <Route path="get_clients_by_part_of_surname"
                        element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PART_OF_SURNAME"}/>}
                 />
-                <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
-                <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
+                <Route path="get_served_clients_by_cities" element={<GetSelfCustomerByCity/>}/>
             </Route>
+
             <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
-                <Route path="get_clients_by_percent_order_by_surname"
-                       element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
+                <Route path="get_clients_by_percent_order_by_surname" element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
             </Route>
 
             <Route path="store-products" element={<StoreProductButtonGroup allowedRoles={[Roles.MANAGER]}/>}>

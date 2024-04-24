@@ -24,7 +24,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
             + " SET email=?, password=?, empl_name=?, empl_surname=?, empl_patronymic=?, empl_role=?, salary=?, date_of_birth=?, date_of_start=?, phone_number=?, city=?, street=?, zip_code=?" + " WHERE id_employee=? ";
     private static String DELETE = "DELETE FROM employee WHERE id_employee=?";
     private static String SEARCH_ADDRESS_AND_PHONE_BY_SURNAME = "SELECT street, phone_number, city, empl_surname FROM employee WHERE empl_surname=?";
-    private static String GET_CASHIERS_CHECK_AND_SALES_REPORT = "SELECT employee.empl_surname, employee.empl_name, COUNT(checks.check_number) AS checks_number, SUM(sale.product_number) AS products_number " +
+    private static String GET_CASHIERS_CHECK_AND_SALES_REPORT = "SELECT employee.empl_surname, employee.empl_name, employee.id_employee, COUNT(checks.check_number) AS checks_number, SUM(sale.product_number) AS products_number " +
             " FROM employee LEFT JOIN checks ON employee.id_employee = checks.id_employee " +
             " LEFT JOIN sale ON checks.check_number = sale.check_number" +
             " GROUP BY employee.id_employee" +
