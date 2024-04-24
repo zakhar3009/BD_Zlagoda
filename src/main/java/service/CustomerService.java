@@ -71,4 +71,9 @@ public class CustomerService {
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getCustomersWithoutCategoryPurchases(categoryName);
     }
+
+    public HashMap<String, String> getSelfCountOfClientsGroupedByCity(String employeeID){
+        CustomerDao customerDao = daoFactory.createCustomerDao();
+        return customerDao.getSelfCountOfClientsGroupedByCity(employeeID);
+    }
 }
