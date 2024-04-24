@@ -28,9 +28,9 @@ public class JdbcSaleDao implements SaleDao {
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC " +
             " WHERE checks.check_number=?";
 
-    private static String GET_CHECKS_PER_PERIOD = "SELECT * FROM checks" +
+    private static String GET_CHECKS_PER_PERIOD = "SELECT * FROM checks JOIN employee USING(id_employee) JOIN customer_card USING(card_number)" +
             " WHERE checks.print_date>=? AND checks.print_date<=?";
-    private static String GET_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT * FROM checks JOIN employee USING(id_employee)" +
+    private static String GET_CHECKS_BY_EMPLOYEE_PER_PERIOD = "SELECT * FROM checks JOIN employee USING(id_employee) JOIN customer_card USING(card_number)" +
             " WHERE id_employee=? AND (checks.print_date>=? AND checks.print_date<=?)";
 
     private static String GET_ALL_UPCs = "SELECT UPC FROM sale";

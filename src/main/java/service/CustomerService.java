@@ -3,7 +3,10 @@ package service;
 import dao.CustomerDao;
 import dao.DaoFactory;
 import entity.CustomerCard;
+import entity.Employee;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +62,7 @@ public class CustomerService {
         return customerDao.getCustomersByPercentOrderBySurname(percent);
     }
 
-    public List<CustomerCard> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
+    public HashMap<CustomerCard, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getCustomerCheckedOutByCashiers(cashiersIds);
     }

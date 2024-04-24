@@ -2,13 +2,11 @@ package dao.jdbc;
 
 import dao.CustomerDao;
 import entity.CustomerCard;
+import entity.Employee;
 import exception.ServerException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class JdbcCustomerDao implements CustomerDao {
 
@@ -22,8 +20,8 @@ public class JdbcCustomerDao implements CustomerDao {
     private static String DELETE = "DELETE FROM customer_card WHERE card_number=?";
     private static String SEARCH_CUSTOMERS_BY_PART_OF_SURNAME = "SELECT * FROM customer_card WHERE cust_surname LIKE ?";
     private static String GET_CUSTOMERS_BY_PERCENT_ORDER_BY_SURNAME = "SELECT * FROM customer_card WHERE percent=? ORDER BY cust_surname";
-    private static String GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS = "SELECT  customer_card.* " +
-            "FROM customer_card INNER JOIN checks ON customer_card.card_number = checks.card_number " +
+    private static String GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.*,  employee.*" +
+            "FROM customer_card JOIN checks USING (card_number) JOIN employee USING (id_employee)" +
             "WHERE " +
             "    NOT EXISTS ( " +
             "        SELECT * " +
@@ -90,17 +88,18 @@ public class JdbcCustomerDao implements CustomerDao {
     }
 
     @Override
-    public List<CustomerCard> getCustomerCheckedOutByCashiers(List<String> cashiers) {
-        List<CustomerCard> customerCards = new ArrayList<>();
+    public HashMap<CustomerCard, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiers) {
+        HashMap<CustomerCard, ArrayList<Employee>> result = new HashMap<>();
         try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS)) {
             query.setString(1, String.join(", ", cashiers));
             ResultSet resultSet = query.executeQuery();
-            while(resultSet.next())
-                customerCards.add(extractCustomerCardFromResultSet(resultSet));
+            while(resultSet.next()) {
+                result.computeIfAbsent(extractCustomerCardFromResultSet(resultSet), k -> new ArrayList<>()).add(JdbcEmployeeDao.extractUserFromResultSet(resultSet));
+            }
         } catch (SQLException e) {
             throw new ServerException(e);
         }
-        return customerCards;
+        return result;
     }
 
     @Override
