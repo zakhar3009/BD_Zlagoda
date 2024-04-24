@@ -35,7 +35,7 @@ export default function useCreateUpdateCategory(id, category) {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             if (id) toast.success("Category was updated");
             else toast.success("New category was added");
         } catch (err) {

@@ -19,9 +19,9 @@ export const checksTableMap = new Map([
 export const checksCommandMap = new Map([
     // ["GET_CHECK_BY_NUMBER", "Get check by id"],
     // manager commands
-    ["GET_ALL_CHECKS", "Get all checks"],
-    ["GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", "Get checks by specific cashier per period"],
-    ["GET_ALL_CHECKS_BY_TIME_PERIOD", "Get checks per period"],
+    ["GET_ALL_CHECKS", "Checks"],
+    // ["GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", "Get checks by specific cashier per period"],
+    // ["GET_ALL_CHECKS_BY_TIME_PERIOD", "Get checks per period"],
     // ["DELETE_CHECK", "Delete check"],
     // cashier commands
     // ["GET_SELF_DAILY_CHECKS (c)", "Get self daily checks"],

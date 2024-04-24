@@ -12,8 +12,6 @@ export default function useFetchCategory() {
     const { id } = useParams();
     const [category, setCategory] = useState(defaultCategory);
 
-    console.log(id)
-
     const getCategoryByID = async () => {
         try {
             const response = await fetch(
@@ -24,7 +22,6 @@ export default function useFetchCategory() {
                 })
             );
             const categoryID = await response.json();
-            console.log(categoryID);
             setCategory(categoryID);
         } catch (err) {
             toast.error(`Error: ${err}`);

@@ -44,10 +44,6 @@ export const storeProductsTableMap = new Map([
     ["GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", simpleStoreProductCols],
     ["GET_PRODUCT_BY_UPC", ]
 ]);
-// export const storeProductsCommandMap = new Map([
-//     ["GET_ALL_PRODUCTS_IN_SHOP", "Store Products"],
-//     ["POST_ADD_PRODUCT_IN_SHOP", "Add new store product"],
-// ]);
 export const storeProductsCommands = [
     {
         path: "get_all_products_in_shop_order_by_quantity",
@@ -78,5 +74,21 @@ export const storeProductsCommands = [
         path: "get_non_prom_products_order_by_quantity",
         title: "Get all non prom products order by quantity",
         allowedRoles: [Roles.MANAGER, Roles.CASHIER]
+    },
+    {
+        path: "get_product_by_UPC",
+        title: "Search store product by UPC",
+        allowedRoles: [Roles.MANAGER, Roles.CASHIER]
+    },
+    {
+        path: "post_add_product_in_shop",
+        title: "",
+        allowedRoles: [Roles.MANAGER]
+    },
+    {
+        path: "post_update_product_in_shop",
+        title: "",
+        allowedRoles: [Roles.MANAGER]
     }
+
 ]

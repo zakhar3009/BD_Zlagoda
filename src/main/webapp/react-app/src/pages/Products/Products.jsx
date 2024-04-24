@@ -37,7 +37,6 @@ export default function Products({command, properties}) {
                 })
             ));
             setIsLoading(false);
-            console.log(data);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
@@ -64,9 +63,8 @@ export default function Products({command, properties}) {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             fetchProductsData();
-            console.log(data);
             toast.success("Product was removed!")
         } catch (err) {
             toast.error(`ERROR: ${err}`)
@@ -84,6 +82,7 @@ export default function Products({command, properties}) {
                         deleteProperty={"id"}
                         pathToCreateUpdate={"/post_update_product"}
                         deleteEnabled={auth?.user?.role === Roles.MANAGER}
+                        editEnabled={auth?.user?.role === Roles.MANAGER}
                     ></MatTable>
                     <div ref={componentRef}>
                         <TableForPrint

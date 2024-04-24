@@ -28,7 +28,6 @@ export default function CustomerCard({command}) {
             const data = await response.json();
             setCustomerCards(data);
             setIsLoading(false);
-            console.log("LOADED CLIENTS", data);
         } catch (err) {
             toast.error(`ERROR: ${err}`);
         }

@@ -1,9 +1,5 @@
-import MatTable from "@/components/table/MatTable.jsx";
-import {productsTableMap} from "@/constants/ProductsCommandMap.js";
 import React, {useState} from "react";
-
 import {toast} from "react-toastify";
-import PersonSharpIcon from "@mui/icons-material/PersonSharp.js";
 import Card from "@/components/cards/Card.jsx";
 
 export default function SearchStoreProductByUPC() {

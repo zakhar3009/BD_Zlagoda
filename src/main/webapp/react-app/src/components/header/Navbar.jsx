@@ -1,7 +1,7 @@
 import {Fragment, useEffect} from "react";
 import {Disclosure, Menu, Transition} from "@headlessui/react";
 import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink, Outlet, useLocation, useNavigate} from "react-router-dom";
 import {classNames} from "@/constants/utils/helpers.js";
 import EmployeeMenu from "./flyout-menus/EmployeeMenu";
 import CategoryMenu from "./flyout-menus/CategoryMenu";
@@ -11,7 +11,7 @@ import CustomerCardMenu from './flyout-menus/CustomerCardMenu.jsx';
 import "react-toastify/dist/ReactToastify.css";
 import StoreProductMenu from "@/components/header/flyout-menus/StoreProductMenu.jsx";
 import useAuth from "@/hooks/auth/useAuth.js";
-import ChecksMenu from "@/components/header/flyout-menus/Checks.jsx";
+import ChecksMenu from "@/components/header/flyout-menus/CheckMenu.jsx";
 import {Roles} from "@/constants/auth/allowedRoles.js";
 
 const navigation = [
@@ -24,14 +24,17 @@ const navigation = [
 ];
 
 export default function Navbar() {
-    const {auth, setAuth} = useAuth();
+    const navigate = useNavigate();
+    const {auth, setAuth, onLogout} = useAuth();
 
     useEffect(() => {
         const userInfo = sessionStorage.getItem("user");
-        console.log("User", JSON.parse(userInfo));
-        if(userInfo) setAuth({
-            user: JSON.parse(userInfo)
-        })
+        if (userInfo) {
+            setAuth({
+                user: JSON.parse(userInfo)
+            })
+            navigate("/welcome")
+        } else navigate("/")
     }, []);
 
     const allowedNav = navigation.filter(
@@ -119,6 +122,7 @@ export default function Navbar() {
                                                 <Menu.Item>
                                                     {({active}) => (
                                                         <NavLink
+                                                            onClick={() => onLogout()}
                                                             to={auth?.user ? "/" : "/login"}
                                                             className={classNames(
                                                                 active ? "bg-gray-100" : "",

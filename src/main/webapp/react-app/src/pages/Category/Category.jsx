@@ -4,9 +4,11 @@ import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
 import TableForPrint from "@/components/table/TableForPrint.jsx";
 import {useReactToPrint} from "react-to-print";
+import useAuth from "@/hooks/auth/useAuth.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
-// GET_ALL_CATEGORIES
 export default function Category({command}) {
+    const {auth} = useAuth();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const componentRef = useRef();
@@ -26,9 +28,8 @@ export default function Category({command}) {
             const data = await response.json();
             setData(data);
             setIsLoading(false);
-            console.log(data);
         } catch (err) {
-            console.log(err);
+            toast.error(err);
         }
     };
 
@@ -53,9 +54,8 @@ export default function Category({command}) {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             fetchCategoryData();
-            console.log(data);
             toast.success("Category was removed!")
         } catch (err) {
             toast.error("Cannot be deleted, due to database integrity!");
@@ -73,6 +73,8 @@ export default function Category({command}) {
                         deleteFunc={deleteCategory}
                         deleteProperty={"number"}
                         pathToCreateUpdate={"/post_update_category"}
+                        editEnabled={auth?.user?.role === Roles.MANAGER}
+                        deleteEnabled={auth?.user?.role === Roles.MANAGER}
                     ></MatTable>
                     <div ref={componentRef}>
                         <TableForPrint

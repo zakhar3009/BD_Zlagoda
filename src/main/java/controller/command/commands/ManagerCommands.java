@@ -71,7 +71,9 @@ public enum ManagerCommands {
 
     // delete later (just for testing purpose) - from Cashier
     POST_ADD_CHECK("POST_ADD_CHECK", new CreateCheckCommand(CheckService.getInstance())),
-    GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", new GetAllStoreProductsOrderByName(StoreProductService.getInstance()));
+    GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", new GetAllStoreProductsOrderByName(StoreProductService.getInstance())),
+    GET_SELF_DAILY_CHECKS("GET_SELF_DAILY_CHECKS", new GetSelfDailyChecksCommand(CheckService.getInstance())),
+    GER_SELF_CHECKS_PER_PERIOD("GET_SELF_CHECKS_PER_PERIOD", new GetSelfChecksPerPeriod(CheckService.getInstance()));
 
     ManagerCommands(String commandKey, Command command) {
         this.key = commandKey;

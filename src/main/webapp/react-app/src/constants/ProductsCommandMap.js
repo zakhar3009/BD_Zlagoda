@@ -16,14 +16,3 @@ export const productsTableMap = new Map([
     ["GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY", columnsName],
     ["GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", columnsName]
 ]);
-// export const productsCommandMap = new Map([
-//     ["GET_ALL_PRODUCTS", "Products"],
-//     ["POST_ADD_PRODUCT", "Add new product"],
-// ]);
-
-// export const productsCommands = {
-//     "get_all_products": {
-//         title: "Get all products",
-//         allowedRoles: []
-//     }
-// };

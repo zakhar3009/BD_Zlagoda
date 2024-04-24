@@ -27,16 +27,6 @@ export default function useStoreProducts(command) {
                     sellingPrice: item.sellingPrice,
                 })));
             setIsLoading(false);
-            console.log("StoreProducts: ", data.map(
-                (item) => ({
-                    UPC: item.UPC,
-                    UPC_prom: item.promStoreProduct?.UPC ? item.promStoreProduct.UPC : "",
-                    name: item.product.name,
-                    category_name: item.product.category.name,
-                    productsNumber : item.productsNumber,
-                    promotionalProduct: item.promotionalProduct,
-                    sellingPrice: item.sellingPrice,
-                })));
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }

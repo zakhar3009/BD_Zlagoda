@@ -28,7 +28,7 @@ export default function StoreProductButtonGroup({ allowedRoles }) {
 
     const hasPermissionOnBtn = (item) => {
         if(!item.allowedRoles.includes(auth?.user?.role)) return;
-        if(item.path === "post_add_client" || item.path === "post_update_client") return;
+        if(item.path === "post_add_product_in_shop" || item.path === "post_update_product_in_shop") return;
         return (
             <ToggleButton key={item.path} value={item.path}>
                 <NavLink to={item.path}>

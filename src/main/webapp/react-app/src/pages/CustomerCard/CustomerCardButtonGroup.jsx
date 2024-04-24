@@ -48,7 +48,6 @@ export default function CustomerCardButtonGroup({ allowedRoles }) {
                                         exclusive
                                         onChange={handleChange}
                                         aria-label="Platform"
-                                        selectedColor="#00abc0"
                                     >
                                         {customerCardCommands.map((item) => hasPermissionOnBtn(item))}
                                     </ToggleButtonGroup>

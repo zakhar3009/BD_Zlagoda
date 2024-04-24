@@ -65,7 +65,7 @@ export default function useCreateUpdateProduct(id, product) {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             if (id) toast.success("Product was updated");
             else toast.success("New product was added");
         } catch (err) {

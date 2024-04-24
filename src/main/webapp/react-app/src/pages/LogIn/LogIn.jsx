@@ -1,14 +1,12 @@
 import {useState} from "react";
 import useAuth from "@/hooks/auth/useAuth.js";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {ClipLoader} from "react-spinners";
 
 export default function LogIn() {
     const {setAuth} = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,14 +27,13 @@ export default function LogIn() {
         };
         try {
             setIsLoading(true);
-            console.log("fetching");
             const response = await fetch(
                 "http://localhost:8080/controller",
                 requestOptions
             );
             const userData = await response.json();
             if(userData == null) {
-                setError("Not valid credantials");
+                setError(true);
                 return;
             }
             setAuth({

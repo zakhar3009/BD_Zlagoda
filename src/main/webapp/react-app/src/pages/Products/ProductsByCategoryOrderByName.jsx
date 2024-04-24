@@ -2,8 +2,11 @@ import React, {useEffect, useState} from "react";
 import MatTable from "../../components/table/MatTable.jsx";
 import {toast} from "react-toastify";
 import {productsTableMap} from "@/constants/ProductsCommandMap.js";
+import useAuth from "@/hooks/auth/useAuth.js";
+import {Roles} from "@/constants/auth/allowedRoles.js";
 
 export default function ProductsByCategoryOrderByName() {
+    const {auth} = useAuth();
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +34,10 @@ export default function ProductsByCategoryOrderByName() {
 
 
     const getAllProductsByCategory = async (name) => {
-        if (!name) setProducts([])
+        if (!name) {
+            setProducts([]);
+            return;
+        }
         try {
             setIsLoading(true);
             const response = await fetch(
@@ -42,20 +48,14 @@ export default function ProductsByCategoryOrderByName() {
                 })
             );
             const products = await response.json();
-            let filteredProduct =[];
-            products.map((item) =>{
-                const filteredItem ={
-                    category_number: item.category_number,
-                    category_name: item.category.name,
-                    id: item.id,
-                    name: item.name,
-                    characteristic: item.characteristic
-                };
-                filteredProduct.add(filteredItem);
-
-            })
+            setProducts(products.map((item) => ({
+                category_number: item.category.number,
+                category_name: item.category.name,
+                id: item.id,
+                name: item.name,
+                characteristic: item.characteristic
+            })));
             setIsLoading(false);
-            console.log(filteredProduct)
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
@@ -64,7 +64,6 @@ export default function ProductsByCategoryOrderByName() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(selectedCategory);
         getAllProductsByCategory(selectedCategory);
     };
 
@@ -85,9 +84,8 @@ export default function ProductsByCategoryOrderByName() {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             getAllProductsByCategory(selectedCategory);
-            console.log(data);
             toast.success("Product was removed!")
         } catch (err) {
             toast.error(`ERROR: ${err}`)
@@ -121,6 +119,8 @@ export default function ProductsByCategoryOrderByName() {
                     deleteFunc={deleteProduct}
                     deleteProperty={"id"}
                     pathToCreateUpdate={"/post_update_product"}
+                    editEnabled={auth?.user?.role === Roles.MANAGER}
+                    deleteEnabled={auth?.user?.role === Roles.MANAGER}
                 ></MatTable>
             )}
         </div>

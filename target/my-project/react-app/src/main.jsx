@@ -31,6 +31,7 @@ import ProductsButtonGroup from "@/pages/Products/ProductsButtonGroup.jsx";
 import CustomerCardButtonGroup from "@/pages/CustomerCard/CustomerCardButtonGroup.jsx";
 import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
 import {Roles} from "@/constants/auth/allowedRoles.js";
+import SearchStoreProductByUPC from "@/pages/StoreProducts/SearchStoreProductByUPC.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -157,6 +158,7 @@ const router = createBrowserRouter(
                        element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_QUANTITY"}/>}/>
                 <Route path="get_non_prom_products_order_by_name"
                        element={<StoreProduct command={"GET_NON_PROM_PRODUCTS_ORDER_BY_NAME"}/>}/>
+                <Route path="get_product_by_UPC" element={<SearchStoreProductByUPC/>}/>
             </Route>
 
             <Route path="checks">

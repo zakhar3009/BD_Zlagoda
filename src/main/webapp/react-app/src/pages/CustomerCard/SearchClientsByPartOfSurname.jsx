@@ -14,9 +14,6 @@ export default function SearchClientsByPartOfSurname({command}) {
     const fetchClientsData = async () => {
         try {
             setLoading(true);
-
-                console.log(command);
-
             const response = await fetch(
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
@@ -53,7 +50,7 @@ export default function SearchClientsByPartOfSurname({command}) {
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
+            await response.json();
             fetchClientsData();
             toast.success("Client was removed!")
         } catch (err) {

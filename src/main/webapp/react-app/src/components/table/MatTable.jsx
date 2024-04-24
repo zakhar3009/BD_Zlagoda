@@ -31,14 +31,11 @@ export default function MatTable({
     const [selectedItem, setSelectedItem] = React.useState({});
     const [open, setOpen] = React.useState(false);
     const handleOpen = (item) => {
-        console.log("ITEM", item)
         setSelectedItem(item);
-        console.log("OPEN", selectedItem );
         setOpen(true);
     };
     const handleClose = () => {
         setSelectedItem({});
-        console.log("CLOSE", selectedItem)
         setOpen(false);
     };
 
