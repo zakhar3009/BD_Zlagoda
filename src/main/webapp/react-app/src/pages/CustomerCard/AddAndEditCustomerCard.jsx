@@ -3,6 +3,7 @@ import FormInput from "@/components/inputs/FormInput.jsx";
 import { checkValidPhoneNumber } from "@/validators/EmployeeValidations.jsx";
 import useFetchCustomerCard from "@/hooks/CustomerCard/useFetchCustomerCard.jsx";
 import useCreateUpdateCustomerCard from "@/hooks/CustomerCard/useCreateUpdateCustomerCard.jsx";
+import {checkValidPostcode} from "@/validators/CastomerCardsValidations.jsx";
 
 
 export default function AddAndEditCustomerCard(){
@@ -96,6 +97,7 @@ export default function AddAndEditCustomerCard(){
                                 register={register}
                                 errors={errors}
                                 required={true}
+                                validateFunc={checkValidPostcode}
                             />
                         </div>
                         <h2 className="text-base font-semibold col-span-full">

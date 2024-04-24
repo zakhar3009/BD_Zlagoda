@@ -22,6 +22,7 @@ export default function StoreProduct({command}) {
     const {
         storeProducts,
         isLoading,
+        fetchStoreProductsData,
         deleteStoreProduct,
     } = useStoreProducts(command);
 
@@ -33,6 +34,7 @@ export default function StoreProduct({command}) {
     const onCloseEditModal = () => {
         setSelectedProduct({});
         setIsEditModalOpen(false);
+        fetchStoreProductsData();
     }
 
     const onDiscountStoreProduct = (item) => {

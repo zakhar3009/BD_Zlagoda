@@ -104,7 +104,7 @@ VALUES ('smith@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3utl3hkVsgoD2xg8eMLUUtxeT
        ('petrenko@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u1MPC4tpGFFErJlPIi/p37JdwULdw3Ne', 'E006', 'Petrenko',
         'Maria', 'Olehivna', 'Cashier', 1500.00, '1995-07-10', '2022-03-10', '+380504554568', 'Lviv', 'Bandery',
         '79000'), /*2020202020*/
-       ('kachynska.gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u7KaKJKuDHZVAgAYRGcdZVCUJhVUuifq', 'E007', 'Kachynska',
+       ('kachynska@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u7KaKJKuDHZVAgAYRGcdZVCUJhVUuifq', 'E007', 'Kachynska',
         'Iryna', 'Vasylivna', 'Cashier', 2000.00, '2005-05-18', '2022-04-01', '789-012-3456', 'Gatne', 'Kvitneva',
         '12005'), /*32165487*/
        ('kovalenko@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3usZtx4TV4ZCXvRMj7o.ExLbR1fvlHzqa', 'E008',
@@ -186,7 +186,6 @@ VALUES ('SP002', NULL, 1, 4000.00, 1000, TRUE),
        ('SP0016', 'SP0015', 19, 120.00, 96, FALSE),
        ('SP0018', NULL, 17, 800.00, 5, TRUE),
        ('SP0029', 'SP0018', 17, 1000.00, 70, FALSE),
-       ('SP0019', NULL, 9, 45.50, 20, FALSE),
        ('SP0020', NULL, 13, 47.25, 2, FALSE),
 
 
