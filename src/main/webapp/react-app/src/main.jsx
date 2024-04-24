@@ -33,6 +33,7 @@ import WelcomePage from "@/pages/WelcomePage/WelcomePage.jsx";
 import {Roles} from "@/constants/auth/allowedRoles.js";
 import SearchStoreProductByUPC from "@/pages/StoreProducts/SearchStoreProductByUPC.jsx";
 import RequireAuth from "@/components/auth/RequireAuth.jsx";
+import SearchClientsAndCashierById from "@/pages/CustomerCard/SearchClientsAndCashierById.jsx";
 
 // const router = createBrowserRouter([
 //   {
@@ -84,6 +85,8 @@ const router = createBrowserRouter(
                 <Route path=":id/post_update_employee"
                        element={<AddAndEditEmployee/>}
                 />
+                <Route path="get_cashiers_check_and_sales_report"
+                       element={<Employee command={"GET_CASHIERS_CHECK_AND_SALES_REPORT"}/>}/>
             </Route>
 
             <Route path="category" element={<CategoryButtonGroup allowedRoles={[Roles.MANAGER]} />}>
@@ -133,7 +136,10 @@ const router = createBrowserRouter(
                 />
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
                 <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
+                <Route path="get_customer_cards_checked_out_by_cashiers" element={<SearchClientsAndCashierById/>}/>
+
             </Route>
+
             <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
                 <Route path="get_clients_by_percent_order_by_surname"
                        element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>

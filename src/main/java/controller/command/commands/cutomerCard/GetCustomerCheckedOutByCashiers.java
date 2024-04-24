@@ -23,7 +23,7 @@ public class GetCustomerCheckedOutByCashiers implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        HashMap<String, ArrayList<Employee>> result = customerService.getCustomerCheckedOutByCashiers(List.of(hashMap.get("employee_ids").split(",")));
+        HashMap<String, ArrayList<Employee>> result = customerService.getCustomerCheckedOutByCashiers(List.of(hashMap.get("employee_id").split(",")));
         return JSON.gson().toJson(result);
     }
 }

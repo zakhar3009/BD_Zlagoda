@@ -18,6 +18,7 @@ export default function Employee({command}) {
     });
     const fetchEmployeesData = async () => {
         try {
+            console.log(command);
             setIsLoading(true);
             const response = await fetch(
                 "http://localhost:8080/controller?" +
@@ -26,8 +27,18 @@ export default function Employee({command}) {
                 })
             );
             const data = await response.json();
-            setData(data);
+
             setIsLoading(false);
+            if(command === "GET_CASHIERS_CHECK_AND_SALES_REPORT")
+            {
+                setData(data.map((item) => ({
+                    ...item,
+                    products_number: item.products_number ? item.products_number : "0"
+                })))
+
+            }
+            else         setData(data);
+            console.log(data)
         } catch (err) {
             toast.error(err);
         }
