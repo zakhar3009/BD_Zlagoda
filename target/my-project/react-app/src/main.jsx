@@ -38,6 +38,7 @@ import GetSelfCustomerByCity from "@/pages/CustomerCard/GetSelfCustomerByCity.js
 import SearchProductsByPartOfName from "@/pages/Products/SearchProductsByPartOfName.jsx";
 import TopEmployeesBySales from "@/pages/Employee/TopEmployeesBySales.jsx";
 import ClientsWithoutCategoryPurchases from "@/pages/CustomerCard/ClientsWithoutCategoryPurchases.jsx";
+import GetCustomerCardsCheckedOutByCashier from "@/pages/CustomerCard/GetCustomerCardsCheckedOutByCashier.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -125,7 +126,7 @@ const router = createBrowserRouter(
                 />
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
                 <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
-                <Route path="get_customer_cards_checked_out_by_cashiers" element={<SearchClientsAndCashierById/>}/>
+                <Route path="get_customer_cards_checked_out_by_cashiers" element={<GetCustomerCardsCheckedOutByCashier/>}/>
             </Route>
 
             <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.CASHIER]}/>} >
