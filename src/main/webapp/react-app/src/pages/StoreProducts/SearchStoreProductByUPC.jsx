@@ -5,7 +5,7 @@ import Card from "@/components/cards/Card.jsx";
 export default function SearchStoreProductByUPC() {
     const [isLoading, setIsLoading] = useState(true);
     const [query, setQuery] = useState("");
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState(null);
     const fetchProductData = async () => {
         try {
             setIsLoading(true);
@@ -13,11 +13,12 @@ export default function SearchStoreProductByUPC() {
             const response = await fetch(
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
-                    command_name: "GET_PRODUCT_BY_UPC",
-                    UPC: query,
+                    command_name: "SEARCH_STORE_PRODUCTS_PART_OF_UPC",
+                    query: query,
                 })
             );
-            const getProduct = await response.json();
+            const getProduct = await response.json()
+            console.log(getProduct);
             setProduct(getProduct);
             setIsLoading(false);
             console.log(product);
