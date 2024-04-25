@@ -87,22 +87,22 @@ export default function useFilterChecks() {
             toast.error(`ERROR: ${err}`)
         }
     };
-    const handleProductTotalSum = (event) =>{
-         console.log("aa", event.target.value);
-         setUpcProduct(event.target.value);
+    const handleProductTotalValue = (event) =>{
         const values = getValues();
-        const parameters = {
-             UPC: event.target.value,
-             start: values.start,
-             end: values.end
-         }
-        fetchTotalSum("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", parameters);
+        if(values.start && values.end ) {
+            setUpcProduct(event.target.value);
+            const parameters = {
+                UPC: event.target.value,
+                start: values.start,
+                end: values.end
+            }
+            fetchTotalSum("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", parameters);
+        }
     }
 
     useEffect(() => {
         fetchCashier();
         fetchProducts();
-       // fetchAllChecks("GET_ALL_CHECKS", {})
     }, []);
 
     const fetchAllChecks = async (command, parameters) => {
@@ -141,9 +141,11 @@ export default function useFilterChecks() {
                 })
             );
             const data = await response.json();
-            if(command === "GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD")
-                setTotalSum(data);
-            else setTotalValue(data);
+            if(command === "GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD" || command === "GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD")
+                setTotalSum(data["total_sum"]);
+            else
+                setTotalValue(data["quantity"]);
+
             setIsLoading(false);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
@@ -177,11 +179,6 @@ export default function useFilterChecks() {
                     end: values.end
                 }
                 fetchAllChecks("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", parameters);
-                parameters = {
-                    UPC: upcProduct,
-                    start: values.start,
-                    end: values.end
-                }
                 fetchTotalSum("GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD", parameters);
             } else if (!values.id_employee && values.start && values.end) {
                 parameters = {
@@ -206,7 +203,7 @@ export default function useFilterChecks() {
         deleteCheck,
         onSubmit,
         fetchDailyCheck,
-        handleProductTotalSum,
+        handleProductTotalValue,
         errors,
         totalSum,
         totalValue,
