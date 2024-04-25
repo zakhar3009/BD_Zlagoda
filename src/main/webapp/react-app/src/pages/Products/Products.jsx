@@ -67,7 +67,7 @@ export default function Products({command, properties}) {
             fetchProductsData();
             toast.success("Product was removed!")
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            toast.error("Cannot be deleted, due to database integrity!")
         }
     };
 

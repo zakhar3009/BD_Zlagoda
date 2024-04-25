@@ -9,7 +9,11 @@ import moment from "moment/moment.js";
 export default function useFilterChecks() {
     const [isLoading, setIsLoading] = useState(true);
     const [cashier, setCashier] = useState([]);
+    const [products, setProduct] = useState([]);
     const [checks, setChecks] = useState([]);
+    const [totalSum, setTotalSum] = useState("");
+    const [totalValue, setTotalValue] = useState("")
+    const [upcProduct, setUpcProduct] = useState("");
     const {auth} = useAuth();
 
     const {
@@ -50,6 +54,7 @@ export default function useFilterChecks() {
     };
     const fetchCashier = async () => {
         try {
+            setIsLoading(true);
             const response = await fetch(
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
@@ -58,13 +63,45 @@ export default function useFilterChecks() {
             );
             const data = await response.json();
             setCashier(data.map((item) => ({label: item.surname, value: item.id})))
+            setIsLoading(false);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
     };
+    const fetchProducts = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:8080/controller?" +
+                new URLSearchParams({
+                    command_name: "GET_ALL_PRODUCTS_IN_SHOP",
+                })
+            );
+            const data = await response.json();
+            setProduct(data.map((item) => (
+                {
+                    label: item.promotionalProduct ? item.product.name + " (prom)" : item.product.name,
+                    value: item.UPC}
+            )))
+            console.log(data);
+        } catch (err) {
+            toast.error(`ERROR: ${err}`)
+        }
+    };
+    const handleProductTotalSum = (event) =>{
+         console.log("aa", event.target.value);
+         setUpcProduct(event.target.value);
+        const values = getValues();
+        const parameters = {
+             UPC: event.target.value,
+             start: values.start,
+             end: values.end
+         }
+        fetchTotalSum("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", parameters);
+    }
 
     useEffect(() => {
         fetchCashier();
+        fetchProducts();
        // fetchAllChecks("GET_ALL_CHECKS", {})
     }, []);
 
@@ -93,6 +130,26 @@ export default function useFilterChecks() {
             toast.error(`ERROR: ${err}`)
         }
     };
+    const fetchTotalSum = async (command, parameters) => {
+        try {
+            setIsLoading(true);
+            const response = await fetch(
+                "http://localhost:8080/controller?" +
+                new URLSearchParams({
+                    command_name: command,
+                    ...parameters
+                })
+            );
+            const data = await response.json();
+            if(command === "GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD")
+                setTotalSum(data);
+            else setTotalValue(data);
+            setIsLoading(false);
+        } catch (err) {
+            toast.error(`ERROR: ${err}`)
+        }
+    };
+
     const fetchDailyCheck =() =>{
         const parameters ={
             id_employee: auth.user.id,
@@ -120,18 +177,26 @@ export default function useFilterChecks() {
                     end: values.end
                 }
                 fetchAllChecks("GET_CHECKS_BY_CASHIER_AND_TIME_PERIOD", parameters);
+                parameters = {
+                    UPC: upcProduct,
+                    start: values.start,
+                    end: values.end
+                }
+                fetchTotalSum("GET_SUM_OF_CHECKS_BY_CASHIER_AND_TIME_PERIOD", parameters);
             } else if (!values.id_employee && values.start && values.end) {
                 parameters = {
                     start: values.start,
                     end: values.end
                 }
                 fetchAllChecks("GET_ALL_CHECKS_BY_TIME_PERIOD", parameters);
+                fetchTotalSum("GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD", parameters);
+
             } else if (values.id_employee && !values.start && !values.end) {
                 parameters = {
                     id_employee: values.id_employee,
                 }
                 fetchAllChecks("GET_ALL_CHECKS_BY_CASHIER", parameters);
-            } else fetchAllChecks("GET_ALL_CHECKS", parameters)
+            }
         }
     }
 
@@ -141,7 +206,11 @@ export default function useFilterChecks() {
         deleteCheck,
         onSubmit,
         fetchDailyCheck,
+        handleProductTotalSum,
         errors,
+        totalSum,
+        totalValue,
+        products,
         cashier,
         checks,
         isLoading,

@@ -6,6 +6,37 @@ export default function SearchStoreProductByUPC() {
     const [isLoading, setIsLoading] = useState(true);
     const [query, setQuery] = useState("");
     const [product, setProduct] = useState({});
+
+
+    const deleteStoreProduct = async (command, productUPC) => {
+        const requestOptions = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                command_name: command,
+            },
+            body: JSON.stringify({
+                UPC: productUPC,
+            }),
+        };
+        try {
+            const response = await fetch(
+                "http://localhost:8080/controller",
+                requestOptions
+            );
+            const data = await response.json();
+            fetchStoreProductsData();
+            if (command === "DELETE_PRODUCT_IN_SHOP")
+                toast.success("Product in shop was removed!")
+            else toast.success("Prom product in shop was removed!")
+        } catch (err) {
+            toast.error("Cannot be deleted, due to database integrity!")
+        }
+    };
+    const onEditStoreProduct = (item) => {
+        navigate("../" + item.UPC + "/post_update_product_in_shop");
+    }
+
     const fetchProductData = async () => {
         try {
             setIsLoading(true);

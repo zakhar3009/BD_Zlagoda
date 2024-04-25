@@ -12,9 +12,25 @@ import {Roles} from "@/constants/auth/allowedRoles.js";
 
 
 export default function Checks() {
-    const {register, handleSubmit, onSubmit, fetchDailyCheck, cashier, checks, errors, isLoading, deleteCheck, auth } = useFilterChecks();
+    const {
+        register,
+        handleSubmit,
+        onSubmit,
+        fetchDailyCheck,
+        handleProductTotalSum,
+        totalValue,
+        cashier,
+        totalSum,
+        products,
+        checks,
+        errors,
+        isLoading,
+        deleteCheck,
+        auth
+    } = useFilterChecks();
     const [viewModalOpen, setViewModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
+    // const [totalSum, setTotalSum] = useState(0);
     const componentRef = useRef();
     const role = auth?.user?.role;
 
@@ -30,10 +46,22 @@ export default function Checks() {
         setSelectedItem({});
         setViewModalOpen(false);
     }
-
     return (
-        <main className="px-8 py-2 pt-6 h-screen bg-gradient-to-r from-violet-200 to-pink-200">
+        <main className="px-8 py-2 pt-6 min-h-screen bg-gradient-to-r from-violet-200 to-pink-200">
             <Card maxW="max-w-3xl">
+                {!isLoading &&
+                    <div className="flex justify-between mb-2">
+                        <select
+                            onChange={handleProductTotalSum}
+                            className="col-span-2 block pl-3 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <option value="">Choose product...</option>
+                            {products.map((item) => (
+                                <option key={item.value} value={item.value}>{item.label}</option>
+                            ))}
+                        </select>
+                        <label className="font-bold text-gray-700 font-mono">Total sum: {totalValue}$</label>
+                    </div>
+                }
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="grid sm:grid-cols-2 gap-3">
@@ -84,7 +112,6 @@ export default function Checks() {
                     }
                 </form>
             </Card>
-
             {!isLoading && (
                 <div>
                     <MatTable
@@ -111,11 +138,16 @@ export default function Checks() {
                             rows={checks}
                         />
                     </div>
-                    <div className="flex justify-content-end mt-2">
-                        <button
-                            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                            onClick={handlePrint}>To PDF
-                        </button>
+                    <div className="flex justify-between m-2">
+                        <div>
+                            <label className="font-bold text-gray-700 font-mono text-xl">Total sum: {}$</label>
+                        </div>
+                        <div>
+                            <button
+                                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                onClick={handlePrint}>To PDF
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

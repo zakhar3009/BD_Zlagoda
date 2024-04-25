@@ -15,7 +15,6 @@ export default function AddNewCheck() {
     const navigate = useNavigate();
     const { auth } = useAuth();
 
-// 234234234324
     const fetchClientsData = async () => {
         try {
             const response = await fetch(
