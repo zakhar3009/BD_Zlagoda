@@ -130,6 +130,7 @@ export default function useFilterChecks() {
             toast.error(`ERROR: ${err}`)
         }
     };
+
     const fetchTotalSum = async (command, parameters) => {
         try {
             setIsLoading(true);

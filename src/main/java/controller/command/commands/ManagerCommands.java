@@ -78,7 +78,8 @@ public enum ManagerCommands {
     GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY("GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", new GetSelfCountOfClientsGroupedByCity(CustomerService.getInstance())),
     CUSTOMERS_WITHOUT_CATEGORY_PURCHASES("CUSTOMERS_WITHOUT_CATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance())),
     SEARCH_PRODUCT_BY_PART_OF_NAME("SEARCH_PRODUCT_BY_NAME", new GetAllProductsByPartOfNameCommand(ProductService.getInstance())),
-    SEARCH_STORE_PRODUCTS_PART_OF_UPC("SEARCH_STORE_PRODUCTS_PART_OF_UPC", new GetAllStoreProductsByPartOfUpcCommand(StoreProductService.getInstance()));
+    SEARCH_STORE_PRODUCTS_PART_OF_UPC("SEARCH_STORE_PRODUCTS_PART_OF_UPC", new GetAllStoreProductsByPartOfUpcCommand(StoreProductService.getInstance())),
+    GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", new GetCheckById(CheckService.getInstance()));
 
     ManagerCommands(String commandKey, Command command) {
         this.key = commandKey;
