@@ -76,6 +76,7 @@ public enum ManagerCommands {
     GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS("GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", new GetCustomerCheckedOutByCashiers(CustomerService.getInstance())),
     GET_TOP_EMPLOYEES_BY_SALES("GET_TOP_EMPLOYEES_BY_SALES", new GetTopEmployeesBySales(EmployeeService.getInstance())),
     GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY("GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", new GetSelfCountOfClientsGroupedByCity(CustomerService.getInstance())),
+    CUSTOMERS_WITHOUT_CATEGORY_PURCHASES("CUSTOMERS_WITHOUT_CATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance())),
     SEARCH_PRODUCT_BY_PART_OF_NAME("SEARCH_PRODUCT_BY_NAME", new GetAllProductsByPartOfNameCommand(ProductService.getInstance()));
 
     ManagerCommands(String commandKey, Command command) {
