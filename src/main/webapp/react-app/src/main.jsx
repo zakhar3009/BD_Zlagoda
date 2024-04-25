@@ -39,6 +39,7 @@ import SearchProductsByPartOfName from "@/pages/Products/SearchProductsByPartOfN
 import TopEmployeesBySales from "@/pages/Employee/TopEmployeesBySales.jsx";
 import ClientsWithoutCategoryPurchases from "@/pages/CustomerCard/ClientsWithoutCategoryPurchases.jsx";
 import GetCustomerCardsCheckedOutByCashier from "@/pages/CustomerCard/GetCustomerCardsCheckedOutByCashier.jsx";
+import SearchCheckByNumber from "@/pages/Checks/SearchCheckByNumber.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -170,6 +171,7 @@ const router = createBrowserRouter(
             </Route>
             <Route path="checks" element={<RequireAuth allowedRoles={[Roles.CASHIER]} />}>
                 <Route path="post_add_check" element={<AddNewCheck/>}/>
+                <Route path="get_check_by_number" element={<SearchCheckByNumber />} />
             </Route>
 
         </Route>

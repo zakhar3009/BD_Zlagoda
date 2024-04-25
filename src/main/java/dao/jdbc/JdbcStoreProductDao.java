@@ -21,6 +21,13 @@ public class JdbcStoreProductDao implements StoreProductDao {
             " INNER JOIN category ON product.category_number = category.category_number)" +
             " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC" +
             " WHERE t1.UPC=?";
+
+    private static String SEARCH_STORE_PRODUCTS_BY_PART_OF_UPC = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.* " +
+            " FROM ((store_product t1 INNER JOIN product ON t1.id_product = product.id_product)" +
+            " INNER JOIN category ON product.category_number = category.category_number)" +
+            " LEFT JOIN store_product t2 ON t1.UPC_prom = t2.UPC" +
+            " WHERE t1.UPC LIKE ?";
+
     private static String CREATE = "INSERT INTO store_product" +
             " (UPC, UPC_prom, id_product, selling_price, products_number, promotional_product) VALUES (?, ?, ?, ?, ?, ?)";
     private static String UPDATE = "UPDATE store_product" +
@@ -93,8 +100,6 @@ public class JdbcStoreProductDao implements StoreProductDao {
         return storeProducts;
     }
 
-
-
     @Override
     public Optional<StoreProduct> getById(String id) {
         Optional<StoreProduct> storeProduct = Optional.empty();
@@ -109,7 +114,19 @@ public class JdbcStoreProductDao implements StoreProductDao {
         return storeProduct;
     }
 
-
+    @Override
+    public List<StoreProduct> searchByPartOfUPC(String upc) {
+        List<StoreProduct> storeProducts = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_STORE_PRODUCTS_BY_PART_OF_UPC)) {
+            query.setString(1, "%" + upc.toLowerCase() + "%");
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next())
+                storeProducts.add(extractStoreProductFromResultSet(resultSet));
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return storeProducts;
+    }
 
     @Override
     public void create(StoreProduct storeProduct) {

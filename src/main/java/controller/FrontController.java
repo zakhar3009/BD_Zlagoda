@@ -3,6 +3,9 @@ package controller;
 
 import controller.command.Command;
 import controller.command.commands.CommandFactory;
+import controller.command.commands.auth.SessionManager;
+import entity.Employee;
+import entity.Role;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+
 @WebServlet(urlPatterns = "/controller", loadOnStartup = 1)
 public class FrontController extends HttpServlet {
 
@@ -30,7 +35,16 @@ public class FrontController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-        Command command = CommandFactory.getManagerCommand(request);
+        Command command;
+        HashMap<String, String> headers = CommandFactory.getAttributes(request, HashMap.class);
+        if(headers != null && headers.get("command_name").equals("POST_LOGIN")) {
+            command = CommandFactory.getManagerCommand(request);
+        } else {
+            Employee user = SessionManager.getInstance().getUserFromSession(request.getSession());
+            Role userRole = user.getRole();
+            if (userRole.equals(Role.MANAGER)) command = CommandFactory.getManagerCommand(request);
+            else command = CommandFactory.getCashierCommand(request);
+        }
         try {
             PrintWriter out = response.getWriter();
             response.setHeader("Access-Control-Allow-Origin", "*");
