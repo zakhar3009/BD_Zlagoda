@@ -1,48 +1,47 @@
 import {useState} from "react";
+import MatTable from "../../components/table/MatTable.jsx";
+import {employeesTableMap} from "../../constants/EmployeesCommandMap.js";
 import {toast} from "react-toastify";
-import MatTable from "@/components/table/MatTable.jsx";
 import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
-import {Roles} from "@/constants/auth/allowedRoles.js";
-import useAuth from "@/hooks/auth/useAuth.js";
 
-export default function SearchClientsByPartOfSurname({command}) {
-    const { auth } = useAuth();
-    const [query, setQuery] = useState("");
-    const [clients, setClients] = useState();
+export default function SearchClientsAndCashierById() {
+    const [employee_id, setEmployee_id] = useState("");
+    const [customers, setCustomers] = useState();
     const [isLoading, setLoading] = useState(true);
 
-    const fetchClientsData = async () => {
+    const fetchCustomersData = async () => {
         try {
+
             setLoading(true);
             const response = await fetch(
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
-                    command_name: command,
-                    query: query,
+                    command_name: "GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS",
+                    employee_id: "E007",
                 })
             );
-            const getAllClients = await response.json();
-            setClients(getAllClients);
+            const getAllEmployees = await response.json();
+            setCustomers(getAllEmployees);
             setLoading(false);
         } catch (err) {
-            toast.error(`ERROR: ${err}`)
+            console.log(err);
         }
     };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        fetchClientsData();
+        fetchCustomersData();
     };
 
-    const deleteClient = async (clientId) => {
+    const deleteEmployee = async (employeeId) => {
         const requestOptions = {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                command_name: "DELETE_CLIENT",
+                command_name: "GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS",
             },
             body: JSON.stringify({
-                id: clientId,
+                id: employeeId,
             }),
         };
         try {
@@ -51,8 +50,8 @@ export default function SearchClientsByPartOfSurname({command}) {
                 requestOptions
             );
             await response.json();
-            fetchClientsData();
-            toast.success("Client was removed!")
+            fetchCustomersData();
+            toast.success("Employee was removed!")
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
@@ -65,12 +64,12 @@ export default function SearchClientsByPartOfSurname({command}) {
                 className="grid sm:grid-cols-2 gap-3 mb-4"
             >
                 <input
+                    type="text"
                     id="default-input"
-                    placeholder={command === "GET_CLIENTS_BY_PART_OF_SURNAME" ? "Surname" : "Percent"}
-                    type={command === "GET_CLIENTS_BY_PART_OF_SURNAME" ? "text" : "number"}
-                    value={query}
+                    placeholder="Employee id.."
+                    value={employee_id}
                     onChange={(event) => {
-                        setQuery(event.target.value);
+                        setEmployee_id(event.target.value);
                     }}
                     className="bg-gray-50 md:place-self-end sm:max-w-80 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
@@ -84,15 +83,12 @@ export default function SearchClientsByPartOfSurname({command}) {
             {!isLoading && (
                 <MatTable
                     columnNames={customerCardTableMap.get(
-                        command
+                        "GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS"
                     )}
-                    rows={clients}
-                    deleteFunc={deleteClient}
-                    deleteProperty={"number"}
-                    pathToCreateUpdate={"/post_update_client"}
-                    editEnabled={true}
-                    deleteEnabled={auth?.user?.role === Roles.MANAGER}
-                    withActions={true}
+                    rows={customers}
+                    deleteFunc={deleteEmployee}
+                    deleteProperty={"id"}
+                    pathToCreateUpdate={"/post_update_employee"}
                 ></MatTable>
             )}
         </div>

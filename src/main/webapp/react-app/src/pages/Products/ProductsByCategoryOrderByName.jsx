@@ -121,6 +121,7 @@ export default function ProductsByCategoryOrderByName() {
                     pathToCreateUpdate={"/post_update_product"}
                     editEnabled={auth?.user?.role === Roles.MANAGER}
                     deleteEnabled={auth?.user?.role === Roles.MANAGER}
+                    withActions={auth?.user?.role === Roles.MANAGER}
                 ></MatTable>
             )}
         </div>

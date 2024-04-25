@@ -20,7 +20,6 @@ const promProductCols =
         "characteristic",
         "sellingPrice",
         "productsNumber",
-        "actions"
     ];
 const productColsByUPC =
     [
@@ -32,7 +31,7 @@ const productColsByUPC =
         "actions"
     ];
 export const storeProductTablePrintMap = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice"]
-const simpleStoreProductCols = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice", "actions"]
+const simpleStoreProductCols = ["UPC", "UPC_prom", "name", "category_name", "productsNumber", "promotionalProduct", "sellingPrice"]
 export const storeProductsTableMap = new Map([
     ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", simpleStoreProductCols],
     ["GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_QUANTITY", simpleStoreProductCols],
