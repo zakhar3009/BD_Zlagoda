@@ -20,6 +20,14 @@ const reportTableNames =
         "checks_number",
     ]
 
+const topEmployeesColumns = [
+    "empl_surname",
+    "empl_name",
+    "empl_patronymic",
+    "total_products_sold",
+    "total_sales"
+]
+
 export const employeesTableMap = new Map([
   ["GET_ALL_EMPLOYEES", defaultTableNames],
   ["GET_ALL_EMPLOYEES_ORDER_BY_SURNAME", defaultTableNames],
@@ -28,7 +36,8 @@ export const employeesTableMap = new Map([
     "SEARCH_EMPLOYEE_ADDRESS_AND_PHONE_BY_SURNAME",
     ["surname", "phoneNumber", "city", "street"],
   ],
-    ["GET_CASHIERS_CHECK_AND_SALES_REPORT", reportTableNames]
+    ["GET_CASHIERS_CHECK_AND_SALES_REPORT", reportTableNames],
+    ["GET_TOP_EMPLOYEES_BY_SALES", topEmployeesColumns]
 ]);
 
 export const employeesCommandMap = new Map([

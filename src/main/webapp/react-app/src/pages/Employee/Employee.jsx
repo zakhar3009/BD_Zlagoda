@@ -39,8 +39,7 @@ export default function Employee({command}) {
                 })))
 
             }
-            else         setData(data);
-            console.log(data)
+            else setData(data);
         } catch (err) {
             toast.error(err);
         }

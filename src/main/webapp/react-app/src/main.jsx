@@ -36,6 +36,8 @@ import RequireAuth from "@/components/auth/RequireAuth.jsx";
 import SearchClientsAndCashierById from "@/pages/CustomerCard/SearchClientsAndCashierById.jsx";
 import GetSelfCustomerByCity from "@/pages/CustomerCard/GetSelfCustomerByCity.jsx";
 import SearchProductsByPartOfName from "@/pages/Products/SearchProductsByPartOfName.jsx";
+import TopEmployeesBySales from "@/pages/Employee/TopEmployeesBySales.jsx";
+import ClientsWithoutCategoryPurchases from "@/pages/CustomerCard/ClientsWithoutCategoryPurchases.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -73,6 +75,7 @@ const router = createBrowserRouter(
                 />
                 <Route path="get_cashiers_check_and_sales_report"
                        element={<Employee command={"GET_CASHIERS_CHECK_AND_SALES_REPORT"}/>}/>
+                <Route path="get_top_employees_by_sales" element={<TopEmployeesBySales />} />
             </Route>
 
             <Route path="category" element={<CategoryButtonGroup allowedRoles={[Roles.MANAGER]} />}>
@@ -134,6 +137,7 @@ const router = createBrowserRouter(
 
             <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
                 <Route path="get_clients_by_percent_order_by_surname" element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
+                <Route path="customers_without_category_purchases" element={<ClientsWithoutCategoryPurchases />} />
             </Route>
 
             <Route path="store-products" element={<StoreProductButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
