@@ -6,6 +6,7 @@ import entity.CustomerCard;
 import exception.ServerException;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public class JdbcCustomerDao implements CustomerDao {
@@ -20,7 +21,7 @@ public class JdbcCustomerDao implements CustomerDao {
     private static String DELETE = "DELETE FROM customer_card WHERE card_number=?";
     private static String SEARCH_CUSTOMERS_BY_PART_OF_SURNAME = "SELECT * FROM customer_card WHERE cust_surname LIKE ?";
     private static String GET_CUSTOMERS_BY_PERCENT_ORDER_BY_SURNAME = "SELECT * FROM customer_card WHERE percent=? ORDER BY cust_surname";
-    private static String GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.*,  e1.*, checks.*" +
+    private static String GET_CUSTOMERS_AND_CHEKS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.*,  e1.*, checks.*" +
             "FROM customer_card JOIN checks USING (card_number) JOIN employee e1 USING (id_employee)" +
             "WHERE " +
             "    NOT EXISTS ( " +
@@ -55,6 +56,20 @@ public class JdbcCustomerDao implements CustomerDao {
             " WHERE C2.id_employee=?)" +
             " GROUP BY city" +
             " ORDER BY clients_count ASC";
+
+    private static String GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR = "SELECT cc.*" +
+            "FROM Customer_Card cc" +
+            "WHERE cc.card_number NOT IN (" +
+            "    SELECT c.card_number" +
+            "    FROM Checks c" +
+            "    JOIN Employee e ON c.id_employee = e.id_employee" +
+            "    WHERE e.id_employee =?" +
+            ")" +
+            "AND cc.card_number NOT IN (" +
+            "    SELECT ch.card_number" +
+            "    FROM Checks ch" +
+            "    WHERE ch.print_date >= CURRENT_DATE - INTERVAL '1' YEAR" +
+            ");";
     private static String CUSTOMER_NUMBER = "card_number";
     private static String CUSTOMER_SURNAME = "cust_surname";
     private static String CUSTOMER_NAME = "cust_name";
@@ -116,7 +131,7 @@ public class JdbcCustomerDao implements CustomerDao {
     @Override
     public HashMap<String, ArrayList<Check>> getCustomerCheckedOutByCashiers(List<String> cashiers) {
         HashMap<String, ArrayList<Check>> result = new HashMap<>();
-        try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS)) {
+        try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_AND_CHEKS_CHECKED_OUT_BY_CASHIERS)) {
             query.setString(1, String.join(", ", cashiers));
             ResultSet resultSet = query.executeQuery();
             while(resultSet.next()) {
@@ -158,6 +173,21 @@ public class JdbcCustomerDao implements CustomerDao {
             throw new ServerException(e);
         }
         return result;
+    }
+
+    @Override
+    public List<CustomerCard> getCustomersNoCashierCheckoutsNoPurchasesThisYear(Date start, Date end) {
+        List<CustomerCard> customerCards = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR)) {
+            query.setDate(1, start);
+            query.setDate(2, end);
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next())
+                customerCards.add(extractCustomerCardFromResultSet(resultSet));
+        } catch (SQLException e) {
+            throw new ServerException(e);
+        }
+        return customerCards;
     }
 
     @Override
