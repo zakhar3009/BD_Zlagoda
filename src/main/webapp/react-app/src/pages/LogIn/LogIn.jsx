@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 import {ClipLoader} from "react-spinners";
 
 export default function LogIn() {
-    const {setAuth} = useAuth();
+    const {auth, setAuth} = useAuth();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");

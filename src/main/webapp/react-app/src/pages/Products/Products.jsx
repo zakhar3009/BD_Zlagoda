@@ -83,6 +83,7 @@ export default function Products({command, properties}) {
                         pathToCreateUpdate={"/post_update_product"}
                         deleteEnabled={auth?.user?.role === Roles.MANAGER}
                         editEnabled={auth?.user?.role === Roles.MANAGER}
+                        withActions={auth?.user?.role === Roles.MANAGER}
                     ></MatTable>
                     <div ref={componentRef}>
                         <TableForPrint

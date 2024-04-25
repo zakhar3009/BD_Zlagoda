@@ -73,6 +73,7 @@ export default function CustomerCard({command}) {
                         pathToCreateUpdate={"/post_update_client"}
                         editEnabled={true}
                         deleteEnabled={auth?.user?.role === Roles.MANAGER}
+                        withActions={true}
                     ></MatTable>
                     <div ref={componentRef}>
                         <TableForPrint

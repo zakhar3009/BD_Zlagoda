@@ -21,6 +21,7 @@ export default function NewMatTable({
                                      discountEnabled,
                                      editEnabled,
                                      deleteEnabled,
+                                     withActions
                                  }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -73,6 +74,8 @@ export default function NewMatTable({
             };
         }),
     ];
+
+    if(withActions) columns.push({ id: "actions", label: "actions", align: "center"})
 
     const whatColumn = (column, row) => {
         const value = String(row[column.label]);

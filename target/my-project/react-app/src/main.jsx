@@ -123,11 +123,11 @@ const router = createBrowserRouter(
                 <Route path="get_customer_cards_checked_out_by_cashiers" element={<SearchClientsAndCashierById/>}/>
             </Route>
 
-            <Route path="customer-card" allowedRoles={[Roles.CASHIER]}>
+            <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.CASHIER]}/>} >
                 <Route path="get_clients_by_part_of_surname"
                        element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PART_OF_SURNAME"}/>}
                 />
-                <Route path="get_served_clients_by_cities" element={<GetSelfCustomerByCity/>}/>
+                <Route path="get_served_clients_by_cities" element={<GetSelfCustomerByCity />}/>
             </Route>
 
             <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.MANAGER]}/>}>

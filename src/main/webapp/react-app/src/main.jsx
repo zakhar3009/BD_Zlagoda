@@ -43,8 +43,10 @@ const router = createBrowserRouter(
             <Route index element={<Hero/>}/>
             <Route path="/login" element={<LogIn/>}/>
             <Route path="*" element={<Error/>}/>
-            <Route path="/profile" element={<Profile/>}/>
-            <Route path="/welcome" element={<WelcomePage/>}/>
+            <Route path="user" element={<RequireAuth allowedRoles={[Roles.CASHIER, Roles.MANAGER]} />}>
+                <Route path="profile" element={<Profile/>}/>
+            </Route>
+            <Route path="welcome" element={<WelcomePage/>}/>
 
             <Route path="employee" element={<EmployeeButtonGroup allowedRoles={[Roles.MANAGER]} />}>
                 <Route
