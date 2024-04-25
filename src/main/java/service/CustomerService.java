@@ -2,8 +2,8 @@ package service;
 
 import dao.CustomerDao;
 import dao.DaoFactory;
+import entity.Check;
 import entity.CustomerCard;
-import entity.Employee;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +62,7 @@ public class CustomerService {
         return customerDao.getCustomersByPercentOrderBySurname(percent);
     }
 
-    public HashMap<String, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
+    public HashMap<String, ArrayList<Check>> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getCustomerCheckedOutByCashiers(cashiersIds);
     }
