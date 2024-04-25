@@ -59,6 +59,7 @@ export default function StoreProduct({command}) {
                         discountEnabled={auth?.user?.role === "MANAGER"}
                         editEnabled={auth?.user?.role === "MANAGER"}
                         deleteEnabled={auth?.user?.role === "MANAGER"}
+                        withActions={auth?.user?.role === "MANAGER"}
                     />
                     {isEditModalOpen &&
                         <EditStoreProductDiscountModal

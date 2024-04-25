@@ -1,5 +1,5 @@
 import MatTable from "@/components/table/MatTable.jsx";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import useFilterChecks from "@/hooks/Checks/useFilterChecks.jsx";
 import {checksTableMap} from "@/constants/ChecksCommandMap.js";
 import Card from "./../../components/cards/Card.jsx";
@@ -86,7 +86,7 @@ export default function Checks() {
             </Card>
 
             {!isLoading && (
-                <>
+                <div>
                     <MatTable
                         columnNames={checksTableMap.get(
                             "GET_ALL_CHECKS")}
@@ -97,6 +97,7 @@ export default function Checks() {
                         onViewClick={onOpenViewModal}
                         deleteFunc={deleteCheck}
                         deleteEnabled={role === Roles.MANAGER}
+                        withActions={true}
                     ></MatTable>
                     <ViewCheckModal
                         open={viewModalOpen}
@@ -116,7 +117,7 @@ export default function Checks() {
                             onClick={handlePrint}>To PDF
                         </button>
                     </div>
-                </>
+                </div>
             )}
         </main>
     )

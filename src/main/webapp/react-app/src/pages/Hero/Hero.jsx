@@ -10,7 +10,7 @@ export default function Hero() {
           Welcome to annonyms page.
         </h1>
         <p className="mt-6 text-base leading-8 text-gray-600">
-          In our database course project, we're creating a shop management system named Zlagoda.
+          In our database course project, we're creating a shop management system named Harmony.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <NavLink

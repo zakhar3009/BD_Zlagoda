@@ -59,7 +59,10 @@ target/
 *.iml
 **/target
 /target/
+*/target/*
 */target/**
+/.class
+/target/maven-status
 **/META-INF/
 !.mvn/wrapper/maven-wrapper.jar
 

@@ -23,6 +23,7 @@ export default function MatTable({
                                      onViewClick,
                                      deleteEnabled,
                                      editEnabled,
+                                     withActions,
                                  }) {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(0);
@@ -56,9 +57,9 @@ export default function MatTable({
                 align: "center",
             };
         }),
-
-        {id: "actions", label: "Actions", minWidth: 50, align: "center",  className: "print-hidden"},
     ];
+
+    if(withActions) columns.push({id: "actions", label: "Actions", align: "center",  className: "print-hidden"})
 
     const whatColumn = (column, row) => {
         const value = row[column.label];

@@ -75,6 +75,7 @@ export default function Category({command}) {
                         pathToCreateUpdate={"/post_update_category"}
                         editEnabled={auth?.user?.role === Roles.MANAGER}
                         deleteEnabled={auth?.user?.role === Roles.MANAGER}
+                        withActions={auth?.user?.role === Roles.MANAGER}
                     ></MatTable>
                     <div ref={componentRef}>
                         <TableForPrint
