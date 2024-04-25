@@ -6,7 +6,7 @@ import useAuth from "@/hooks/auth/useAuth.js";
 import {Roles} from "@/constants/auth/allowedRoles.js";
 
 export default function ChecksMenu() {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
 
     return (
         <Menu as="div" className="relative ml-3">
@@ -40,7 +40,21 @@ export default function ChecksMenu() {
                             </NavLink>
                         )}
                     </Menu.Item>
-
+                    {auth?.user?.role === Roles.CASHIER && (
+                        <Menu.Item>
+                            {({active}) => (
+                                <NavLink
+                                    to="/checks/get_check_by_number"
+                                    className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm font-medium text-gray-700"
+                                    )}
+                                >
+                                    Search check by number
+                                </NavLink>
+                            )}
+                        </Menu.Item>
+                    )}
                     {auth?.user?.role === Roles.CASHIER && (
                         <Menu.Item>
                         {({active}) => (
