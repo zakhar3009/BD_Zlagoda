@@ -73,7 +73,7 @@ public class EmployeeService {
         return employeeDao.getCashierChecksAndSalesReport();
     }
 
-    public HashMap<String, String> getTopEmployeesBySales() {
+    public ArrayList<HashMap<String, String>> getTopEmployeesBySales() {
         EmployeeDao employeeDao = daoFactory.createEmployeeDao();
         return employeeDao.getTopEmployeesBySales();
     }

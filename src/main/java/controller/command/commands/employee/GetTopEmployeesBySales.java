@@ -6,6 +6,7 @@ import service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GetTopEmployeesBySales implements Command {
@@ -18,7 +19,7 @@ public class GetTopEmployeesBySales implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws IOException {
-        HashMap<String, String> hashMap = employeeService.getTopEmployeesBySales();
+        ArrayList<HashMap<String, String>> hashMap = employeeService.getTopEmployeesBySales();
         return JSON.gson().toJson(hashMap);
     }
 }
