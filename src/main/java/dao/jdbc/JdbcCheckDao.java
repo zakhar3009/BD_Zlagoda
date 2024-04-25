@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class JdbcCheckDao implements CheckDao {
 
@@ -17,8 +16,8 @@ public class JdbcCheckDao implements CheckDao {
     private static String DELETE = "DELETE FROM checks WHERE check_number=?";
     private static String GET_ALL = "SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number)";
     private static String GET_BY_ID = "SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE check_number=?";
-    private static String GET_CHECKS_SUM_BY_EMPLOYEE_PER_PERIOD = "SELECT SUM(sum_total) FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE (print_date>=? AND print_date<=?) AND id_employee=?";
-    private static String GET_CHECKS_SUM_PER_PERIOD = "SELECT SUM(sum_total) FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE print_date>=? AND print_date<=?";
+    private static String GET_CHECKS_SUM_BY_EMPLOYEE_PER_PERIOD = "SELECT SUM(sum_total) AS sum_total FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE (print_date>=? AND print_date<=?) AND id_employee=?";
+    private static String GET_CHECKS_SUM_PER_PERIOD = "SELECT SUM(sum_total) AS sum_total FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE print_date>=? AND print_date<=?";
     private static String GET_SElF_DAILY_CHECKS = "SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE id_employee=? AND print_date=?";
     private static String GET_SElF_CHECKS_PER_PERIOD = "SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE id_employee=? AND (print_date>? AND print_date<?)";
     private static String GET_ALL_CHECK_BY_CASHIER ="SELECT * FROM (checks JOIN employee USING(id_employee)) JOIN customer_card USING(card_number) WHERE id_employee=?";
@@ -44,7 +43,9 @@ public class JdbcCheckDao implements CheckDao {
             query.setDate(2, end);
             query.setString(3, employeeId);
             ResultSet resultSet = query.executeQuery();
-            totalSum = Double.parseDouble(resultSet.getString(TOTAL_SUM));
+            while (resultSet.next()) {
+                totalSum += resultSet.getDouble(TOTAL_SUM);
+            }
         } catch (SQLException e) {
             throw new ServerException(e);
         }
@@ -58,7 +59,9 @@ public class JdbcCheckDao implements CheckDao {
             query.setDate(1, start);
             query.setDate(2, end);
             ResultSet resultSet = query.executeQuery();
-            totalSum = resultSet.getDouble(TOTAL_SUM);
+            while (resultSet.next()) {
+                totalSum += resultSet.getDouble(TOTAL_SUM);
+            }
         } catch (SQLException e) {
             throw new ServerException(e);
         }

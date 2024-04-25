@@ -7,15 +7,16 @@ import LocalPhoneSharpIcon from '@mui/icons-material/LocalPhoneSharp';
 import PaidSharpIcon from '@mui/icons-material/PaidSharp';
 import InsertInvitationSharpIcon from '@mui/icons-material/InsertInvitationSharp';
 import SupervisedUserCircleSharpIcon from '@mui/icons-material/SupervisedUserCircleSharp';
-
+import BadgeIcon from '@mui/icons-material/Badge';
 export default function Profile() {
     const {auth} = useAuth();
-    console.log(auth)
     return (
         <Card height="screen" maxW="max-w-3xl">
             <div className="flex justify-center">
                 <label className="font-mono text-lg font-bold text-justify">Your profile</label>
             </div>
+            <ProfileElement icon={BadgeIcon} label={"ID"} data={auth.user.id}/>
+
             <div className="p-3">
                 <div className="flex justify-start">
                     <PersonSharpIcon/>

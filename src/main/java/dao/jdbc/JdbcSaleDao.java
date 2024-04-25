@@ -20,7 +20,7 @@ public class JdbcSaleDao implements SaleDao {
             "FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number)) WHERE UPC=? AND check_number=?";
     private static String GET_ALL = "SELECT * " +
             "FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number))";
-    private static String GET_QUANTITY_OF_SOLD_PRODUCT_PER_PERIOD = "SELECT SUM(product_number) FROM ((sale JOIN store_product USING(UPC)) JOIN checks USING(check_number)) JOIN checks USING(check_number)" +
+    private static String GET_QUANTITY_OF_SOLD_PRODUCT_PER_PERIOD = "SELECT SUM(product_number) AS product_number FROM sale JOIN store_product USING(UPC) JOIN checks USING(check_number)" +
             " WHERE UPC=? AND (print_date>=? AND print_date<=?)";
     private static String GET_FULL_CHECK_BY_NUMBER = "SELECT t1.*, t2.selling_price AS prom_selling_price, product.*, category.*, employee.*, sale.*, customer_card.*, checks.*  " +
             " FROM (sale JOIN store_product t1 USING(UPC) JOIN product USING(id_product) " +
@@ -156,7 +156,9 @@ public class JdbcSaleDao implements SaleDao {
             query.setDate(2, start);
             query.setDate(3, end);
             ResultSet resultSet = query.executeQuery();
-            quantity = resultSet.getInt(PRODUCT_NUMBER);
+            while (resultSet.next()) {
+                quantity += resultSet.getInt(PRODUCT_NUMBER);
+            }
         } catch (SQLException e) {
             throw new ServerException(e);
         }

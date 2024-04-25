@@ -1,8 +1,8 @@
 package dao.jdbc;
 
 import dao.CustomerDao;
+import entity.Check;
 import entity.CustomerCard;
-import entity.Employee;
 import exception.ServerException;
 
 import java.sql.*;
@@ -20,7 +20,7 @@ public class JdbcCustomerDao implements CustomerDao {
     private static String DELETE = "DELETE FROM customer_card WHERE card_number=?";
     private static String SEARCH_CUSTOMERS_BY_PART_OF_SURNAME = "SELECT * FROM customer_card WHERE cust_surname LIKE ?";
     private static String GET_CUSTOMERS_BY_PERCENT_ORDER_BY_SURNAME = "SELECT * FROM customer_card WHERE percent=? ORDER BY cust_surname";
-    private static String GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.card_number,  e1.*" +
+    private static String GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.*,  e1.*, checks.*" +
             "FROM customer_card JOIN checks USING (card_number) JOIN employee e1 USING (id_employee)" +
             "WHERE " +
             "    NOT EXISTS ( " +
@@ -114,13 +114,13 @@ public class JdbcCustomerDao implements CustomerDao {
     }
 
     @Override
-    public HashMap<String, ArrayList<Employee>> getCustomerCheckedOutByCashiers(List<String> cashiers) {
-        HashMap<String, ArrayList<Employee>> result = new HashMap<>();
+    public HashMap<String, ArrayList<Check>> getCustomerCheckedOutByCashiers(List<String> cashiers) {
+        HashMap<String, ArrayList<Check>> result = new HashMap<>();
         try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_CHECKED_OUT_BY_CASHIERS)) {
             query.setString(1, String.join(", ", cashiers));
             ResultSet resultSet = query.executeQuery();
             while(resultSet.next()) {
-                result.computeIfAbsent(resultSet.getString(CUSTOMER_NUMBER), k -> new ArrayList<>()).add(JdbcEmployeeDao.extractUserFromResultSet(resultSet));
+                result.computeIfAbsent(resultSet.getString(CUSTOMER_NUMBER), k -> new ArrayList<>()).add(JdbcCheckDao.extractCheckFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e);

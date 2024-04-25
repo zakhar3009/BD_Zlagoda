@@ -104,7 +104,7 @@ VALUES ('smith@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3utl3hkVsgoD2xg8eMLUUtxeT
        ('petrenko@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u1MPC4tpGFFErJlPIi/p37JdwULdw3Ne', 'E006', 'Petrenko',
         'Maria', 'Olehivna', 'Cashier', 1500.00, '1995-07-10', '2022-03-10', '+380504554568', 'Lviv', 'Bandery',
         '79000'), /*2020202020*/
-       ('kachynska.gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u7KaKJKuDHZVAgAYRGcdZVCUJhVUuifq', 'E007', 'Kachynska',
+       ('kachynska@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3u7KaKJKuDHZVAgAYRGcdZVCUJhVUuifq', 'E007', 'Kachynska',
         'Iryna', 'Vasylivna', 'Cashier', 2000.00, '2005-05-18', '2022-04-01', '789-012-3456', 'Gatne', 'Kvitneva',
         '12005'), /*32165487*/
        ('kovalenko@gmail.com', '$2a$10$c7XAOdvq40jde1A5nUvJ3usZtx4TV4ZCXvRMj7o.ExLbR1fvlHzqa', 'E008',
@@ -219,7 +219,11 @@ VALUES ('CH001', 'E005', 'C001', '2022-01-01', 1984.74, 348.20),
        ('CH002', 'E005', 'C002', '2022-01-02', 200.00, 20.00),
         ('CH003', 'E005', 'C003', '2022-01-03', 120.00, 12.00),
         ('CH004', 'E005', 'C004', '2022-01-04', 180.00, 18.00),
-        ('CH005', 'E005', 'C005', '2022-01-05', 220.00, 22.00);
+        ('CH005', 'E005', 'C005', '2022-01-05', 220.00, 22.00),
+       ('CH006', 'E006', 'C007', '2024-02-04', 180.00, 18.00),
+       ('CH007', 'E007', 'C008', '2024-02-04', 180.00, 18.00),
+       ('CH008', 'E007', 'C008', '2024-04-25', 180.00, 18.00);
+
 
 -- Insert data into Sale table
 INSERT INTO Sale (UPC, check_number, product_number, selling_price)
