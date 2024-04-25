@@ -28,9 +28,10 @@ public class JdbcCustomerDao implements CustomerDao {
             "        FROM employee " +
             "        WHERE employee.id_employee = e1.id_employee" +
             "        AND employee.id_employee NOT IN (?))";
-    private static String GET_CUSTOMERS_WITHOUT_CATEGORY_PURCHASES = "SELECT c.*" +
-            " FROM customer_card c" +
-            " WHERE NOT EXISTS (" +
+    private static String GET_CUSTOMERS_WITHOUT_CATEGORY_PURCHASES =
+            "SELECT c.* " +
+            "FROM customer_card c " +
+            "WHERE NOT EXISTS (" +
             "    SELECT o.check_number" +
             "    FROM Checks o" +
             "    WHERE o.card_number = c.card_number" +
@@ -40,9 +41,13 @@ public class JdbcCustomerDao implements CustomerDao {
             "        INNER JOIN Store_Product sp ON s.UPC = sp.UPC" +
             "        INNER JOIN Product p ON sp.id_product = p.id_product" +
             "        WHERE s.check_number = o.check_number" +
-            "        AND p.category_number = (SELECT category_number FROM Category WHERE category_name=?)" +
+            "        AND p.category_number = (" +
+            "           SELECT category_number" +
+            "           FROM Category" +
+            "           WHERE category_name = ?" +
+            "       )" +
             "    )" +
-            ")";
+            " )";
     private static String GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY = "SELECT COUNT(C1.card_number) AS clients_count, C1.city AS city" +
             " FROM customer_card AS C1" +
             " WHERE card_number IN (SELECT C2.card_number" +
@@ -83,7 +88,7 @@ public class JdbcCustomerDao implements CustomerDao {
     public List<CustomerCard> searchCustomersByPartOfSurname(String partOfSurname) {
         List<CustomerCard> customerCards = new ArrayList<>();
         try (PreparedStatement query = connection.prepareStatement(SEARCH_CUSTOMERS_BY_PART_OF_SURNAME)) {
-            query.setString(1, "%" + partOfSurname + "%");
+            query.setString(1, "%" + partOfSurname.toLowerCase() + "%");
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
                 customerCards.add(extractCustomerCardFromResultSet(resultSet));
@@ -126,7 +131,9 @@ public class JdbcCustomerDao implements CustomerDao {
     @Override
     public List<CustomerCard> getCustomersWithoutCategoryPurchases(String categoryName) {
         List<CustomerCard> clients = new ArrayList<>();
-        try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_CUSTOMERS_WITHOUT_CATEGORY_PURCHASES)) {
+        try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_WITHOUT_CATEGORY_PURCHASES)) {
+            query.setString(1, categoryName);
+            ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
                 clients.add(extractCustomerCardFromResultSet(resultSet));
             }

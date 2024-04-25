@@ -62,6 +62,11 @@ export default function EmployeeButtonGroup ({ allowedRoles }) {
                                                 Get cashiers check and sales report
                                             </NavLink>
                                         </ToggleButton>
+                                        <ToggleButton value="get_top_employees_by_sales">
+                                            <NavLink to="get_top_employees_by_sales">
+                                                Get top employees by sales
+                                            </NavLink>
+                                        </ToggleButton>
                                     </ToggleButtonGroup>
                                 </div>
                             </div>

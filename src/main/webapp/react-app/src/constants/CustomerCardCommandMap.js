@@ -58,6 +58,11 @@ export const customerCardCommands = [
         allowedRoles: [Roles.CASHIER]
     },
     {
+        path: "customers_without_category_purchases",
+        title: "Clients without category purchases",
+        allowedRoles: [Roles.MANAGER]
+    },
+    {
         path: "post_add_client",
         title: "Add new Client",
         allowedRoles: [Roles.CASHIER, Roles.MANAGER]
