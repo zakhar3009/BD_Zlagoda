@@ -5,6 +5,7 @@ import dao.DaoFactory;
 import entity.Check;
 import entity.CustomerCard;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,5 +76,10 @@ public class CustomerService {
     public HashMap<String, String> getSelfCountOfClientsGroupedByCity(String employeeID){
         CustomerDao customerDao = daoFactory.createCustomerDao();
         return customerDao.getSelfCountOfClientsGroupedByCity(employeeID);
+    }
+
+    public List<CustomerCard> getCustomersNoCashierCheckoutsNoPurchasesThisYear(Date start, Date end){
+        CustomerDao customerDao = daoFactory.createCustomerDao();
+        return customerDao.getCustomersNoCashierCheckoutsNoPurchasesThisYear(start, end);
     }
 }
