@@ -27,11 +27,11 @@ export const customerCardTableMap = new Map([
     ]);
 
 export const customerCardCommands = [
-    {
-        path: "get_all_clients",
-        title: "Get all clients",
-        allowedRoles: [Roles.CASHIER, Roles.MANAGER]
-    },
+    // {
+    //     path: "get_all_clients",
+    //     title: "Get all clients",
+    //     allowedRoles: [Roles.CASHIER, Roles.MANAGER]
+    // },
     {
         path: "get_all_clients_order_by_surname",
         title: "Get all clients order by surname",
@@ -55,7 +55,7 @@ export const customerCardCommands = [
     {
         path: "get_served_clients_by_cities",
         title: "Get served clients by cities",
-        allowedRoles: [Roles.CASHIER]
+        allowedRoles: [Roles.MANAGER]
     },
     {
         path: "customers_without_category_purchases",

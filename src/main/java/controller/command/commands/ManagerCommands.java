@@ -68,10 +68,6 @@ public enum ManagerCommands {
     GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD("GET_SUM_ALL_OF_CHECKS_BY_TIME_PERIOD", new GetChecksSumPerPeriod(CheckService.getInstance())),
     GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD("GET_COUNT_OF_SOLD_PRODUCTS_BY_TIME_PERIOD", new GetQuantityOfSoldProductPerPeriod(SaleService.getInstance())),
     // delete later (just for testing purpose) - from Cashier
-    POST_ADD_CHECK("POST_ADD_CHECK", new CreateCheckCommand(CheckService.getInstance())),
-    GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME("GET_ALL_PRODUCTS_IN_SHOP_ORDER_BY_NAME", new GetAllStoreProductsOrderByName(StoreProductService.getInstance())),
-    GET_SELF_DAILY_CHECKS("GET_SELF_DAILY_CHECKS", new GetSelfDailyChecksCommand(CheckService.getInstance())),
-    GER_SELF_CHECKS_PER_PERIOD("GET_SELF_CHECKS_PER_PERIOD", new GetSelfChecksPerPeriod(CheckService.getInstance())),
     GET_CASHIERS_CHECK_AND_SALES_REPORT ("GET_CASHIERS_CHECK_AND_SALES_REPORT", new GetCashierChecksAndSalesReport(EmployeeService.getInstance())),
     GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS("GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", new GetCustomerCheckedOutByCashiers(CustomerService.getInstance())),
     GET_TOP_EMPLOYEES_BY_SALES("GET_TOP_EMPLOYEES_BY_SALES", new GetTopEmployeesBySales(EmployeeService.getInstance())),
@@ -79,9 +75,8 @@ public enum ManagerCommands {
     CUSTOMERS_WITHOUT_CATEGORY_PURCHASES("CUSTOMERS_WITHOUT_CATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance())),
     SEARCH_PRODUCT_BY_PART_OF_NAME("SEARCH_PRODUCT_BY_NAME", new GetAllProductsByPartOfNameCommand(ProductService.getInstance())),
     SEARCH_STORE_PRODUCTS_PART_OF_UPC("SEARCH_STORE_PRODUCTS_PART_OF_UPC", new GetAllStoreProductsByPartOfUpcCommand(StoreProductService.getInstance())),
-    GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", new GetCheckById(CheckService.getInstance())),
+    GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", new GetCheckById(CheckService.getInstance()));
 
-    GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR("GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR", new GetCustomersNoCashierCheckoutsNoPurchasesThisYear(CustomerService.getInstance()));
     ManagerCommands(String commandKey, Command command) {
         this.key = commandKey;
         this.command = command;

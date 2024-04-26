@@ -47,7 +47,7 @@ export default function useCreateUpdateCustomerCard(id, client) {
         } catch (err) {
             toast.error(`Error: ${err}`);
         } finally {
-            navigate("../get_all_clients");
+            navigate("../get_all_clients_order_by_surname");
         }
     };
 
