@@ -6,7 +6,7 @@ import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
 
 export default function GetCustomerCardsCheckedOutByCashier() {
     const [employee_id, setEmployee_id] = useState("");
-    const [customers, setCustomers] = useState();
+    const [customers, setCustomers] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const fetchCustomersData = async () => {
         try {
@@ -16,7 +16,7 @@ export default function GetCustomerCardsCheckedOutByCashier() {
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
                     command_name: "GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS",
-                    employee_id: employee_id,
+                    id_employee: employee_id,
                 })
             );
             const getAllEmployees = await response.json();

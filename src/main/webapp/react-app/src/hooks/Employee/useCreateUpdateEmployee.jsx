@@ -23,7 +23,7 @@ export default function useCreateUpdateEmployee(id, employee) {
     setValue("salary", employee.salary);
     setValue("dateOfBirth", employee.dateOfBirth);
     setValue("dateOfStart", employee.dateOfStart);
-    setValue("password", employee.password);
+   // setValue("password", employee.password);
     setValue("email", employee.email);
     setValue("city", employee.city);
     setValue("street", employee.street);

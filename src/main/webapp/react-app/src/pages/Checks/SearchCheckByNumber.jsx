@@ -95,7 +95,7 @@ export default function SearchCheckByNumber() {
     };
 
     return (
-        <main className="px-8 py-2 pt-6 min-h-screen bg-gradient-to-r from-violet-200 to-pink-200">
+        <main className="px-8 py-2 pt-6 min-h-screen max-h-full bg-gradient-to-r from-violet-200 to-pink-200">
             <form
                 onSubmit={handleFormSubmit}
                 className="grid sm:grid-cols-2 gap-3 mb-4"

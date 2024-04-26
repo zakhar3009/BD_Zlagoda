@@ -29,7 +29,6 @@ export default function useFetchCustomerCard() {
                 })
             );
             const client = await response.json();
-            console.log(client);
             setClient(client);
         } catch (err) {
             toast.error(`Error: ${err}`);

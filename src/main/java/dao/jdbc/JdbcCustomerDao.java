@@ -67,6 +67,7 @@ public class JdbcCustomerDao implements CustomerDao {
             "    FROM Checks c" +
             "    JOIN Employee e ON c.id_employee = e.id_employee" +
             "    WHERE e.id_employee =?" +
+            "    AND e.date_of_start <= CURRENT_DATE - INTERVAL '1' YEAR" +
             ")" +
             "AND cc.card_number NOT IN (" +
             "    SELECT ch.card_number" +
@@ -167,8 +168,6 @@ public class JdbcCustomerDao implements CustomerDao {
             query.setString(1, employeeID);
             ResultSet resultSet = query.executeQuery();
             while(resultSet.next()) {
-//                result.put("city", resultSet.getString("city"));
-//                result.put("clients_count", resultSet.getString("clients_count"));
                 result.put(resultSet.getString("city"), resultSet.getString("clients_count"));
             }
         } catch (SQLException e) {

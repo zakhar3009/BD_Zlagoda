@@ -35,7 +35,7 @@ export default function CustomerCardButtonGroup({ allowedRoles }) {
     const customerCardButtonGroup = () => {
         return (
             <main
-                className={`px-8 py-1/2 ${!checkRoute() ? "h-screen" : "h-full"} bg-gradient-to-r from-violet-200 to-pink-200`}>
+                className={`px-8 py-1/2 min-h-screen max-h-full bg-gradient-to-r from-violet-200 to-pink-200`}>
                 {!checkRoute() &&
                     <div className="flex justify-center items-center mb-4">
                         <div className={`w-auto bg-gradient-to-r from-violet-200 to-pink-200 pt-2 pb-2`}>

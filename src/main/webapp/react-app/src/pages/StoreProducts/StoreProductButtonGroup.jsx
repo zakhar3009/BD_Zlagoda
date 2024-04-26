@@ -2,14 +2,12 @@ import React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {Navigate, NavLink, Outlet, useLocation} from "react-router-dom";
-import Card from './../../components/cards/Card.jsx'
 import useAuth from "@/hooks/auth/useAuth.js";
-import {customerCardCommands} from "@/constants/CustomerCardCommandMap.js";
 import {storeProductsCommands} from "@/constants/StoreProductsCommandMap.js";
 import {Roles} from "@/constants/auth/allowedRoles.js";
 
-export default function StoreProductButtonGroup({ allowedRoles }) {
-    const { auth } = useAuth();
+export default function StoreProductButtonGroup({allowedRoles}) {
+    const {auth} = useAuth();
     const location = useLocation();
     const [alignment, setAlignment] = React.useState(
         auth?.user?.role === Roles.MANAGER
@@ -27,8 +25,8 @@ export default function StoreProductButtonGroup({ allowedRoles }) {
     }
 
     const hasPermissionOnBtn = (item) => {
-        if(!item.allowedRoles.includes(auth?.user?.role)) return;
-        if(item.path === "post_add_product_in_shop" || item.path === "post_update_product_in_shop") return;
+        if (!item.allowedRoles.includes(auth?.user?.role)) return;
+        if (item.path === "post_add_product_in_shop" || item.path === "post_update_product_in_shop") return;
         return (
             <ToggleButton key={item.path} value={item.path}>
                 <NavLink to={item.path}>
@@ -40,22 +38,27 @@ export default function StoreProductButtonGroup({ allowedRoles }) {
 
     const storeProductButtonGroup = () => {
         return (
-            <main className={`px-8 py-1/2 min-h-screen max-h-full bg-gradient-to-r from-violet-200 to-pink-200`}>
+            <main className="px-8 py-1/2 min-h-screen max-h-full bg-gradient-to-r from-violet-200 to-pink-200">
                 {!checkRoute() &&
                     <div className="flex justify-center items-center mb-4">
-                        <Card>
-                            <ToggleButtonGroup
-                                color="secondary"
-                                value={alignment}
-                                size={"small"}
-                                exclusive
-                                onChange={handleChange}
-                                aria-label="Platform"
-                            >
-                                {storeProductsCommands.map((item) => hasPermissionOnBtn(item))}
-                            </ToggleButtonGroup>
-                        </Card>
-                    </div>}
+                        <div className={`w-auto bg-gradient-to-r from-violet-200 to-pink-200 pt-2 pb-2`}>
+                            <div className={`mx-auto shadow-2xl mt-3 p-4 rounded-2xl bg-white`}>
+                                <div className="flex justify-center">
+                                    <ToggleButtonGroup
+                                        color="secondary"
+                                        value={alignment}
+                                        size="small"
+                                        exclusive
+                                        onChange={handleChange}
+                                        aria-label="Platform"
+                                    >
+                                        {storeProductsCommands.map((item) => hasPermissionOnBtn(item))}
+                                    </ToggleButtonGroup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <Outlet/>
             </main>
         );
@@ -72,7 +75,7 @@ export default function StoreProductButtonGroup({ allowedRoles }) {
         && allowedRoute()
             ? storeProductButtonGroup()
             : auth?.user
-                ? <Navigate to="/unauthorised" state={{ from: location }} replace />
-                : <Navigate to="/login" state={{ from: location }} replace />
+                ? <Navigate to="/unauthorised" state={{from: location}} replace/>
+                : <Navigate to="/login" state={{from: location}} replace/>
     )
 }

@@ -15,7 +15,7 @@ export default function GetCustomerNoCashierCheckoutsThisYear(){
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
                     command_name: "GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR",
-                    employee_id: employee_id
+                    id_employee: employee_id
                 })
             );
             const getAllEmployees = await response.json();

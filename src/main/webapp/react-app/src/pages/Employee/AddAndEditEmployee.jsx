@@ -97,7 +97,7 @@ export default function AddAndEditEmployee() {
                                 )}
                             </div>
                         </div>
-                        <div className="sm:col-span-3">
+                        <div className="sm:col-span-6">
                             <FormInput
                                 label="Email address"
                                 name="email"
@@ -108,18 +108,7 @@ export default function AddAndEditEmployee() {
                                 required={true}
                             />
                         </div>
-                        <div className="sm:col-span-3">
-                            <FormInput
-                                label="Password"
-                                name="password"
-                                placeholder="Password"
-                                type="password"
-                                register={register}
-                                errors={errors}
-                                required={true}
-                                validateFunc={checkValidPassword}
-                            />
-                        </div>
+
                         <div className="sm:col-span-3">
                             <FormInput
                                 label="Date of birth"

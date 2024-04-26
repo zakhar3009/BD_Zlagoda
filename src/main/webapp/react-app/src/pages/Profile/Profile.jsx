@@ -8,10 +8,15 @@ import PaidSharpIcon from '@mui/icons-material/PaidSharp';
 import InsertInvitationSharpIcon from '@mui/icons-material/InsertInvitationSharp';
 import SupervisedUserCircleSharpIcon from '@mui/icons-material/SupervisedUserCircleSharp';
 import BadgeIcon from '@mui/icons-material/Badge';
+import EditStoreProductDiscountModal from "@/components/modals/EditStoreProductDiscountModal.jsx";
+import React, {useState} from "react";
+import ChangeUserPasswordModal from "@/components/modals/ChangeUserPassword.jsx";
 export default function Profile() {
     const {auth} = useAuth();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
     return (
-        <Card height="screen" maxW="max-w-3xl">
+        <Card maxW="max-w-3xl">
             <div className="flex justify-center">
                 <label className="font-mono text-lg font-bold text-justify">Your profile</label>
             </div>
@@ -63,6 +68,19 @@ export default function Profile() {
             <ProfileElement icon={InsertInvitationSharpIcon} label={"Date of birth"} data={auth.user.dateOfBirth}/>
             <ProfileElement icon={InsertInvitationSharpIcon} label={"Date of start working"}
                             data={auth.user.dateOfStart}/>
+            <div className="p-3">
+                <button
+                    onClick={() => setIsEditModalOpen(true)}
+                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 w-100">
+                    Change a password
+                </button>
+                {isEditModalOpen &&
+                    <ChangeUserPasswordModal
+                        open={isEditModalOpen}
+                        handleClose={() => setIsEditModalOpen(false)}
+                    />
+                }
+            </div>
         </Card>
     )
 }

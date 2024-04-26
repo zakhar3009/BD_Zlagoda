@@ -2,7 +2,6 @@ import {useState} from "react";
 import MatTable from "../../components/table/MatTable.jsx";
 import {employeesTableMap} from "../../constants/EmployeesCommandMap.js";
 import {toast} from "react-toastify";
-import {Roles} from "@/constants/auth/allowedRoles.js";
 
 export default function SearchEmployee() {
     const [surname, setSurname] = useState("");
@@ -88,9 +87,6 @@ export default function SearchEmployee() {
                     deleteFunc={deleteEmployee}
                     deleteProperty={"id"}
                     pathToCreateUpdate={"/post_update_employee"}
-                    editEnabled={true}
-                    deleteEnabled={true}
-                    withActions={true}
                 ></MatTable>
             )}
         </div>

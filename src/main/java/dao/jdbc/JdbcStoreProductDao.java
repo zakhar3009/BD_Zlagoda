@@ -280,7 +280,7 @@ public class JdbcStoreProductDao implements StoreProductDao {
     protected static StoreProduct extractPromStoreProductFromResultSet(ResultSet resultSet) throws SQLException {
 
         return new StoreProduct.Builder()
-                .setUpc(resultSet.getString(UPC))
+                .setUpc(resultSet.getString(UPC_PROM))
                 .setPromStoreProduct(null)
                 .setProduct(JdbcProductDao.extractProductFromResultSet(resultSet))
                 .setSellingPrice(resultSet.getDouble(PROM_SELLING_PRICE))

@@ -13,7 +13,7 @@ const employeeDefaultValues = {
   dateOfStart: "",
   phoneNumber: "",
   email: "",
-  password: "",
+  // password: "",
   city: "",
   street: "",
   zipCode: "",

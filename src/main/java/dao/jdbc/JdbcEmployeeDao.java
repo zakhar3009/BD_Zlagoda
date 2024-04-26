@@ -1,6 +1,7 @@
 package dao.jdbc;
 
 import controller.Encryption;
+import controller.command.commands.auth.SessionManager;
 import dao.EmployeeDao;
 import entity.Employee;
 import entity.Role;
@@ -211,8 +212,15 @@ public class JdbcEmployeeDao implements EmployeeDao {
     @Override
     public void update(Employee employee) {
         try (PreparedStatement query = connection.prepareStatement(UPDATE)) {
+            String password = "";
+            Optional<Employee> updatingEmployee = getById(employee.getId());
+            if(updatingEmployee.isPresent()){
+                password = updatingEmployee.get().getPassword();
+            }
             query.setString(1, employee.getEmail());
-            query.setString(2, Encryption.hashPassword(employee.getPassword()));
+            query.setString(2, employee.getPassword() == null
+                    ? password
+                    : Encryption.hashPassword(employee.getPassword()));
             query.setString(3, employee.getName());
             query.setString(4, employee.getSurname());
             query.setString(5, employee.getPatronymic());
