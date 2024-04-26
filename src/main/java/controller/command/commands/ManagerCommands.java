@@ -77,8 +77,11 @@ public enum ManagerCommands {
     GET_TOP_EMPLOYEES_BY_SALES("GET_TOP_EMPLOYEES_BY_SALES", new GetTopEmployeesBySales(EmployeeService.getInstance())),
     GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY("GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", new GetSelfCountOfClientsGroupedByCity(CustomerService.getInstance())),
     CUSTOMERS_WITHOUT_CATEGORY_PURCHASES("CUSTOMERS_WITHOUT_CATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance())),
-    SEARCH_PRODUCT_BY_PART_OF_NAME("SEARCH_PRODUCT_BY_NAME", new GetAllProductsByPartOfNameCommand(ProductService.getInstance()));
+    SEARCH_PRODUCT_BY_PART_OF_NAME("SEARCH_PRODUCT_BY_NAME", new GetAllProductsByPartOfNameCommand(ProductService.getInstance())),
+    SEARCH_STORE_PRODUCTS_PART_OF_UPC("SEARCH_STORE_PRODUCTS_PART_OF_UPC", new GetAllStoreProductsByPartOfUpcCommand(StoreProductService.getInstance())),
+    GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", new GetCheckById(CheckService.getInstance())),
 
+    GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR("GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR", new GetCustomersNoCashierCheckoutsNoPurchasesThisYear(CustomerService.getInstance()));
     ManagerCommands(String commandKey, Command command) {
         this.key = commandKey;
         this.command = command;

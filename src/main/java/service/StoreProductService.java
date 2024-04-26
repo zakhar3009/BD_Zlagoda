@@ -30,6 +30,11 @@ public class StoreProductService {
         return storeProductDao.getById(id);
     }
 
+    public List<StoreProduct> searchByPartOfUPC(String upc) {
+        StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
+        return storeProductDao.searchByPartOfUPC(upc);
+    }
+
     public void create(StoreProduct storeProduct){
         StoreProductDao storeProductDao = daoFactory.createStoreProductDao();
         storeProductDao.create(storeProduct);
