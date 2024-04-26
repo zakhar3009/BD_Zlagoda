@@ -8,7 +8,7 @@ import {Roles} from "@/constants/auth/allowedRoles.js";
 export default function ProductsButtonGroup({ allowedRoles }) {
     const { auth } = useAuth();
     const location = useLocation();
-    const [alignment, setAlignment] = React.useState("get_all_products");
+    const [alignment, setAlignment] = React.useState("get_all_products_order_by_name");
     const routeName = location.pathname;
 
     const handleChange = (event, newAlignment) => {
@@ -37,11 +37,6 @@ export default function ProductsButtonGroup({ allowedRoles }) {
                                         onChange={handleChange}
                                         aria-label="Platform"
                                     >
-                                        <ToggleButton value="get_all_products">
-                                            <NavLink to="get_all_products">
-                                                Get all products
-                                            </NavLink>
-                                        </ToggleButton>
                                         <ToggleButton value="get_all_products_order_by_name">
                                             <NavLink to="get_all_products_order_by_name">
                                                 Get all products order by name

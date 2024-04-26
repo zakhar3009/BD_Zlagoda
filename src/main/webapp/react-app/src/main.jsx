@@ -95,10 +95,6 @@ const router = createBrowserRouter(
 
             <Route path="products" element={<ProductsButtonGroup allowedRoles={[Roles.CASHIER, Roles.MANAGER]}/>}>
                 <Route
-                    path="get_all_products"
-                    element={<Products command={"GET_ALL_PRODUCTS"}/>}
-                />
-                <Route
                     path="get_all_products_order_by_name"
                     element={<Products command={"GET_ALL_PRODUCTS_ORDER_BY_NAME"}/>}
                 />
@@ -117,15 +113,16 @@ const router = createBrowserRouter(
 
             <Route path="customer-card"
                    element={<CustomerCardButtonGroup allowedRoles={[Roles.CASHIER, Roles.MANAGER]}/>}>
-                <Route
-                    path="get_all_clients"
-                    element={<CustomerCard command={"GET_ALL_CLIENTS"}/>}
-                />
+                {/*<Route*/}
+                {/*    path="get_all_clients"*/}
+                {/*    element={<CustomerCard command={"GET_ALL_CLIENTS"}/>}*/}
+                {/*/>*/}
                 <Route
                     path="get_all_clients_order_by_surname"
                     element={<CustomerCard command={"GET_ALL_CLIENTS_ORDER_BY_SURNAME"}/>}
                 />
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
+
                 <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
                 <Route path="get_customer_cards_checked_out_by_cashiers" element={<GetCustomerCardsCheckedOutByCashier/>}/>
             </Route>
@@ -134,12 +131,12 @@ const router = createBrowserRouter(
                 <Route path="get_clients_by_part_of_surname"
                        element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PART_OF_SURNAME"}/>}
                 />
-                <Route path="get_served_clients_by_cities" element={<GetSelfCustomerByCity />}/>
             </Route>
 
             <Route path="customer-card" element={<CustomerCardButtonGroup allowedRoles={[Roles.MANAGER]}/>}>
                 <Route path="get_clients_by_percent_order_by_surname" element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
                 <Route path="customers_without_category_purchases" element={<ClientsWithoutCategoryPurchases />} />
+                <Route path="get_served_clients_by_cities" element={<GetSelfCustomerByCity />}/>
             </Route>
 
             <Route path="store-products" element={<StoreProductButtonGroup allowedRoles={[Roles.MANAGER]}/>}>

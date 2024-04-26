@@ -8,7 +8,7 @@ import {customerCardCommands} from "@/constants/CustomerCardCommandMap.js";
 export default function CustomerCardButtonGroup({ allowedRoles }) {
     const { auth } = useAuth();
     const location = useLocation();
-    const [alignment, setAlignment] = React.useState("get_all_clients");
+    const [alignment, setAlignment] = React.useState("get_all_clients_order_by_surname");
     const routeName = location.pathname;
 
     const handleChange = (event, newAlignment) => {

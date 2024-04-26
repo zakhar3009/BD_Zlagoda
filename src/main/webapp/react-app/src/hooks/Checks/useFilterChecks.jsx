@@ -82,7 +82,6 @@ export default function useFilterChecks() {
                     label: item.promotionalProduct ? item.product.name + " (prom)" : item.product.name,
                     value: item.UPC}
             )))
-            console.log(data);
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }

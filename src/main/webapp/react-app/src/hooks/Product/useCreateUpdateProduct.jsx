@@ -71,7 +71,7 @@ export default function useCreateUpdateProduct(id, product) {
         } catch (err) {
             toast.error(`Error: ${err}`);
         } finally {
-            navigate("../get_all_products");
+            navigate("../get_all_products_order_by_name");
         }
     };
 
