@@ -8,8 +8,6 @@ import service.CustomerService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class GetCustomersNoCashierCheckoutsNoPurchasesThisYear implements Comman
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        List<CustomerCard> customerCards = customerService.getCustomersNoCashierCheckoutsNoPurchasesThisYear(Date.valueOf(hashMap.get("start")), Date.valueOf(hashMap.get("end")));
+        List<CustomerCard> customerCards = customerService.getCustomersNoCashierCheckoutsNoPurchasesThisYear(hashMap.get("id_employee"));
         return JSON.gson().toJson(customerCards);
     }
 }

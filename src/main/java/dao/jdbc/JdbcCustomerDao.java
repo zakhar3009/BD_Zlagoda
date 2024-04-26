@@ -1,12 +1,10 @@
 package dao.jdbc;
 
 import dao.CustomerDao;
-import entity.Check;
 import entity.CustomerCard;
 import exception.ServerException;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.*;
 
 public class JdbcCustomerDao implements CustomerDao {
@@ -21,14 +19,19 @@ public class JdbcCustomerDao implements CustomerDao {
     private static String DELETE = "DELETE FROM customer_card WHERE card_number=?";
     private static String SEARCH_CUSTOMERS_BY_PART_OF_SURNAME = "SELECT * FROM customer_card WHERE cust_surname LIKE ?";
     private static String GET_CUSTOMERS_BY_PERCENT_ORDER_BY_SURNAME = "SELECT * FROM customer_card WHERE percent=? ORDER BY cust_surname";
-    private static String GET_CUSTOMERS_AND_CHEKS_CHECKED_OUT_BY_CASHIERS = "SELECT customer_card.*,  e1.*, checks.*" +
-            "FROM customer_card JOIN checks USING (card_number) JOIN employee e1 USING (id_employee)" +
-            "WHERE " +
-            "    NOT EXISTS ( " +
-            "        SELECT * " +
-            "        FROM employee " +
-            "        WHERE employee.id_employee = e1.id_employee" +
-            "        AND employee.id_employee NOT IN (?))";
+    private static String GET_CUSTOMERS_AND_CHEKS_CHECKED_OUT_BY_CASHIERS = "SELECT c.* " +
+            " FROM customer_card AS c" +
+            " INNER JOIN checks AS ch ON c.card_number = ch.card_number" +
+            " WHERE NOT EXISTS (" +
+            "  SELECT *" +
+            "  FROM checks" +
+            "  WHERE checks.id_employee=? " +
+            "  AND checks.card_number = ch.card_number" +
+            ") AND NOT EXISTS (" +
+            "  SELECT *" +
+            "  FROM checks" +
+            "  WHERE checks.sum_total > 1000 AND c.card_number = checks.card_number " +
+            ")";
     private static String GET_CUSTOMERS_WITHOUT_CATEGORY_PURCHASES =
             "SELECT c.* " +
             "FROM customer_card c " +
@@ -59,7 +62,7 @@ public class JdbcCustomerDao implements CustomerDao {
 
     private static String GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR = "SELECT cc.*" +
             "FROM Customer_Card cc" +
-            "WHERE cc.card_number NOT IN (" +
+            " WHERE cc.card_number NOT IN (" +
             "    SELECT c.card_number" +
             "    FROM Checks c" +
             "    JOIN Employee e ON c.id_employee = e.id_employee" +
@@ -129,18 +132,17 @@ public class JdbcCustomerDao implements CustomerDao {
     }
 
     @Override
-    public HashMap<String, ArrayList<Check>> getCustomerCheckedOutByCashiers(List<String> cashiers) {
-        HashMap<String, ArrayList<Check>> result = new HashMap<>();
+    public List<CustomerCard> getCustomerCheckedOutByCashiers(String employeeID) {
+        List<CustomerCard> customerCards = new ArrayList<>();
         try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_AND_CHEKS_CHECKED_OUT_BY_CASHIERS)) {
-            query.setString(1, String.join(", ", cashiers));
+            query.setString(1, employeeID);
             ResultSet resultSet = query.executeQuery();
-            while(resultSet.next()) {
-                result.computeIfAbsent(resultSet.getString(CUSTOMER_NUMBER), k -> new ArrayList<>()).add(JdbcCheckDao.extractCheckFromResultSet(resultSet));
-            }
+            while(resultSet.next())
+                customerCards.add(extractCustomerCardFromResultSet(resultSet));
         } catch (SQLException e) {
             throw new ServerException(e);
         }
-        return result;
+        return customerCards;
     }
 
     @Override
@@ -176,11 +178,10 @@ public class JdbcCustomerDao implements CustomerDao {
     }
 
     @Override
-    public List<CustomerCard> getCustomersNoCashierCheckoutsNoPurchasesThisYear(Date start, Date end) {
+    public List<CustomerCard> getCustomersNoCashierCheckoutsNoPurchasesThisYear(String employeeId) {
         List<CustomerCard> customerCards = new ArrayList<>();
         try (PreparedStatement query = connection.prepareStatement(GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR)) {
-            query.setDate(1, start);
-            query.setDate(2, end);
+            query.setString(1, employeeId);
             ResultSet resultSet = query.executeQuery();
             while(resultSet.next())
                 customerCards.add(extractCustomerCardFromResultSet(resultSet));
