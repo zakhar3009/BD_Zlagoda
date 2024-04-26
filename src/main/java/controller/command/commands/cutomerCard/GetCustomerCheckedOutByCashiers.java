@@ -3,12 +3,11 @@ package controller.command.commands.cutomerCard;
 import controller.command.Command;
 import controller.command.commands.CommandFactory;
 import controller.utils.JSON;
-import entity.Check;
+import entity.CustomerCard;
 import service.CustomerService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class GetCustomerCheckedOutByCashiers implements Command {
     @Override
     public String execute(HttpServletRequest request) throws IOException {
         HashMap<String, String> hashMap = CommandFactory.getParameters(request);
-        HashMap<String, ArrayList<Check>> result = customerService.getCustomerCheckedOutByCashiers(List.of(hashMap.get("employee_id").split(",")));
+        List<CustomerCard> result = customerService.getCustomerCheckedOutByCashiers(hashMap.get("id_employee"));
         return JSON.gson().toJson(result);
     }
 }

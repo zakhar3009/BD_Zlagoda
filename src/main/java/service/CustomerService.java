@@ -2,11 +2,8 @@ package service;
 
 import dao.CustomerDao;
 import dao.DaoFactory;
-import entity.Check;
 import entity.CustomerCard;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -63,9 +60,9 @@ public class CustomerService {
         return customerDao.getCustomersByPercentOrderBySurname(percent);
     }
 
-    public HashMap<String, ArrayList<Check>> getCustomerCheckedOutByCashiers(List<String> cashiersIds){
+    public List<CustomerCard> getCustomerCheckedOutByCashiers(String employeeID){
         CustomerDao customerDao = daoFactory.createCustomerDao();
-        return customerDao.getCustomerCheckedOutByCashiers(cashiersIds);
+        return customerDao.getCustomerCheckedOutByCashiers(employeeID);
     }
 
     public List<CustomerCard> getCustomersWithoutCategoryPurchases(String categoryName){
@@ -78,8 +75,8 @@ public class CustomerService {
         return customerDao.getSelfCountOfClientsGroupedByCity(employeeID);
     }
 
-    public List<CustomerCard> getCustomersNoCashierCheckoutsNoPurchasesThisYear(Date start, Date end){
+    public List<CustomerCard> getCustomersNoCashierCheckoutsNoPurchasesThisYear(String employeeId){
         CustomerDao customerDao = daoFactory.createCustomerDao();
-        return customerDao.getCustomersNoCashierCheckoutsNoPurchasesThisYear(start, end);
+        return customerDao.getCustomersNoCashierCheckoutsNoPurchasesThisYear(employeeId);
     }
 }
