@@ -14,6 +14,7 @@ import controller.command.commands.employee.GetEmployeeById;
 import controller.command.commands.product.GetAllProductsByPartOfNameCommand;
 import controller.command.commands.product.GetAllProductsOrderByName;
 import controller.command.commands.product.GetProductsByCategoryOrderByName;
+import controller.command.commands.sale.CreateSaleCommand;
 import controller.command.commands.sale.GetFullCheckByNumber;
 import controller.command.commands.storeProduct.*;
 import service.*;
@@ -34,10 +35,12 @@ public enum CashierCommands {
     GET_CLIENT_BY_ID("GET_CLIENT_BY_ID", new GetCustomerCardByIdCommand(CustomerService.getInstance())),
     POST_ADD_CLIENT("POST_ADD_CLIENT", new CreateCustomerCardCommand(CustomerService.getInstance())),
     POST_UPDATE_CLIENT("POST_UPDATE_CLIENT", new UpdateCustomerCardCommand(CustomerService.getInstance())),
+    POST_ADD_SALE("POST_ADD_SALE", new CreateSaleCommand(SaleService.getInstance())),
     GET_SELF_DAILY_CHECKS("GET_SELF_DAILY_CHECKS", new GetSelfDailyChecksCommand(CheckService.getInstance())),
     GER_SELF_CHECKS_PER_PERIOD("GET_SELF_CHECKS_PER_PERIOD", new GetSelfChecksPerPeriod(CheckService.getInstance())),
     GET_CHECK_BY_NUMBER("GET_CHECK_BY_NUMBER", new GetCheckById(CheckService.getInstance())),
     GET_FULL_CHECK_BY_NUMBER("GET_FULL_CHECK_BY_NUMBER", new GetFullCheckByNumber(SaleService.getInstance())),
+    GET_ALL_CLIENTS("GET_ALL_CLIENTS", new GetAllCustomerCardsCommand(CustomerService.getInstance())),
     GET_ALL_PRODUCTS_IN_SHOP("GET_ALL_PRODUCTS_IN_SHOP", new GetAllStoreProductsCommand(StoreProductService.getInstance())),
     GET_ALL_CASHIERS_ORDER_BY_SURNAME("GET_ALL_CASHIERS_ORDER_BY_SURNAME", new GetCashiersOrderBySurname(EmployeeService.getInstance())),
     SEARCH_STORE_PRODUCTS_PART_OF_UPC("SEARCH_STORE_PRODUCTS_PART_OF_UPC", new GetAllStoreProductsByPartOfUpcCommand(StoreProductService.getInstance())),
@@ -47,8 +50,7 @@ public enum CashierCommands {
     GET_NON_PROM_PRODUCTS_ORDER_BY_NAME("GET_NON_PROM_PRODUCTS_ORDER_BY_NAME", new GetNonPromProductsOrderByName(StoreProductService.getInstance())),
     GET_PRODUCT_INFO_BY_UPC("GET_PRODUCT_INFO_BY_UPC", new GetStoreProductByIdCommand(StoreProductService.getInstance())),
     GET_SELF_INFO("GET_SELF_INFO", new GetEmployeeById(EmployeeService.getInstance())),
-    CUSTOMERS_WITHOUT_CATEGORY_PURCHASES("CUSTOMERS_WITHOUT_CATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance())),
-    GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR("GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR", new GetCustomersNoCashierCheckoutsNoPurchasesThisYear(CustomerService.getInstance()));
+    CUSTOMERS_WITHOUT_CATEGORY_PURCHASES("CUSTOMERS_WITHOUT_CATEGORY_PURCHASES", new GetCustomersWithoutCategoryPurchases(CustomerService.getInstance()));
 
 
     private String key;

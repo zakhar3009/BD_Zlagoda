@@ -46,10 +46,10 @@ export default function Checks() {
     }
 
     return (
-        <main className="px-8 py-2 pt-6 min-h-screen bg-gradient-to-r from-violet-200 to-pink-200">
+        <main className="px-8 py-2 pt-6 min-h-screen max-h-full bg-gradient-to-r from-violet-200 to-pink-200">
             <Card maxW="max-w-3xl">
 
-                <div className="flex justify-between mb-2">
+                {role === Roles.MANAGER && <div className="flex justify-between mb-2">
                     <select
                         name="upc"
                         id="upc"
@@ -60,8 +60,8 @@ export default function Checks() {
                             <option key={item.value} value={item.value}>{item.label}</option>
                         ))}
                     </select>
-                    <label className="font-bold text-gray-700 font-mono">Total sum: {totalValue}$</label>
-                </div>
+                    <label className="font-bold text-gray-700 font-mono">Total amount: {totalValue}</label>
+                </div>}
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -140,10 +140,12 @@ export default function Checks() {
                         />
                     </div>
                     <div className="flex justify-between m-2">
-                        <div>
-                            <label className="font-bold text-gray-700 font-mono text-xl">Total
-                                quantity: {totalSum}$</label>
-                        </div>
+                        {role === Roles.MANAGER &&
+                            <div>
+                                <label className="font-bold text-gray-700 font-mono text-xl">Total
+                                    quantity: {totalSum}$</label>
+                            </div>
+                        }
                         <div>
                             <button
                                 className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"

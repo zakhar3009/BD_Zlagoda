@@ -23,7 +23,7 @@ public class CreateSaleCommand implements Command {
     public String execute(HttpServletRequest request) throws IOException {
         Sale sale = CommandFactory.getAttributes(request, Sale.class);
         StoreProduct storeProduct = sale.getStoreProduct();
-        storeProduct.setProductsNumber(storeProduct.getProductsNumber() - 1);
+        storeProduct.setProductsNumber(storeProduct.getProductsNumber() - sale.getProductNumber());
         StoreProductService.getInstance().update(storeProduct);
         saleService.create(sale);
         return JSON.gson().toJson("");

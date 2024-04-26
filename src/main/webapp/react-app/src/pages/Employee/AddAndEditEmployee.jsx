@@ -67,7 +67,7 @@ export default function AddAndEditEmployee() {
                                 type="number"
                                 register={register}
                                 errors={errors}
-                                required={true}
+                                required={false}
                                 validateFunc={checkValidSalary}
                             />
                         </div>

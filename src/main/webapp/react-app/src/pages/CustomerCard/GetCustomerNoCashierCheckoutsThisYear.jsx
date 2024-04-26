@@ -1,6 +1,7 @@
 import MatTable from "@/components/table/MatTable.jsx";
 import {customerCardTableMap} from "@/constants/CustomerCardCommandMap.js";
 import {useState} from "react";
+import {toast} from "react-toastify";
 
 export default function GetCustomerNoCashierCheckoutsThisYear(){
     const [employee_id, setEmployee_id] = useState("");
@@ -14,7 +15,7 @@ export default function GetCustomerNoCashierCheckoutsThisYear(){
                 "http://localhost:8080/controller?" +
                 new URLSearchParams({
                     command_name: "GET_CUSTOMERS_NO_CASHIER_CHECKOUTS_NO_PURCHASES_THIS_YEAR",
-                    employee_id: "E007",
+                    employee_id: employee_id
                 })
             );
             const getAllEmployees = await response.json();
@@ -27,6 +28,30 @@ export default function GetCustomerNoCashierCheckoutsThisYear(){
     const handleFormSubmit = (e) => {
         e.preventDefault();
         fetchCustomersData();
+    };
+    
+    const deleteCustomer = async (customerId) => {
+        const requestOptions = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                command_name: "DELETE_CLIENT",
+            },
+            body: JSON.stringify({
+                id: customerId,
+            }),
+        };
+        try {
+            const response = await fetch(
+                "http://localhost:8080/controller",
+                requestOptions
+            );
+            const data = await response.json();
+            fetchCustomersData();
+            toast.success("Customer was removed!")
+        } catch (err) {
+            toast.error("Cannot be deleted, due to database integrity!")
+        }
     };
 
     return(
@@ -58,7 +83,7 @@ export default function GetCustomerNoCashierCheckoutsThisYear(){
                         "GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS"
                     )}
                     rows={customers}
-                    deleteFunc={deleteEmployee}
+                    deleteFunc={deleteCustomer}
                     deleteProperty={"id"}
                     pathToCreateUpdate={"/post_update_employee"}
                 ></MatTable>

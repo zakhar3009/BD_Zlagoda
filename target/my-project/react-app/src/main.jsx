@@ -40,6 +40,7 @@ import TopEmployeesBySales from "@/pages/Employee/TopEmployeesBySales.jsx";
 import ClientsWithoutCategoryPurchases from "@/pages/CustomerCard/ClientsWithoutCategoryPurchases.jsx";
 import GetCustomerCardsCheckedOutByCashier from "@/pages/CustomerCard/GetCustomerCardsCheckedOutByCashier.jsx";
 import SearchCheckByNumber from "@/pages/Checks/SearchCheckByNumber.jsx";
+import GetCustomerNoCashierCheckoutsThisYear from "@/pages/CustomerCard/GetCustomerNoCashierCheckoutsThisYear.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -122,6 +123,7 @@ const router = createBrowserRouter(
                     element={<CustomerCard command={"GET_ALL_CLIENTS_ORDER_BY_SURNAME"}/>}
                 />
                 <Route path=":id/post_update_client" element={<AddAndEditCustomerCard/>}/>
+
                 <Route path="post_add_client" element={<AddAndEditCustomerCard/>}/>
                 <Route path="get_customer_cards_checked_out_by_cashiers" element={<GetCustomerCardsCheckedOutByCashier/>}/>
             </Route>
@@ -136,6 +138,7 @@ const router = createBrowserRouter(
                 <Route path="get_clients_by_percent_order_by_surname" element={<SearchClientsByPartOfSurname command={"GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME"}/>}/>
                 <Route path="customers_without_category_purchases" element={<ClientsWithoutCategoryPurchases />} />
                 <Route path="get_served_clients_by_cities" element={<GetSelfCustomerByCity />}/>
+                <Route path="get_clients_out_of_cashier_this_year" element={<GetCustomerNoCashierCheckoutsThisYear />}/>
             </Route>
 
             <Route path="store-products" element={<StoreProductButtonGroup allowedRoles={[Roles.MANAGER]}/>}>

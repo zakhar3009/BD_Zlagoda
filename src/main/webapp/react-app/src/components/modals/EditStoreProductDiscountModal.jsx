@@ -9,6 +9,7 @@ export default function EditStoreProductDiscountModal({
                                            selectedStoreProduct,
                                            open,
                                            handleClose,
+                                           fetchStoreProductsData
                                        }) {
     const {
         register,
@@ -43,10 +44,10 @@ export default function EditStoreProductDiscountModal({
                 "http://localhost:8080/controller",
                 requestOptions
             );
-            const data = await response.json();
-            console.log(data);
+            await response.json();
             toast.success("Promotional product was created!")
             handleClose();
+            fetchStoreProductsData();
         } catch (err) {
             toast.error(`ERROR: ${err}`)
         }
@@ -61,7 +62,7 @@ export default function EditStoreProductDiscountModal({
         <MatModal open={open} handleClose={handleClose}>
             <div className="flex justify-end items-center">
                 <IoIosClose onClick={handleClose}
-                            className="text-gray-400 text-5xl hover:text-opacity-80 active:text-opacity-50"/>
+                            className="text-gray-400 text-4xl hover:text-opacity-80 active:text-opacity-50"/>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormInput
@@ -76,7 +77,7 @@ export default function EditStoreProductDiscountModal({
                 />
                 <button
                     type="submit"
-                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 w-100"
+                    className="rounded-md bg-indigo-600 mt-4 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 w-100"
                 >Make a discount</button>
             </form>
         </MatModal>
