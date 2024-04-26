@@ -3,6 +3,7 @@ import FormInput from "@/components/inputs/FormInput.jsx";
 import { checkValidPhoneNumber } from "@/validators/EmployeeValidations.jsx";
 import useFetchCustomerCard from "@/hooks/CustomerCard/useFetchCustomerCard.jsx";
 import useCreateUpdateCustomerCard from "@/hooks/CustomerCard/useCreateUpdateCustomerCard.jsx";
+import {checkValidPercent} from "@/validators/CustomerCard.jsx";
 
 
 export default function AddAndEditCustomerCard(){
@@ -109,6 +110,7 @@ export default function AddAndEditCustomerCard(){
                                 register={register}
                                 errors={errors}
                                 required={true}
+                                validateFunc={checkValidPercent}
                             />
                         </div>
                     </div>

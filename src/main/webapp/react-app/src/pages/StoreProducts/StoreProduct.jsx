@@ -23,6 +23,7 @@ export default function StoreProduct({command}) {
         storeProducts,
         isLoading,
         deleteStoreProduct,
+        fetchStoreProductsData,
     } = useStoreProducts(command);
 
     const onDeleteStoreProduct = (item) => {
@@ -66,6 +67,7 @@ export default function StoreProduct({command}) {
                             open={isEditModalOpen}
                             selectedStoreProduct={selectedStoreProduct}
                             handleClose={onCloseEditModal}
+                            fetchStoreProductsData={fetchStoreProductsData}
                         />
                     }
                     <div ref={componentRef}>

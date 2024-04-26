@@ -24,8 +24,6 @@ export default function useFetchEmployee() {
   const { id } = useParams();
   const [employee, setEmployee] = useState(employeeDefaultValues);
 
-  console.log(id);
-
   const getEmployeeById = async () => {
     try {
       const response = await fetch(
@@ -36,7 +34,6 @@ export default function useFetchEmployee() {
           })
       );
       const employeeById = await response.json();
-      console.log(employeeById);
       setEmployee(employeeById);
     } catch (err) {
       toast.error(`Error: ${err}`);

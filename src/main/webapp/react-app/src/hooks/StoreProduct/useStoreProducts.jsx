@@ -64,6 +64,7 @@ export default function useStoreProducts(command) {
 
 
     return {
+        fetchStoreProductsData,
         storeProducts,
         isLoading,
         deleteStoreProduct,

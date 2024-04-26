@@ -1,4 +1,3 @@
-import Card from "./../../components/cards/Card.jsx";
 import {useEffect, useState} from "react";
 import EnhancedTable from './../../components/table/AddNewCheckTable.jsx'
 import {toast} from "react-toastify";
@@ -13,7 +12,7 @@ export default function AddNewCheck() {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
-    const { auth } = useAuth();
+    const {auth} = useAuth();
 
     const fetchClientsData = async () => {
         try {
@@ -26,7 +25,6 @@ export default function AddNewCheck() {
             const data = await response.json();
             setCustomerCards(data);
             setSelectedClient(data[0].number);
-            console.log("LOADED CLIENTS", data);
         } catch (err) {
             toast.error(`ERROR: ${err}`);
         }
@@ -75,7 +73,6 @@ export default function AddNewCheck() {
                 requestOptions
             );
             const checkId = await response.json();
-            console.log("ID ", checkId)
             createSales(checkId, selectedItems);
             toast.success("New check was added");
         } catch (err) {
@@ -90,7 +87,7 @@ export default function AddNewCheck() {
             let changedItem = {
                 ...item
             }
-            if(!changedItem.promStoreProduct) {
+            if (!changedItem.promStoreProduct) {
                 changedItem.promStoreProduct = {}
             }
             delete changedItem.sellingAmount;
@@ -125,46 +122,47 @@ export default function AddNewCheck() {
 
 
     const handleCreateCheck = (selectedItems, totalSum) => {
-       const client = customerCards.find((c) => c.number === selectedClient);
+        const client = customerCards.find((c) => c.number === selectedClient);
         const formattedDate = moment().format("YYYY-MM-D");
         const check = {
-            employee : auth?.user,
+            employee: auth?.user,
             customerCard: client,
             printDate: formattedDate,
             sumTotal: totalSum * 1.2,
             vat: totalSum * 0.2
         }
         createCheck(check, selectedItems);
-        console.log("SELECTED ITEMS", selectedItems);
     }
 
     return (
-        <Card height={"screen"} maxW="max-w-5xl">
-            {!isLoading &&
-                <>
-                <h1 className="text-base font-semibold leading-7 text-gray-900 mb-3">Create check</h1>
-                <div className="mb-4">
-                    <label
-                        htmlFor="customer"
-                        className="block text-sm font-medium leading-6 text-gray-900">
-                        Choose a customer
-                    </label>
+        <main className={`w-full min-h-screen max-h-full bg-gradient-to-r from-violet-200 to-pink-200 pt-2 pb-2`}>
+            <div className={`mx-auto max-w-5xl shadow-2xl mt-3 p-4 rounded-2xl bg-white`}>
+                {!isLoading &&
+                    <>
+                        <h1 className="text-base font-semibold leading-7 text-gray-900 mb-3">Create check</h1>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="customer"
+                                className="block text-sm font-medium leading-6 text-gray-900">
+                                Choose a customer
+                            </label>
 
-                    <select
-                        name="customer"
-                        id="customer"
-                        value={selectedClient}
-                        onChange={e => setSelectedClient(e.target.value)}
-                        className="block pl-3 w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        {customerCards.map((item) => (
-                            <option key={item.number} value={item.number}>
-                                {item.customerName + " " + item.customerSurname}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <EnhancedTable tableRows={products} handleCreateCheck={handleCreateCheck} />
-                </>
-            }
-    </Card>)
+                            <select
+                                name="customer"
+                                id="customer"
+                                value={selectedClient}
+                                onChange={e => setSelectedClient(e.target.value)}
+                                className="block pl-3 w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {customerCards.map((item) => (
+                                    <option key={item.number} value={item.number}>
+                                        {item.customerName + " " + item.customerSurname}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <EnhancedTable tableRows={products} handleCreateCheck={handleCreateCheck}/>
+                    </>
+                }
+            </div>
+        </main>)
 }

@@ -46,7 +46,6 @@ export default function useCreateUpdateStoreProduct(id, storeProduct) {
 
     const addEditStoreProductRequest = async (command) => {
         const formData = getValues();
-        console.log("FORM DATA:", formData)
         const product = products.find((item) => (item.id === Number(formData.product)));
         const newStoreProduct = {
             ...formData,

@@ -80,8 +80,8 @@ export default function EnhancedTable({tableRows, handleCreateCheck}) {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.id);
-            setSelected(newSelected);
+            const newSelected = rows.map((n) => n);
+            setSelected(rows);
             return;
         }
         setSelected([]);
@@ -105,7 +105,6 @@ export default function EnhancedTable({tableRows, handleCreateCheck}) {
         }
         setSelected(newSelected);
     };
-    console.log(selected)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -138,7 +137,6 @@ export default function EnhancedTable({tableRows, handleCreateCheck}) {
                     : prevRow)
             );
         }
-        console.log(selected);
     }
     const onDecreaseQuantity = (event, row) => {
         event.stopPropagation();
@@ -156,7 +154,6 @@ export default function EnhancedTable({tableRows, handleCreateCheck}) {
             return;
         }
         setSelected(prevRows => prevRows.filter(prevRow => prevRow.UPC !== row.UPC));
-        console.log(selected);
     }
 
     const calculateTotalPrice = () => {

@@ -257,6 +257,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 .setSalary(resultSet.getDouble(SALARY))
                 .setZipCode(resultSet.getString(ZIP_CODE))
                 .setEmail(resultSet.getString(EMAIL))
+                .setPassword(resultSet.getString(PASSWORD))
                 .build();
     }
 

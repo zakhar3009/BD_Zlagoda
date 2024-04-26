@@ -18,7 +18,6 @@ export default function Employee({command}) {
     });
     const fetchEmployeesData = async () => {
         try {
-            console.log(command);
             setIsLoading(true);
             const response = await fetch(
                 "http://localhost:8080/controller?" +

@@ -23,7 +23,8 @@ export const customerCardTableMap = new Map([
     ["GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME", columnNames],
     ["GET_CLIENTS_BY_PART_OF_SURNAME", columnNames],
     ["GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", columnNamesForCheckedOutByCashier ],
-    ["GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", columnNamesForCheckedOutByCashier]
+    ["GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", columnNamesForCheckedOutByCashier],
+    ["GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", columnNames]
     ]);
 
 export const customerCardCommands = [
@@ -60,6 +61,11 @@ export const customerCardCommands = [
     {
         path: "customers_without_category_purchases",
         title: "Clients without category purchases",
+        allowedRoles: [Roles.MANAGER]
+    },
+    {
+        path: "get_clients_out_of_cashier_this_year",
+        title: "Get clients with no cashier checks this year",
         allowedRoles: [Roles.MANAGER]
     },
     {
