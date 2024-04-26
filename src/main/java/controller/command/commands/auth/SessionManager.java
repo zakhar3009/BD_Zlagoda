@@ -6,8 +6,9 @@ import javax.servlet.http.HttpSession;
 
 public class SessionManager {
 
-    private SessionManager() {
-    }
+    private static HttpSession session;
+
+    private SessionManager() {}
 
     private static final SessionManager INSTANCE = new SessionManager();
 
@@ -19,11 +20,12 @@ public class SessionManager {
         return session.getAttribute("user") != null;
     }
 
-    public void addUserToSession(HttpSession session, Employee employee) {
+    public void addUserToSession(HttpSession ses, Employee employee) {
+        session = ses;
         session.setAttribute("user", employee);
     }
 
-    public Employee getUserFromSession(HttpSession session) {
+    public Employee getUserFromSession() {
         return (Employee) session.getAttribute("user");
     }
 
