@@ -22,7 +22,6 @@ export const customerCardTableMap = new Map([
     ["GET_ALL_CLIENTS_ORDER_BY_SURNAME", columnNames],
     ["GET_CLIENTS_BY_PERCENT_ORDER_BY_SURNAME", columnNames],
     ["GET_CLIENTS_BY_PART_OF_SURNAME", columnNames],
-    ["GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", columnNamesForCheckedOutByCashier ],
     ["GET_SELF_COUNT_OF_CLIENTS_GROUPED_BY_CITY", columnNamesForCheckedOutByCashier],
     ["GET_CUSTOMER_CARDS_CHECKED_OUT_BY_CASHIERS", columnNames]
     ]);
