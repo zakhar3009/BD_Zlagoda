@@ -36,11 +36,11 @@ public class FrontController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
         Command command;
-        HashMap<String, String> headers = CommandFactory.getAttributes(request, HashMap.class);
-        if(headers != null && headers.get("command_name").equals("POST_LOGIN")) {
+        String commandName = request.getHeader("command_name");
+        if(commandName != null && commandName.equals("POST_LOGIN")) {
             command = CommandFactory.getManagerCommand(request);
         } else {
-            Employee user = SessionManager.getInstance().getUserFromSession(request.getSession());
+            Employee user = SessionManager.getInstance().getUserFromSession();
             Role userRole = user.getRole();
             if (userRole.equals(Role.MANAGER)) command = CommandFactory.getManagerCommand(request);
             else command = CommandFactory.getCashierCommand(request);
